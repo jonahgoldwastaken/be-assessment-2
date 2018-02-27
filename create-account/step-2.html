@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profiel instellen - HDate</title>
+</head>
+<body>
+    <form action="/logged-in">
+        <input type="file" name="profile-image">
+        <label>
+            Voornaam
+            <input type="text" name="first-name">
+        </label>
+        <label>
+            Achternaam
+            <input type="text" name="last-name">
+        </label>
+        <label>
+            Leeftijd
+            <input min="18" type="number" name="age">
+        </label>
+        <label>
+            Woonplaats
+            <input type="text" name="residence">
+        </label>
+        <fieldset>
+            <a href="./hobby-selector.html"><legend>Hobbies</legend> ></a>
+        </fieldset>
+        <input type="submit" value="Afronden >">
+    </form>
+</body>
+</html>
