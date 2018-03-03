@@ -1,0 +1,8 @@
+:root {
+    --pink: rgb(229, 93, 135);
+    --blue: rgb(95, 195, 228);
+    --gradient: linear-gradient(to bottom right, rgb(229, 93, 135), rgb(95, 195, 228));
+    --gradient-transparent: linear-gradient(to bottom right, rgba(229, 93, 135 , 0.8), rgba(95, 195, 228, 0.8));
+    --box-shadow: 0 .25rem .875rem 0.1rem rgba(0, 0, 0, 0.21);
+    --button-shadow: 0 .25rem .4rem rgba(0, 0, 0, 0.2);
+}

@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home - HDate</title>
+    <link rel="stylesheet" href="/assets/stylesheets/app.css">
 </head>
 <body>
-    <header>
+    <header class="header">
         <nav>
             <ul>
                 <li><a href="./profile.html">Profiel</a></li>
@@ -17,13 +18,15 @@
         </nav>
     </header>
     <main>
-        <article>
+        <article class="card">
             <a href="./index-pop-up.html">
-                <img src="" alt="Profielfoto Jonathan Simmons">
-                <h2>Jonathan Simmons</h2>
-                <ul>
+                <div class="card__header">
+                    <img src="" alt="Profielfoto Jonathan Simmons">
+                    <h2>Jonathan Simmons</h2>
+                </div>
+                <ul class="card__gallery">
                     <li>
-                        <img src="" alt="Foto van iemand die breidt.">
+                        <img src="http://lorempixel.com/800/600" alt="Foto van iemand die breidt.">
                         <h3 title="Hobby">Breien</h3>
                         <h4 title="Categorie">Handwerk</h4>
                     </li>
@@ -31,9 +34,9 @@
             </a>
         </article>
     </main>
-    <footer>
-        <a href="./index-pop-up.html">Dislike</a>
-        <a href="./index-pop-up.html">Like</a>
+    <footer class="button-footer">
+        <a class="button-footer__button button-footer__button--dislike" href="./index-pop-up.html">Dislike</a>
+        <a class="button-footer__button button-footer__button--like" href="./index-pop-up.html">Like</a>
     </footer>
 </body>
 </html>

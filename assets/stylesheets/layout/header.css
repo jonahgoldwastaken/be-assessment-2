@@ -1,0 +1,31 @@
+.header {
+    box-shadow: var(--box-shadow);
+    margin-bottom: 2em;
+    padding: 1em;
+}
+
+.header,
+.header ul {
+    display: flex;
+    justify-content: space-around;
+}
+
+.header nav {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.header ul {
+    width: 100%;
+    padding: 0;
+    list-style: none;
+}
+
+.header a {
+    text-decoration: none;
+    color: black;
+    /* font-weight: bold;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+}

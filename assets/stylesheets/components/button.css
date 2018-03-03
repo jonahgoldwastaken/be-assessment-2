@@ -1,0 +1,44 @@
+.btn {
+    padding: 0.4rem 1rem;
+    border-radius: 0.4em;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn--pink {
+    color: white;
+    background: var(--pink);
+}
+
+.btn--blue {
+    color: white;
+    background: var(--blue);
+}
+
+.btn--large {
+    font-size: 1.25em;
+    padding: 0.6em 1.5em;
+}
+
+.btn--center {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-group .btn {
+    flex: 1;
+    border-radius: 0;
+}
+
+.btn-group .btn:first-child {
+    border-radius: .4em 0 0 .4em;
+}
+
+.btn-group .btn:last-child {
+    border-radius: 0 .4em .4em 0;
+}
