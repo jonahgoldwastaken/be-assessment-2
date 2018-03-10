@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="/assets/stylesheets/app.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header header--home">
         <nav>
             <ul>
-                <li><a href="./profile.html">Profiel</a></li>
-                <li><a href="./index.html">Home</a></li>
-                <li><a href="#">Berichten</a></li>
+                <li><a href="./profile.html"><i class="far fa-user-circle"></i></a></li>
+                <li><a href="./index.html"><i class="far fa-thumbs-up"></i></a></li>
+                <li><a href="#"><i class="fas fa-comment"></i></a></li>
+
             </ul>
         </nav>
     </header>
@@ -20,11 +21,23 @@
         <header>
             <h1 class="header__heading">Matches</h1>
         </header>
-        <ul class="list--flex">
-            <li><img src="" alt="Profielfoto account"></li>
-            <li><img src="" alt="Profielfoto account"></li>
-            <li><img src="" alt="Profielfoto account"></li>
-            <li><img src="" alt="Profielfoto account"></li>
+        <ul class="matches">
+            <li class="matches__match">
+                <img src="/assets/images/profile-7.jpg" alt="Profielfoto account">
+                Maria
+            </li>
+            <li class="matches__match">
+                <img src="/assets/images/profile-8.jpg" alt="Profielfoto account">
+                Jordan
+            </li>
+            <li class="matches__match">
+                <img src="/assets/images/profile-2.jpg" alt="Profielfoto account">
+                Irene
+            </li>
+            <li class="matches__match">
+                <img src="/assets/images/profile-6.jpg" alt="Profielfoto account">
+                Loraine
+            </li>
         </ul>
     </section>
     <section>
@@ -33,16 +46,16 @@
         </header>
         <ul>
             <li>
-                <a class="chat" href="./chat.html">
-                    <img class="chat__avatar" src="" alt="Profielfoto James">
-                    <h2 class="chat__user">James Morisson</h2>
+                <a class="chat chat--first" href="./chat.html">
+                    <img class="chat__avatar" src="/assets/images/profile-1.jpg" alt="Profielfoto James">
+                    <h2 class="chat__user">Daniëlle Schinkels</h2>
                     <p class="chat__message">Hoe gaat het met jou?</p>
                     <time class="chat__timestamp" datetime="2017-03-01T16:49">16:49</time>
                 </a>
             </li>
             <li>
-                <a href="./chat.html" class="chat chat--last">
-                    <img class="chat__avatar" src="" alt="Profielfoto Hanoj">
+                <a href="./chat.html" class="chat">
+                    <img class="chat__avatar" src="/assets/images/profile-5.jpg" alt="Profielfoto Hanoj">
                     <h2 class="chat__user">Hanoj Srejiem</h2>
                     <p class="chat__message">Jij: Tot dan! 😊</p>
                     <time class="chat__timestamp" datetime="2017-02-28T12:04">wo.</time>

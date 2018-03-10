@@ -4,10 +4,6 @@
     margin-top: 1rem;
 }
 
-.list--flex {
-    display: flex;
-}
-
 .list__item {
     text-align: center;
     font-size: 1.1em;

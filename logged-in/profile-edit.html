@@ -8,26 +8,26 @@
     <link rel="stylesheet" href="/assets/stylesheets/app.css">
 </head>
 <body>
-    <form class="header--fixed" action="./profile.html">
+    <form action="./profile.html">
         <header class="header">
             <a href="./profile.html">Annuleren</a>
             <h1 class="header__chat-heading">Profiel Opzetten</h1>
             <button type="submit" class="submit-button">Opslaan</button>
         </header>
         <main class="container">
-            <label class="form-group--image">
-                Bewerken
+            <label class="form-group--image form-group--image--filled">
+                Profielfoto aanpassen
                 <input autocomplete="photo" type="file" name="profile-image" accept="image/*">
             </label>
             <fieldset class="fieldset">
                 <legend class="fieldset__legend">Jouw gegevens</legend>
                 <label class="form-group">
                     Voornaam
-                    <input autocomplete="given-name" class="form-group__input" type="text" name="first-name" value="Jonah" required>
+                    <input autocomplete="given-name" class="form-group__input" type="text" name="first-name" value="Michael" required>
                 </label>
                 <label class="form-group">
                     Achternaam
-                    <input autocomplete="family-name" class="form-group__input" type="text" name="last-name" value="Meijers" required>
+                    <input autocomplete="family-name" class="form-group__input" type="text" name="last-name" value="Jorgan" required>
                 </label>
                 <div class="form-combine">
                     <label class="form-group form-group--age">
@@ -36,7 +36,7 @@
                     </label>
                     <label class="form-group form-group--location">
                         Woonplaats
-                        <input autocomplete="address-level2" class="form-group__input" type="text" value="Alkmaar" name="residence">
+                        <input autocomplete="address-level2" class="form-group__input" type="text" value="Castricum" name="residence">
                     </label>
                 </div>
             </fieldset>
@@ -44,7 +44,7 @@
                 <legend class="fieldset__legend">Sexuele voorkeur</legend>
                 <div class="form-combine">
                     <label class="form-group form-group--checkbox">
-                        <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="man">
+                        <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="man" checked>
                         Mannen
                     </label>
                     <label class="form-group form-group--checkbox">
@@ -54,7 +54,7 @@
                 </div>
             </fieldset>
             <fieldset class="fieldset">
-                <legend class="fieldset__legend"><a href="./hobby-selector.html">Hobbies <i class="fa fa-caret-right"></i></a></legend>
+                <legend class="fieldset__legend fieldset__legend--bb"><a href="./hobby-selector.html">Hobbies <i class="fa fa-caret-right"></i></a></legend>
                 <ul class="selected-hobbies">
                     <li class="selected-hobbies__hobby">Breien <button type="button">X</button></li>
                     <li class="selected-hobbies__hobby">Filmen <button type="button">X</button></li>

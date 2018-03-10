@@ -4,7 +4,7 @@
     margin-bottom: 2em;
     padding: 1em;
     position: static;
-    top: 0;
+    top: 0px;
 }
 
 .header,
@@ -12,6 +12,7 @@
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: repeat(3, 1fr);
+    align-items: center;
 }
 
 .header :nth-child(2),
@@ -24,6 +25,10 @@
 .header :nth-child(3) *,
 .header ul :nth-child(3) * {
     text-align: right;
+}
+
+.header--home {
+    padding: 1em 2em;
 }
 
 .header * {
@@ -51,6 +56,15 @@
     font-weight: 900;
 }
 
+.header li a {
+    font-size: 1.4rem;
+}
+
+.header li a i {
+    font-size: inherit;
+    width: 1em;
+}
+
 .header > a {
     display: flex;
     justify-content: flex-start;
@@ -66,12 +80,29 @@
 }
 
 .header__chat-heading {
+    position: relative;
     font-size: 1rem;
+}
+
+.header__chat-heading img {
+    position: absolute;
+    top: -.4rem;
+    left: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.header__cheat-heading--centre {
+    grid-column: 1 / span 3;
+    text-align: center;
 }
 
 .header__heading {
     margin-top: 1em;
     margin-bottom: 0.3em;
+    text-decoration: underline;
 }
 
 .header__heading--underline {

@@ -4,19 +4,20 @@
     grid-template-columns: 4rem repeat(2, 1fr);
     grid-column-gap: 0.6rem;
     padding: 1rem;
-    border-top: 1px solid darkgrey;
+    border-top: 1px solid black;
     color: black;
     text-decoration: none;
 }
 
-.chat--last {
-    border-bottom: 1px solid darkgrey;    
+.chat--first {
+    border-top: 0;
 }
 
 .chat__avatar {
     grid-row: 1 / span 2;
     width: 4em;
     height: 4em;
+    object-fit: cover;
     align-self: center;
     justify-self: start;
     border-radius: 50%;
@@ -105,4 +106,25 @@
 .message-form__submit:focus {
     outline: none;
     background: var(--pink);
+}
+
+.matches {
+    display: flex;
+    margin-top: 1rem;
+}
+
+.matches__match {
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-weight: 900;
+    font-size: 0.8rem;
+}
+
+.matches__match img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    margin-bottom: 0.3rem;
 }

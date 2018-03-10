@@ -10,6 +10,11 @@
     bottom: 2rem;
 }
 
+.absolute--centre {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 .centre-content {
     display: flex;
     justify-content: center;
