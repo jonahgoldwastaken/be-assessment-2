@@ -1,0 +1,27 @@
+.absolute {
+    position: absolute;
+}
+
+.static {
+    position: static;
+}
+
+.absolute--bottom {
+    bottom: 2rem;
+}
+
+.centre-content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.right-content {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.container .centre-content, .container .right-content {
+    width: calc(100% - 2.5rem);
+}

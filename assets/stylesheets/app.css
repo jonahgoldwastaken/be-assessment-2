@@ -1,8 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i|Raleway:500,600,700,800,900');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i|Raleway:500,600,700,800,900');
+@import url('https://use.fontawesome.com/releases/v5.0.8/css/all.css');
 @import './base/vars.css';
 @import './base/init.css';
 
 /* LAYOUT */
+@import './layout/positioning.css';
 @import './layout/header.css';
 @import './layout/main.css';
 @import './layout/footer.css';
@@ -13,3 +15,7 @@
 @import './components/list.css';
 @import './components/overlay.css';
 @import './components/card.css';
+@import './components/chat.css';
+@import './components/profile.css';
+@import './components/form.css';
+@import './components/hobbies.css';

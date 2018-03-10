@@ -2,11 +2,10 @@
     position: absolute;
     top: 33%;
     transform: translateY(-33%);
-    width: calc(100% - .5rem);
+    width: 100%;
     box-shadow: var(--box-shadow);
     padding: 1rem;
     border-radius: 0.4em;
-    margin: 0.25em;
     overflow: hidden;
 }
 
@@ -75,7 +74,7 @@
 }
 
 .card__gallery h3 {
-    font-size: 5rem;
+    font-size: 4rem;
     font-weight: bold;
 }
 
@@ -84,4 +83,8 @@
     top: 1rem;
     left: 1rem;
     font-size: 1.2rem;
+}
+
+.container .card {
+    width: calc(100% - 2.5rem);
 }

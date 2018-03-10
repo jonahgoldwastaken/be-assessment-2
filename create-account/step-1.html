@@ -5,27 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Account aanmaken - HDate</title>
+    <link rel="stylesheet" href="/assets/stylesheets/app.css">
 </head>
 <body>
-    <header>
-        <a href="/logged-out/profile.html">< Annuleren</a>
-        <h1>Registreren</h1>
+    <header class="header">
+        <a href="/logged-out/profile.html"><i class="fa fa-caret-left"></i> Annuleren</a>
+        <h1 class="header__chat-heading">Registreren</h1>
     </header>
-    <main>
+    <main class="container">
         <form action="./step-2.html">
-            <label>
+            <label class="form-group">
                 E-mailadres
-                <input type="email">
+                <input autocomplete="email" class="form-group__input" type="email">
             </label>
-            <label>
+            <label class="form-group">
                 Wachtwoord
-                <input type="password" name="password">
+                <input autocomplete="new-password" class="form-group__input" type="password" name="password">
             </label>
-            <label>
+            <label class="form-group">
                 Wachtwoord herhalen
-                <input type="password" name="password-repeat">
+                <input autocomplete="new-password" class="form-group__input" type="password" name="password-repeat">
             </label>
-            <input type="submit" value="Doorgaan >">
+            <button class="submit-button absolute absolute--bottom right-content" type="submit">Doorgaan <i class="fa fa-caret-right"></i></button>
         </form>
     </main>
 </body>

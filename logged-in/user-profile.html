@@ -5,36 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Daniëlle - HDate</title>
+    <link rel="stylesheet" href="/assets/stylesheets/app.css">
 </head>
 <body>
-    <header>
-        <a href="./chat.html"><</a>
-        <h1>Daniëlle</h1>
-        <button>Meer</button>
+    <header class="header">
+        <a href="./chat.html"><i class="fas fa-caret-left"></i></a>
+        <h1 class="header__chat-heading">Daniëlle</h1>
+        <i class="fas fa-ellipsis-v"></i>
     </header>
-    <main>
-        <h1>Daniëlle Schinkels</h1>
-        <h2>21 jaar</h2>
-        <h2>Heiloo</h2>
+    <main class="container">
+        <section class="user-info">
+            <img class="user-info__avatar" src="" alt="Profielfoto Daniëlle">
+            <h1 class="user-info__name">Daniëlle Schinkels</h1>
+            <h2 class="user-info__age">21 jaar</h2>
+            <h2 class="user-info__location">Heiloo</h2>
+        </section>
         <section>
-            <h2>Hobbies</h2>
-            <ul>
-                <li>
+            <h2 class="header__heading">Hobbies</h2>
+            <ul class="hobbies-list">
+                <li class="hobbies-list__item">
                     <img src="" alt="Foto van iemand die indiaas kookt.">
                     <h3 title="Hobby">Indiaas</h3>
                     <h4 title="Categorie">Koken</h4>
                 </li>
-                <li>
+                <li class="hobbies-list__item">
                     <img src="" alt="Foto van iemand die filmmuziek maakt.">
                     <h3 title="Hobby">Score</h3>
                     <h4 title="Categorie">Film</h4>
                 </li>
-                <li>
+                <li class="hobbies-list__item">
                     <img src="" alt="Foto van iemand die blogt.">
-                    <h3 title="Hobby">BLoggen</h3>
+                    <h3 title="Hobby">Bloggen</h3>
                     <h4 title="Categorie">Digitaal</h4>
                 </li>
-                <li>
+                <li class="hobbies-list__item">
                     <img src="" alt="Foto van iemand die hardloopt.">
                     <h3 title="Hobby">Hardlopen</h3>
                     <h4 title="Categorie">Buiten</h4>

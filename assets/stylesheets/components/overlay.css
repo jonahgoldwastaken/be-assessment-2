@@ -12,6 +12,8 @@
 }
 
 .overlay--blur ~ * {
+    user-select: none;
+    pointer-events: none;
     -webkit-filter: blur(5px);
     filter: blur(5px);
 }

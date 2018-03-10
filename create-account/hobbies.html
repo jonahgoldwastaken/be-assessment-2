@@ -4,28 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Categorieën - HDate</title>
+    <title>Digitale hobbies - HDate</title>
+    <link rel="stylesheet" href="/assets/stylesheets/app.css">
 </head>
 <body>
-    <header>
-        <a href="./hobby-selector.html"><</a>
-        <h1>Jouw hobbies</h1>
-        <button>Zoeken</button>
+    <header class="header">
+        <a href="./hobby-selector.html"><i class="fas fa-caret-left"></i></a>
+        <h1 class="header__chat-heading">Kies je hobbies</h1>
+        <button><i class="fas fa-search"></i></button>
     </header>
-    <main>
-        <h2>Digitaal</h2>
-        <ul>
-            <li><button>Programmeren</button></li>
-            <li><button>Conferenties</button></li>
-            <li><button>Games maken</button></li>
-            <li><button>Open source</button></li>
-            <li><button>Bloggen</button></li>
-            <li><button>YouTuben</button></li>
-            <li><button>Artikels schrijven</button></li>
-            <li><button>Gedichten schrijven</button></li>
+    <main class="container">
+        <h2 class="header__heading header__heading--underline">Digitaal</h2>
+        <ul class="hobbies-list">
+            <li class="hobbies-list__item"><h3>Programmeren</h3></li>
+            <li class="hobbies-list__item"><h3>Conferenties</h3></li>
+            <li class="hobbies-list__item"><h3>Games maken</h3></li>
+            <li class="hobbies-list__item"><h3>Open source</h3></li>
+            <li class="hobbies-list__item"><h3>Bloggen</h3></li>
+            <li class="hobbies-list__item"><h3>YouTuben</h3></li>
+            <li class="hobbies-list__item"><h3>Artikels schrijven</h3></li>
+            <li class="hobbies-list__item"><h3>Gedichten schrijven</h3></li>
         </ul>
-        <footer>
-            <p>Geselecteerd: Breien, filmen, montage en koken.</p>
+        <footer class="selected-hobbies-footer">
+            <p class="selected-hobbies-footer__prefix">Geselecteerd:</p>
+            <p class="selected-hobbies-footer__selected text--bold">Varen, schoonmaken, motorcross en vissen.</p>
         </footer>
     </main>
 </body>

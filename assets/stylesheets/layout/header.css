@@ -1,18 +1,39 @@
 .header {
     box-shadow: var(--box-shadow);
+    background: white;
     margin-bottom: 2em;
     padding: 1em;
+    position: static;
+    top: 0;
 }
 
 .header,
 .header ul {
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.header :nth-child(2),
+.header ul :nth-child(2) {
+    text-align: center;
+}
+
+.header :nth-child(3),
+.header ul :nth-child(3),
+.header :nth-child(3) *,
+.header ul :nth-child(3) * {
+    text-align: right;
+}
+
+.header * {
+    width: 100%;
 }
 
 .header nav {
     width: 100%;
     margin: 0 auto;
+    grid-column: span 3;
 }
 
 .header ul {
@@ -24,8 +45,35 @@
 .header a {
     text-decoration: none;
     color: black;
-    /* font-weight: bold;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; */
+}
+
+.header a[href="#"] {
+    font-weight: 900;
+}
+
+.header > a {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+}
+
+.header a > i {
+    width: 1rem;
+}
+
+.header .submit-button {
+    font-size: 1rem;
+}
+
+.header__chat-heading {
+    font-size: 1rem;
+}
+
+.header__heading {
+    margin-top: 1em;
+    margin-bottom: 0.3em;
+}
+
+.header__heading--underline {
+    text-decoration: underline;
 }

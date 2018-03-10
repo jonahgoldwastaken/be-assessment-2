@@ -5,45 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profiel instellen - HDate</title>
+    <link rel="stylesheet" href="/assets/stylesheets/app.css">
 </head>
-<body>
-    <form action="/logged-in">
-        <input type="file" name="profile-image">
-        <label>
-            Voornaam
-            <input type="text" name="first-name">
-        </label>
-        <label>
-            Achternaam
-            <input type="text" name="last-name">
-        </label>
-        <label>
-            Leeftijd
-            <input min="18" type="number" name="age">
-        </label>
-        <label>
-            Woonplaats
-            <input type="text" name="residence">
-        </label>
-        <fieldset>
-            <legend>Sexuele voorkeur</legend>
-            <label>
-                Mannen <input type="checkbox" name="sex_pref" value="man">
+<body class="header--fixed">
+    <header class="header">
+        <a href="/logged-out/profile.html">< Annuleren</a>
+        <h1 class="header__chat-heading">Profiel Opzetten</h1>
+    </header>
+    <main class="container">
+        <form action="/logged-in">
+            <label class="form-group--image">
+                Profielfoto Toevoegen
+                <input type="file" name="profile-image">
             </label>
-            <label>
-                Vrouwen <input type="checkbox" name="sex_pref" value="woman">
-            </label>
-        </fieldset>
-        <fieldset>
-            <a href="./hobby-selector.html"><legend>Hobbies</legend> ></a>
-            <ul>
-                <li>Breien <button type="button">X</button></li>
-                <li>Filmen <button type="button">X</button></li>
-                <li>Montage <button type="button">X</button></li>
-                <li>Koken <button type="button">X</button></li>
-            </ul>
-        </fieldset>
-        <input type="submit" value="Afronden >">
-    </form>
+            <fieldset class="fieldset">
+                <legend class="fieldset__legend">Jouw gegevens</legend>
+                <label class="form-group">
+                    Voornaam
+                    <input class="form-group__input" type="text" name="first-name">
+                </label>
+                <label class="form-group">
+                    Achternaam
+                    <input class="form-group__input" type="text" name="last-name">
+                </label>
+                <div class="form-combine">
+                    <label class="form-group form-group--age">
+                        Leeftijd
+                        <input class="form-group__input" min="18" value="18" max="99" type="number" name="age">
+                    </label>
+                    <label class="form-group form-group--location">
+                        Woonplaats
+                        <input class="form-group__input" type="text" name="residence">
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="fieldset">
+                <legend class="fieldset__legend">Sexuele voorkeur</legend>
+                <div class="form-combine">
+                    <label class="form-group form-group--checkbox">
+                        <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="man" checked>
+                        Mannen
+                    </label>
+                    <label class="form-group form-group--checkbox">
+                        <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="woman" checked>
+                        Vrouwen
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="fieldset">
+                <legend class="fieldset__legend"><a href="./hobby-selector.html">Hobbies <i class="fa fa-angle-right"></i></a></legend>
+                <ul class="selected-hobbies">
+                    <li class="selected-hobbies__hobby">Breien <button type="button">X</button></li>
+                    <li class="selected-hobbies__hobby">Filmen <button type="button">X</button></li>
+                    <li class="selected-hobbies__hobby">Montage <button type="button">X</button></li>
+                    <li class="selected-hobbies__hobby">Koken <button type="button">X</button></li>
+                </ul>
+            </fieldset>
+            <button type="submit" class="submit-button right-content static absolute--bottom">Afronden <i class="fa fa-caret-right"></i></button>
+        </form>
+    </main>
 </body>
 </html>

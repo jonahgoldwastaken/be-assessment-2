@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home - HDate</title>
+    <link rel="stylesheet" href="/assets/stylesheets/app.css">
 </head>
 <body>
-    <header>
+    <header class="header">
         <nav>
             <ul>
                 <li><a href="./profile.html">Profiel</a></li>
@@ -16,12 +17,14 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <article>
+    <main class="container">
+        <article class="card">
             <a href="./user-profile.html">
-                <img src="" alt="Profielfoto Daniëlle Schinkels">
-                <h2>Daniëlle Schinkels</h2>
-                <ul>
+                <div class="card__header">
+                    <img src="" alt="Profielfoto Daniëlle Schinkels">
+                    <h2>Daniëlle Schinkels</h2>
+                </div>
+                <ul class="card__gallery">
                     <li>
                         <img src="" alt="Foto van iemand die vist.">
                         <h3 title="Hobby">Vissen</h3>
@@ -31,10 +34,10 @@
             </a>
         </article>
     </main>
-    <footer>
-        <a href="./filter-categories.html">Filter</a>
-        <a href="./home-other-profile.html">Dislike</a>
-        <a href="./home-other-profile.html">Like</a>
+    <footer class="button-footer">
+        <a class="button-footer__button button-footer__button--dislike" href="./home-other-account.html"><i class="fa fa-thumbs-down"></i></a>
+        <a class="button-footer__button" href="./filter-categories.html"><i class="fa fa-filter"></i></a>
+        <a class="button-footer__button button-footer__button--like" href="./home-other-account.html"><i class="fa fa-thumbs-up"></i></a>
     </footer>
 </body>
 </html>
