@@ -140,6 +140,10 @@
 }
 
 .submit-button {
+    -webkit-appearance: none;
+    appearance: none;
+    background: none;
+    border: none;
     margin-left: auto;
     font-size: 1.4rem;
     color: green;
@@ -147,8 +151,9 @@
     align-items: baseline;
 }
 
-.submit-button.static {
-    margin-bottom: 2rem;
+.submit-button:not(.sticky) {
+    margin-top: 1rem;
+    padding-bottom: 2rem;
 }
 
 .submit-button i {

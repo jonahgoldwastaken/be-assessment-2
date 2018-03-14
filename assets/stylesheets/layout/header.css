@@ -3,7 +3,8 @@
     background: white;
     margin-bottom: 2em;
     padding: 1em;
-    position: static;
+    position: -webkit-sticky;
+    position: sticky;
     top: 0px;
 }
 
@@ -58,11 +59,13 @@
 
 .header li a {
     font-size: 1.4rem;
+    line-height: 1em;
 }
 
 .header li a i {
     font-size: inherit;
     width: 1em;
+    line-height: 1em;
 }
 
 .header > a {
@@ -94,7 +97,7 @@
     object-fit: cover;
 }
 
-.header__cheat-heading--centre {
+.header__chat-heading--centre {
     grid-column: 1 / span 3;
     text-align: center;
 }
@@ -107,4 +110,9 @@
 
 .header__heading--underline {
     text-decoration: underline;
+}
+
+.header .submit-button {
+    padding: 0 !important;
+    margin: 0 !important;
 }

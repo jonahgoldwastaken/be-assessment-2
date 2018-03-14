@@ -6,6 +6,11 @@
     position: static;
 }
 
+.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+}
+
 .absolute--bottom {
     bottom: 2rem;
 }
