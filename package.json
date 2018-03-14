@@ -1,0 +1,30 @@
+{
+  "name": "hdate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theonejonahgold/hdate.git"
+  },
+  "keywords": [],
+  "author": "Jonah Meijers <jonahmeijers97@gmail.com> (https://jonahmeijers.nl)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theonejonahgold/hdate/issues"
+  },
+  "homepage": "https://github.com/theonejonahgold/hdate#readme",
+  "devDependencies": {
+    "xo": "^0.20.3"
+  },
+  "xo": {
+    "space": 4
+  },
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  }
+}
