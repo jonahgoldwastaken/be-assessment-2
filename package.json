@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "xo --fix"
   },
   "repository": {
     "type": "git",
@@ -21,7 +23,8 @@
     "xo": "^0.20.3"
   },
   "xo": {
-    "space": 4
+    "space": 4,
+    "semicolon": false
   },
   "dependencies": {
     "ejs": "^2.5.7",
