@@ -122,6 +122,11 @@
     font-size: 0.8rem;
 }
 
+.matches__match a {
+    color: black;
+    text-decoration: none;
+}
+
 .matches__match img {
     width: 4rem;
     height: 4rem;
