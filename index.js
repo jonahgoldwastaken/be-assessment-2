@@ -14,5 +14,5 @@ module.exports = app
     .use('/account', account)
     .use('/hobbies', hobbyCategories)
     .use('/messages', messages)
-    .get('/', (req, res) => res.render('onboarding.ejs'))
+    .get('/', (req, res) => res.render('onboarding'))
     .listen(1337)

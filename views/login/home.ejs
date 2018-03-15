@@ -8,15 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/app.css">
 </head>
 <body>
-    <header class="header header--home">
-        <nav>
-            <ul>
-                <li><a href="/account"><i class="far fa-user-circle"></i></a></li>
-                <li><a href="#"><i class="fas fa-thumbs-up"></i></a></li>
-                <li><a href="/messages"><i class="far fa-comment"></i></a></li>
-            </ul>
-        </nav>
-    </header>
+    <%- include('../layouts/homeHeader', { url: 'home' }) %>
     <main class="container">
         <article class="card">
             <a href="/account/user">

@@ -7,16 +7,7 @@
     <link rel="stylesheet" href="/stylesheets/app.css">
 </head>
 <body>
-    <header class="header header--home">
-        <nav>
-            <ul>
-                <li><a href="/account"><i class="far fa-user-circle"></i></a></li>
-                <li><a href="/home"><i class="far fa-thumbs-up"></i></a></li>
-                <li><a href="#"><i class="fas fa-comment"></i></a></li>
-
-            </ul>
-        </nav>
-    </header>
+    <%- include('../layouts/homeHeader', { url: 'messages' })
     <section class="container">
         <header>
             <h1 class="header__heading">Matches</h1>
