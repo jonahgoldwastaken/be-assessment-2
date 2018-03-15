@@ -21,7 +21,7 @@
 }
 
 .form-group--image--filled {
-    background: url('/assets/images/profile-4.jpg') no-repeat center/cover;
+    background: url('/images/profile-4.jpg') no-repeat center/cover;
 }
 
 .form-group--image input {
