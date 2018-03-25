@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
+    "prestart": "mongod --dbpath db --fork --logpath db/log/mongo.log",
     "start": "node .",
+    "prestop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
+    "stop": "rm db/log/*",
     "watch": "nodemon .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "xo --fix"
+    "lint": "eslint *.js --fix"
   },
   "repository": {
     "type": "git",
@@ -21,15 +24,13 @@
   },
   "homepage": "https://github.com/theonejonahgold/hdate#readme",
   "devDependencies": {
-    "nodemon": "^1.17.2",
-    "xo": "^0.20.3"
-  },
-  "xo": {
-    "space": 4,
-    "semicolon": false
+    "eslint": "^4.19.1",
+    "nodemon": "^1.17.2"
   },
   "dependencies": {
+    "dotenv": "^5.0.1",
     "ejs": "^2.5.7",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "mongodb": "^3.0.5"
   }
 }

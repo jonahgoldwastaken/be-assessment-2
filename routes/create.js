@@ -1,7 +1,20 @@
 /* eslint-disable new-cap */
 const router = require('express').Router()
 
+const createAccount = (req, res) => {
+    const step = req.params.step
+    switch (step) {
+        case 3:
+            res.render('create-account/step-3')
+            break
+        case 2:
+            res.render('create-account/step-2')
+            break
+        default:
+            res.render('create-account/step-1')
+            break
+    }
+}
+
 module.exports = router
-    .get('/step-1', (req, res) => res.render('create-account/step-1'))
-    .get('/step-2', (req, res) => res.render('create-account/step-2'))
-    .get('/step-2-selected', (req, res) => res.render('create-account/step-2-selected'))
+    .get('/:step', createAccount)

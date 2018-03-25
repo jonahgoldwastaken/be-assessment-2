@@ -1,0 +1,7 @@
+/node_modules
+/db
+/.env
+/.gitignore
+/yarn.lock
+/package.json
+/views/*
