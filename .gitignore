@@ -5,3 +5,4 @@ mongo.log.*
 .env
 yarn-error.log
 package-lock.json
+assets

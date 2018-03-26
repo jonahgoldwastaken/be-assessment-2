@@ -4,4 +4,5 @@
 /.gitignore
 /yarn.lock
 /package.json
-/views/*
+/views
+/assets
