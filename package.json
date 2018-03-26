@@ -8,7 +8,7 @@
     "start": "node .",
     "stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
     "poststop": "rm db/log/*",
-    "prewatch": "mongod --dbpath db --fork --logpath db/log/mongo.log",
+    "prewatch": "mongod --dbpath db --fork --logpath db/log/mongo.log && yarn build",
     "watch": "nodemon .",
     "build": "webpack-cli --config webpack.config.js --hide-modules",
     "clean-up": "rm -r assets && rm db/log/*",
