@@ -1,30 +1,30 @@
 <%- include('../layouts/head.ejs', { title: 'Instellingen - HDate' }) %>
-<body>
-    <header class="header">
-        <a href="/account"><i class="fa fa-caret-left"></i></a>
-        <h1 class="header__chat-heading">Instellingen</h1>
-    </header>
-    <main class="container">
-        <form action="/account">
-            <fieldset class="fieldset">
-                <legend class="fieldset__legend">Meldingen</legend>
-                <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="notifs_chats">
-                    Chatberichten
-                </label>
-                <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="notifs_likes">
-                    Nieuwe likes
-                </label>
-                <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="notifs_matches">
-                    Nieuwe matches
-                </label>
-            </fieldset>
-        </form>
-    </main>
-    <footer class="absolute absolute--bottom centre-content">
-        <button class="btn btn--large btn--red">Account verwijderen</button>
-    </footer>
-</body>
-</html>
+
+<header class="header">
+    <a href="/account"><i class="fa fa-caret-left"></i></a>
+    <h1 class="header__chat-heading">Instellingen</h1>
+</header>
+<main class="container">
+    <form action="/account">
+        <fieldset class="fieldset">
+            <legend class="fieldset__legend">Meldingen</legend>
+            <label class="form-group form-group--checkbox">
+                <input class="form-group__checkbox fa" type="checkbox" name="notifs_chats">
+                Chatberichten
+            </label>
+            <label class="form-group form-group--checkbox">
+                <input class="form-group__checkbox fa" type="checkbox" name="notifs_likes">
+                Nieuwe likes
+            </label>
+            <label class="form-group form-group--checkbox">
+                <input class="form-group__checkbox fa" type="checkbox" name="notifs_matches">
+                Nieuwe matches
+            </label>
+        </fieldset>
+    </form>
+</main>
+<footer class="absolute absolute--bottom centre-content">
+    <button class="btn btn--large btn--red">Account verwijderen</button>
+</footer>
+
+<%- include('../layouts/tail.ejs') %>

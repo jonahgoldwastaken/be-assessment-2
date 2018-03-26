@@ -1,54 +1,54 @@
 <%- include('../../layouts/head.ejs', { title: 'Profiel instellen - HDate' })
-<body class="header--fixed">
-    <header class="header">
-        <a href="/logged-out/profile.html"><i class="fa fa-caret-left"></i> Annuleren</a>
-        <h1 class="header__chat-heading">Profiel Opzetten</h1>
-    </header>
-    <main class="container">
-        <form action="/home">
-            <label class="form-group--image">
-                Profielfoto Toevoegen
-                <input autocomplete="photo" type="file" name="profile-image" accept="image/*">
+
+<header class="header">
+    <a href="/logged-out/profile.html"><i class="fa fa-caret-left"></i> Annuleren</a>
+    <h1 class="header__chat-heading">Profiel Opzetten</h1>
+</header>
+<main class="container">
+    <form action="/home">
+        <label class="form-group--image">
+            Profielfoto Toevoegen
+            <input autocomplete="photo" type="file" name="profile-image" accept="image/*">
+        </label>
+        <fieldset class="fieldset">
+            <legend class="fieldset__legend">Jouw gegevens</legend>
+            <label class="form-group">
+                Voornaam
+                <input autocomplete="given-name" class="form-group__input" type="text" name="first-name" required>
             </label>
-            <fieldset class="fieldset">
-                <legend class="fieldset__legend">Jouw gegevens</legend>
-                <label class="form-group">
-                    Voornaam
-                    <input autocomplete="given-name" class="form-group__input" type="text" name="first-name" required>
+            <label class="form-group">
+                Achternaam
+                <input autocomplete="family-name" class="form-group__input" type="text" name="last-name" required>
+            </label>
+            <div class="form-combine">
+                <label class="form-group form-group--age">
+                    Leeftijd
+                    <input class="form-group__input" min="18" value="18" max="99" type="number" name="age" required>
                 </label>
-                <label class="form-group">
-                    Achternaam
-                    <input autocomplete="family-name" class="form-group__input" type="text" name="last-name" required>
+                <label class="form-group form-group--location">
+                    Woonplaats
+                    <input autocomplete="address-level2" class="form-group__input" type="text" name="residence">
                 </label>
-                <div class="form-combine">
-                    <label class="form-group form-group--age">
-                        Leeftijd
-                        <input class="form-group__input" min="18" value="18" max="99" type="number" name="age" required>
-                    </label>
-                    <label class="form-group form-group--location">
-                        Woonplaats
-                        <input autocomplete="address-level2" class="form-group__input" type="text" name="residence">
-                    </label>
-                </div>
-            </fieldset>
-            <fieldset class="fieldset">
-                <legend class="fieldset__legend">Sexuele voorkeur</legend>
-                <div class="form-combine">
-                    <label class="form-group form-group--checkbox">
-                        <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="man">
-                        Mannen
-                    </label>
-                    <label class="form-group form-group--checkbox">
-                        <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="woman">
-                        Vrouwen
-                    </label>
-                </div>
-            </fieldset>
-            <fieldset class="fieldset">
-                <legend class="fieldset__legend"><a href="/hobbies">Hobbies <i class="fa fa-angle-right"></i></a></legend>
-            </fieldset>
-            <button type="submit" class="submit-button right-content">Afronden <i class="fa fa-caret-right"></i></button>
-        </form>
-    </main>
-</body>
-</html>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset__legend">Sexuele voorkeur</legend>
+            <div class="form-combine">
+                <label class="form-group form-group--checkbox">
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="man">
+                    Mannen
+                </label>
+                <label class="form-group form-group--checkbox">
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="woman">
+                    Vrouwen
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset__legend"><a href="/hobbies">Hobbies <i class="fa fa-angle-right"></i></a></legend>
+        </fieldset>
+        <button type="submit" class="submit-button right-content">Afronden <i class="fa fa-caret-right"></i></button>
+    </form>
+</main>
+
+<%- include('../../layouts/tail.ejs') %>

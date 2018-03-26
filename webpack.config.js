@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 require('dotenv').config()
 
 module.exports = {
-    entry: './src/app.js',
+    entry: './src/bundler.js',
     output: {
         path: path.resolve(__dirname, 'assets'),
         filename: 'app.bundle.js',
