@@ -1,0 +1,59 @@
+<%- include('../layouts/head.ejs', title: { title: 'Berichten - HDate' }) %>
+
+<%- include('../layouts/homeHeader', { url: 'messages' })
+<section class="container">
+    <header>
+        <h1 class="header__heading">Matches</h1>
+    </header>
+    <ul class="matches">
+        <li class="matches__match">
+            <a href="/account/user">
+                <img src="/images/profile-7.jpg" alt="Profielfoto account">
+                Maria
+            </a>
+        </li>
+        <li class="matches__match">
+            <a href="/account/user">
+                <img src="/images/profile-8.jpg" alt="Profielfoto account">
+                Jordan
+            </a>
+        </li>
+        <li class="matches__match">
+            <a href="/account/user">
+                <img src="/images/profile-2.jpg" alt="Profielfoto account">
+                Irene
+            </a>
+        </li>
+        <li class="matches__match">
+            <a href="/account/user">
+                <img src="/images/profile-6.jpg" alt="Profielfoto account">
+                Loraine
+            </a>
+        </li>
+    </ul>
+</section>
+<section>
+    <header class="container">
+        <h1 class="header__heading">Chats</h1>
+    </header>
+    <ul>
+        <li>
+            <a class="chat chat--first" href="/messages/chat">
+                <img class="chat__avatar" src="/images/profile-1.jpg" alt="Profielfoto James">
+                <h2 class="chat__user">Daniëlle Schinkels</h2>
+                <p class="chat__message">Hoe gaat het met jou?</p>
+                <time class="chat__timestamp" datetime="2017-03-01T16:49">16:49</time>
+            </a>
+        </li>
+        <li>
+            <a href="/messages/chat" class="chat">
+                <img class="chat__avatar" src="/images/profile-5.jpg" alt="Profielfoto Hanoj">
+                <h2 class="chat__user">Hanoj Srejiem</h2>
+                <p class="chat__message">Jij: Tot dan! 😊</p>
+                <time class="chat__timestamp" datetime="2017-02-28T12:04">wo.</time>
+            </a>
+        </li>
+    </ul>
+</section>
+
+<%- include('../layouts/tail.ejs') %>

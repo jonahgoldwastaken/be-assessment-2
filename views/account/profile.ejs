@@ -1,0 +1,40 @@
+<%- include('../layouts/head.ejs', { title: 'Mijn profiel - HDate' }) %>
+
+<%- include('../layouts/homeHeader', { url: 'profile' }) %>
+<main class="container">
+    <section class="user-info">
+        <img class="user-info__avatar" src="/images/profile-4.jpg" alt="Profielfoto gebruiker">
+        <h1 class="user-info__name">Michael Jorgan</h1>
+        <h2 class="user-info__age">20 jaar</h2>
+        <h2 class="user-info__location">Castricum</h2>
+    </section>
+    <section>
+        <h2 class="header__heading">Hobbies</h2>
+        <ul class="hobbies-list">
+            <li class="hobbies-list__item">
+                <img src="/images/knitting.jpg" alt="Foto van iemand die breidt.">
+                <h3 title="Hobby">Breien</h3>
+                <h4 title="Categorie">Handwerk</h4>
+            </li>
+            <li class="hobbies-list__item">
+                <img src="/images/filming.jpg" alt="Foto van iemand die filmt.">
+                <h3 title="Hobby">Filmen</h3>
+                <h4 title="Categorie">Film</h4>
+            </li>
+            <li class="hobbies-list__item">
+                <img src="/images/editing.jpg" alt="Foto van iemand die monteert.">
+                <h3 title="Hobby">Montage</h3>
+                <h4 title="Categorie">Film</h4>
+            </li>
+            <li class="hobbies-list__more">
+                <a href="#">En 1 meer...</a>
+            </li>
+        </ul>
+    </section>
+</main>
+<footer class="container btn-group">
+    <a class="btn btn--blue" href="/account/edit">Profiel bewerken</a>
+    <a class="btn btn--pink" href="/account/settings">Instellingen</a>
+</footer>
+
+<%- include('../layouts/tail.ejs') %>

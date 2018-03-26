@@ -1,0 +1,39 @@
+<header class="header header--home">
+    <nav>
+        <ul>
+            <li>
+                <% if (url == 'profile') { %>
+                    <a href="#">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                <% } else { %>
+                    <a href="/account">
+                        <i class="far fa-user-circle"></i>
+                    </a>
+                <% } %>
+            </li>
+            <li>
+                <% if (url == 'home') { %>
+                    <a href="#">
+                        <i class="fas fa-thumbs-up"></i>
+                    </a>
+                <% } else { %>
+                    <a href="/home">
+                        <i class="far fa-thumbs-up"></i>
+                    </a>
+                <% } %>
+            </li>
+            <li>
+                <% if (url == 'messages') { %>
+                    <a href="#">
+                        <i class="fas fa-comment"></i>
+                    </a>
+                <% } else { %>
+                    <a href="/messages">
+                        <i class="far fa-comment"></i>
+                    </a>
+                <% } %>
+            </li>
+        </ul>
+    </nav>
+</header>

@@ -1,0 +1,60 @@
+<%- include('../layouts/head.ejs', { title: 'Profiel bewerken - HDate' })>
+
+<form action="/account">
+    <header class="header">
+        <a href="/account">Annuleren</a>
+        <h1 class="header__chat-heading">Profiel Bewerken</h1>
+        <button type="submit" class="submit-button">Opslaan</button>
+    </header>
+    <main class="container">
+        <label class="form-group--image form-group--image--filled">
+            Profielfoto aanpassen
+            <input autocomplete="photo" type="file" name="profile-image" accept="image/*">
+        </label>
+        <fieldset class="fieldset">
+            <legend class="fieldset__legend">Jouw gegevens</legend>
+            <label class="form-group">
+                Voornaam
+                <input autocomplete="given-name" class="form-group__input" type="text" name="first-name" value="Michael" required>
+            </label>
+            <label class="form-group">
+                Achternaam
+                <input autocomplete="family-name" class="form-group__input" type="text" name="last-name" value="Jorgan" required>
+            </label>
+            <div class="form-combine">
+                <label class="form-group form-group--age">
+                    Leeftijd
+                    <input class="form-group__input" min="18" value="20" max="99" type="number" name="age" required>
+                </label>
+                <label class="form-group form-group--location">
+                    Woonplaats
+                    <input autocomplete="address-level2" class="form-group__input" type="text" value="Castricum" name="residence">
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset__legend">Sexuele voorkeur</legend>
+            <div class="form-combine">
+                <label class="form-group form-group--checkbox">
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="man" checked>
+                    Mannen
+                </label>
+                <label class="form-group form-group--checkbox">
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="woman" checked>
+                    Vrouwen
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset__legend fieldset__legend--bb"><a href="/hobbies">Hobbies <i class="fa fa-caret-right"></i></a></legend>
+            <ul class="selected-hobbies">
+                <li class="selected-hobbies__hobby">Breien <button type="button">X</button></li>
+                <li class="selected-hobbies__hobby">Filmen <button type="button">X</button></li>
+                <li class="selected-hobbies__hobby">Montage <button type="button">X</button></li>
+                <li class="selected-hobbies__hobby">Koken <button type="button">X</button></li>
+            </ul>
+        </fieldset>
+    </main>
+</form>
+
+<%- include('../layouts/tail.ejs') %>

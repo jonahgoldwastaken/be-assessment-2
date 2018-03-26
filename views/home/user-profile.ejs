@@ -1,0 +1,42 @@
+<%- include('../layouts/head.ejs', { title: 'Daniëlle - HDate' }) %>
+
+<header class="header">
+    <a href="/messages/chat"><i class="fas fa-caret-left"></i></a>
+    <h1 class="header__chat-heading">Daniëlle</h1>
+    <i class="fas fa-ellipsis-v"></i>
+</header>
+<main class="container">
+    <section class="user-info">
+        <img class="user-info__avatar" src="/images/profile-1.jpg" alt="Profielfoto Daniëlle">
+        <h1 class="user-info__name">Daniëlle Schinkels</h1>
+        <h2 class="user-info__age">21 jaar</h2>
+        <h3 class="user-info__location">Heiloo</h3>
+    </section>
+    <section>
+        <h2 class="header__heading">Hobbies</h2>
+        <ul class="hobbies-list">
+            <li class="hobbies-list__item">
+                <img src="/images/indian.jpg" alt="Foto van iemand die indiaas kookt.">
+                <h3 title="Hobby">Indiaas</h3>
+                <h4 title="Categorie">Koken</h4>
+            </li>
+            <li class="hobbies-list__item">
+                <img src="/images/score.jpg" alt="Close-up van bladmuziek.">
+                <h3 title="Hobby">Score</h3>
+                <h4 title="Categorie">Film</h4>
+            </li>
+            <li class="hobbies-list__item">
+                <img src="/images/blogging.jpg" alt="Foto van iemand die blogt.">
+                <h3 title="Hobby">Bloggen</h3>
+                <h4 title="Categorie">Digitaal</h4>
+            </li>
+            <li class="hobbies-list__item">
+                <img src="/images/running.jpg" alt="Foto van iemand die hardloopt.">
+                <h3 title="Hobby">Hardlopen</h3>
+                <h4 title="Categorie">Buiten</h4>
+            </li>
+        </ul>
+    </section>
+</main>
+
+<%- include('../layouts/tail.ejs') %>
