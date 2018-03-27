@@ -3,7 +3,7 @@ set -x
 
 export NODE_ENV=production
 cd ~/ && \
-tar zxvf package.tgz -C . && \
+tar zxf package.tgz -C . && \
 cd hdate && \
 mkdir -p db/log && \
 npm rebuild && \
