@@ -13,7 +13,7 @@
         "browser": true,
         "node": true,
         "es6": true,
-        "commonjs": true,
+        "commonjs": true
     },
     "rules": {
         "no-console": [
@@ -43,6 +43,14 @@
                 "functions": "ignore"
             }
         ],
-        "curly": ["error", "multi-or-nest", "consistent"]
+        "curly": ["error", "multi-or-nest", "consistent"],
+        "space-before-function-paren": [
+            "warn",
+            {
+                "anonymous": "always",
+                "named": "always",
+                "asyncArrow": "always"
+            }
+        ]
     }
 }

@@ -1,24 +1,22 @@
 <%- include('../../layouts/head.ejs', { title: 'Account aanmaken - HDate' }) %>
 
 <header class="header">
-    <a href="/account/advantages"><i class="fa fa-caret-left"></i> Annuleren</a>
+    <a href="/"><i class="fa fa-caret-left"></i> Annuleren</a>
     <h1 class="header__chat-heading">Registreren</h1>
 </header>
 <main class="container">
-    <form action="/account/create/step-2">
+    <form action="/account/create/1" method="POST">
         <label class="form-group">
             E-mailadres
-            <input autocomplete="email" class="form-group__input" type="email">
+            <input autocomplete="email" class="form-group__input" type="email" name="email" required>
         </label>
         <label class="form-group">
             Wachtwoord
-            <input autocomplete="new-password" class="form-group__input" type="password" name="password">
+            <input autocomplete="new-password" class="form-group__input" minlength="6" type="password" name="password" required>
         </label>
-        <label class="form-group">
-            Wachtwoord herhalen
-            <input autocomplete="new-password" class="form-group__input" type="password" name="password-repeat">
-        </label>
-        <button class="submit-button sticky absolute--bottom right-content" type="submit">Doorgaan <i class="fa fa-caret-right"></i></button>
+        <button class="submit-button sticky absolute--bottom right-content" type="submit">
+            Doorgaan <i class="fa fa-caret-right"></i>
+        </button>
     </form>
 </main>
 

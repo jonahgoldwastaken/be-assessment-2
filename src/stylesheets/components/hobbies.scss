@@ -1,0 +1,37 @@
+.hobbies {
+
+}
+
+.hobby-search {
+    display: block;
+    width: 100%;
+    position: relative;
+    font-size: 1.5em;
+    margin-bottom: 0.6em;
+    padding-bottom: 0.4em;
+}
+
+.hobby-search__input {
+    font-size: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    background: none;
+    border-bottom: 1px solid var(--blue);
+    position: absolute;
+    left: 0;
+    padding-bottom: 0.4em;
+    height: 100%;
+    width: 100%;
+}
+
+.hobby-search__input:focus {
+    outline: none;
+    border-bottom-width: 3px;
+}
+
+.hobby-search__input:focus ~ .hobby-search__label {
+    color: transparent;
+    position: relative;
+}

@@ -48,7 +48,7 @@
     -moz-appearance: none;
     appearance: none;
     margin-top: 0.3em;
-    border: 2px solid var(--blue);
+    border: 2px solid var(--pink);
     padding: 0.3rem 0.4rem;
     width: 100%;
     border-radius: 0.4rem;
@@ -58,7 +58,11 @@
 
 .form-group__input:focus {
     outline: none;
-    border-color: var(--pink);
+    border-color: var(--blue);
+}
+
+.form-group__input:valid {
+    border-color: var(--green);
 }
 
 .form-group__checkbox {

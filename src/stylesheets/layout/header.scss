@@ -85,21 +85,21 @@
 .header__chat-heading {
     position: relative;
     font-size: 1rem;
-}
+    
+    &--centre {
+        grid-column: 1 / span 3;
+        text-align: center;
+    }
 
-.header__chat-heading img {
-    position: absolute;
-    top: -.4rem;
-    left: 0;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.header__chat-heading--centre {
-    grid-column: 1 / span 3;
-    text-align: center;
+    img {
+       position: absolute;
+       top: -.4rem;
+       left: 0;
+       width: 2rem;
+       height: 2rem;
+       border-radius: 50%;
+       object-fit: cover;
+    }
 }
 
 .header__heading {

@@ -42,20 +42,34 @@ module.exports = {
                 ]
             },
             {
-                test: /\.css/,
+                test: /\.scss/,
                 use: ExtractTextPlugin.extract({
-                    use: {
+                    use: [{
                         loader: 'css-loader',
                         options: {
                             sourceMap: true,
                             minimize: process.env.APP_ENV != 'dev'
                         }
-                    }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }]
                 })
             }
         ]
     },
     plugins: [
-        new ExtractTextPlugin('app.css')
+        new ExtractTextPlugin('app.css'),
+        new webpack.WatchIgnorePlugin([
+            /index.js/,
+            /views/,
+            /db/,
+            /node_modules/,
+            /assets/,
+            /.vscode/
+        ])
     ]
 }

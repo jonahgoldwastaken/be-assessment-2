@@ -1,8 +1,8 @@
 .container {
     width: calc(100% - 2.5rem);
     margin: 0 auto;
-}
-
-.container--vert-center {
-    margin-top: 33vh;
+    
+    &--vert-center {
+        margin-top: 33vh;
+    }
 }

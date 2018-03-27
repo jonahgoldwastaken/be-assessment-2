@@ -1,24 +1,24 @@
-<%- include('../../layouts/head.ejs', { title: 'Profiel instellen - HDate' })
+<%- include('../../layouts/head.ejs', { title: 'Profiel instellen - HDate' }) %>
 
 <header class="header">
     <a href="/logged-out/profile.html"><i class="fa fa-caret-left"></i> Annuleren</a>
     <h1 class="header__chat-heading">Profiel Opzetten</h1>
 </header>
 <main class="container">
-    <form action="/home">
+    <form action="/account/create/2" method="POST" enctype="multipart/form-data">
         <label class="form-group--image">
             Profielfoto Toevoegen
-            <input autocomplete="photo" type="file" name="profile-image" accept="image/*">
+            <input autocomplete="photo" type="file" name="image" accept="image/*">
         </label>
         <fieldset class="fieldset">
             <legend class="fieldset__legend">Jouw gegevens</legend>
             <label class="form-group">
                 Voornaam
-                <input autocomplete="given-name" class="form-group__input" type="text" name="first-name" required>
+                <input autocomplete="given-name" class="form-group__input" type="text" name="first_name" required>
             </label>
             <label class="form-group">
                 Achternaam
-                <input autocomplete="family-name" class="form-group__input" type="text" name="last-name" required>
+                <input autocomplete="family-name" class="form-group__input" type="text" name="last_name" required>
             </label>
             <div class="form-combine">
                 <label class="form-group form-group--age">
@@ -27,27 +27,39 @@
                 </label>
                 <label class="form-group form-group--location">
                     Woonplaats
-                    <input autocomplete="address-level2" class="form-group__input" type="text" name="residence">
+                    <input autocomplete="address-level2" class="form-group__input" type="text" name="residence" required>
                 </label>
             </div>
         </fieldset>
-        <fieldset class="fieldset">
-            <legend class="fieldset__legend">Sexuele voorkeur</legend>
+        <fieldset class="fieldset" required>
+            <legend class="fieldset__legend">Je bent een...</legend>
             <div class="form-combine">
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="man">
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="male">
+                    Man
+                </label>
+                <label class="form-group form-group--checkbox">
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="female">
+                    Vrouw
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset" required>
+            <legend class="fieldset__legend">en valt op...</legend>
+            <div class="form-combine">
+                <label class="form-group form-group--checkbox">
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="male">
                     Mannen
                 </label>
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="woman">
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="female">
                     Vrouwen
                 </label>
             </div>
         </fieldset>
-        <fieldset class="fieldset">
-            <legend class="fieldset__legend"><a href="/hobbies">Hobbies <i class="fa fa-angle-right"></i></a></legend>
-        </fieldset>
-        <button type="submit" class="submit-button right-content">Afronden <i class="fa fa-caret-right"></i></button>
+        <button type="submit" class="submit-button right-content">
+            Afronden <i class="fa fa-caret-right"></i>
+        </button>
     </form>
 </main>
 
