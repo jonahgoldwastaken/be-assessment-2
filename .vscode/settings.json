@@ -1,3 +1,4 @@
 {
-    "xo.enable": true
+    "travis.repository": "hdate",
+    "travis.username": "theonejonahgold"
 }
