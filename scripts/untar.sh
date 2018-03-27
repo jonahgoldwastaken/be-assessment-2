@@ -8,5 +8,5 @@ cp .env hdate/.env && \
 cd hdate && \
 mkdir -p db/log && \
 npm rebuild && \
-npm run stop && \
-npm start
+screen -X -S hdate quit && \
+screen -dmS hdate npm start
