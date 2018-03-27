@@ -5,9 +5,9 @@
   "private": true,
   "scripts": {
     "prestart": "yarn build || npm run build",
-    "start": "node .",
+    "start": "node server.js",
     "prewatch": "mongod --dbpath db --fork --logpath db/log/mongo.log && yarn build",
-    "watch": "nodemon .",
+    "watch": "nodemon server.js",
     "stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
     "poststop": "rm db/log/*",
     "build": "webpack-cli --progress --config webpack.config.js --hide-modules",
