@@ -4,7 +4,6 @@
   "description": "A dating site for hobbyists",
   "private": true,
   "scripts": {
-    "prestart": "yarn build || npm run build",
     "start": "node server.js",
     "prewatch": "mongod --dbpath db --fork --logpath db/log/mongo.log && yarn build",
     "watch": "nodemon server.js",
