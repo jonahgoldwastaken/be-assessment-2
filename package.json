@@ -4,7 +4,7 @@
   "description": "A dating site for hobbyists",
   "private": true,
   "scripts": {
-    "prestart": "mongod --dbpath db --fork --logpath db/log/mongo.log",
+    "prestart": "mongod --dbpath db --logpath /dev/null",
     "start": "node .",
     "prewatch": "mongod --dbpath db --fork --logpath db/log/mongo.log && yarn build",
     "watch": "nodemon .",
