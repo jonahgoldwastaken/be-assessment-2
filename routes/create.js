@@ -10,10 +10,12 @@ module.exports = router
     .post('/', registerUser)
 
 function accountForms (req, res) {
-    const step = +req.params.step
-    let registrationData
-    if (req.session.registration)
+    let step = +req.params.step
+    let registrationData = null
+    if (req.session.registration) {
         registrationData = req.session.registration
+        step == 1 ? step = 2 : null
+    }
     switch (step) {
         case 3:
             res.render('account/create-account/step-3', {
@@ -40,8 +42,9 @@ function registerUser (req, res) {
         if (err) {
             console.error(err)
         } else {
-            req.session.registration = null
+            req.session.destroy()
             req.session.user = {
+                _id: data._id,
                 name: data.name
             }
             res.status(201).redirect('/home')
@@ -62,8 +65,8 @@ function registerSession (req, res, next) {
     return
 
     function stepTwo () {
-        const stepTwoProfile = Object.assign(req.session.registration, {
-            step: 2,
+        req.session.registration = Object.assign(req.session.registration, {
+            step: 3,
             firstName: req.body.first_name,
             lastName: req.body.last_name,
             age: req.body.age,
@@ -72,7 +75,6 @@ function registerSession (req, res, next) {
             sexPref: req.body.sex_pref,
             image: req.file.filename
         })
-        req.session.registration = stepTwoProfile
         res.status(200).redirect('/account/create/3')
     }
 
@@ -82,7 +84,7 @@ function registerSession (req, res, next) {
         argon.hash(password)
             .then(hashedPassword => {
                 req.session.registration = {
-                    step: 1,
+                    step: 2,
                     email: email,
                     password: hashedPassword
                 }
