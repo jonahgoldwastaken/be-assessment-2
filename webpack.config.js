@@ -12,8 +12,8 @@ module.exports = {
         publicPath: '/assets/'
     },
     target: 'web',
-    devtool: process.env.APP_ENV == 'dev' ? 'eval' : 'source-maps',
-    mode: process.env.APP_ENV == 'dev' ? 'development' : 'production',
+    devtool: process.env.NODE_ENV == 'development' ? 'eval' : 'source-maps',
+    mode: process.env.NODE_ENV,
     module: {
         rules: [
             {
@@ -48,7 +48,7 @@ module.exports = {
                         loader: 'css-loader',
                         options: {
                             sourceMap: true,
-                            minimize: process.env.APP_ENV != 'dev'
+                            minimize: process.env.NODE_ENV != 'development'
                         }
                     },
                     {
