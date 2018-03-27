@@ -1,5 +1,7 @@
 require('dotenv').config()
 const express = require('express')
+const http = require('http')
+const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const mongoUtil = require('./utils/mongoUtil')
@@ -8,12 +10,13 @@ console.log(process.env)
 mongoUtil.connect(err => {
     err && console.error(err)
     multerUtil.createInstance()
+    const app = express()
     const home = require('./routes/home')
     const account = require('./routes/account')
     const hobbyCategories = require('./routes/hobbies')
     const messages = require('./routes/messages')
-    const app = express()
-    app.set('view engine', 'ejs')
+    module.exports = app
+        .set('view engine', 'ejs')
         .set('views', 'views')
         .use(express.static('assets'))
         .use(bodyParser.urlencoded({ extended: true }))
@@ -27,5 +30,5 @@ mongoUtil.connect(err => {
         .use('/hobbies', hobbyCategories)
         .use('/messages', messages)
         .get('/', (req, res) => res.render('onboarding'))
-    module.exports = app
+    http.createServer(app).listen(port, () => console.log(`started server on port ${port}`))
 })
