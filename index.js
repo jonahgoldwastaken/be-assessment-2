@@ -1,6 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-const http = require('http')
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const session = require('express-session')
@@ -30,5 +29,5 @@ mongoUtil.connect(err => {
         .use('/hobbies', hobbyCategories)
         .use('/messages', messages)
         .get('/', (req, res) => res.render('onboarding'))
-    http.createServer(app).listen(port, () => console.log(`started server on port ${port}`))
+        .listen(port)
 })
