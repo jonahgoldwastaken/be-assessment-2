@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const mongoUtil = require('./utils/mongoUtil')
 const multerUtil = require('./utils/multerUtil')
+const port = process.env.PORT || 1337
 mongoUtil.connect(err => {
     err && console.error(err)
     multerUtil.createInstance()
@@ -27,5 +28,5 @@ mongoUtil.connect(err => {
         .use('/hobbies', hobbyCategories)
         .use('/messages', messages)
         .get('/', (req, res) => res.render('onboarding'))
-        .listen(1337)
+        .listen(port)
 })
