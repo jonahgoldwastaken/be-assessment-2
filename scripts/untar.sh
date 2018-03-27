@@ -2,10 +2,10 @@
 set -x
 
 export NODE_ENV=production
-export NVM_BIN=$HOME/.nvm/versions/node/v8.9.3/bin
-
+nvm use 9.8.0 && \
 cd ~/ && \
 tar zxvf package.tgz -C . && \
-cd hdate . && \
-npm install && \
+cd hdate && \
+mkdir -p db/log && \
+npm rebuild && \
 npm run start
