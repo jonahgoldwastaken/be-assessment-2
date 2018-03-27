@@ -8,13 +8,12 @@ console.log(process.env)
 mongoUtil.connect(err => {
     err && console.error(err)
     multerUtil.createInstance()
-    const app = express()
     const home = require('./routes/home')
     const account = require('./routes/account')
     const hobbyCategories = require('./routes/hobbies')
     const messages = require('./routes/messages')
-    module.exports = app
-        .set('view engine', 'ejs')
+    const app = express()
+    app.set('view engine', 'ejs')
         .set('views', 'views')
         .use(express.static('assets'))
         .use(bodyParser.urlencoded({ extended: true }))
@@ -28,4 +27,5 @@ mongoUtil.connect(err => {
         .use('/hobbies', hobbyCategories)
         .use('/messages', messages)
         .get('/', (req, res) => res.render('onboarding'))
+    module.exports = app
 })
