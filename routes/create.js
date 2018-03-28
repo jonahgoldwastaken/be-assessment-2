@@ -1,8 +1,8 @@
 /* eslint-disable new-cap */
 const router = require('express').Router()
 const argon = require('argon2')
-const db = require('../utils/mongoUtil').getInstance()
 const upload = require('../utils/multerUtil').getInstance()
+const Account = require('../models/Account')
 
 module.exports = router
     .get('/:step', accountForms)
@@ -34,18 +34,19 @@ function accountForms (req, res) {
 }
 
 function registerUser (req, res) {
-    const newUser = Object.assign(req.session.registration, {
+    req.session.registration =  Object.assign(req.session.registration, {
         hobbies: req.body.hobbies
     })
-    delete newUser.step
-    db.collection('users').insertOne(newUser, (err, data) => {
+    delete req.session.registration.step
+    const newUser = new Account(req.session.registration)
+    newUser.save((err, user) => {
         if (err) {
             console.error(err)
         } else {
             req.session.destroy()
             req.session.user = {
-                _id: data._id,
-                name: data.name
+                _id: user._id,
+                name: user.name
             }
             res.status(201).redirect('/home')
         }
