@@ -8,7 +8,7 @@ branches:
   only:
   - master
 before_install:
-  - sudo apt-get install .gyp python make g++
+  - sudo apt-get install .gyp python make g++ gcc
 
 jobs:
   include:
