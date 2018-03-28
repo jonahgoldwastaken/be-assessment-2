@@ -8,26 +8,17 @@ notifications:
 branches:
   only:
   - master
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-5
-    - g++-5
-before_script:
-  - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
 
 jobs:
   include:
     - stage: lint JS
       install:
-      - yarn install
+      - npm install
       script:
       - yarn lint
     - stage: build assets
       install:
-      - yarn install
+      - npm install
       script:
       - yarn build-prod
     - stage: deploy to captainduckduck
