@@ -1,15 +1,6 @@
 language: node_js
 node_js:
 - 8.9.4
-env:
-  - CXX=g++
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - build-essential
-      - g++
 notifications:
   email:
     on_failure: change
@@ -23,4 +14,4 @@ install:
 script:
   - npm run build-prod
 after_success:
-  - captainduckduck deploy -s -h DEPLOY_HOST -a DEPLOY_NAME -p DEPLOY_PASS -b DEPLOY_BRANCH
+  - captainduckduck deploy -s -h $DEPLOY_HOST -a $DEPLOY_NAME -p $DEPLOY_PASS -b $DEPLOY_BRANCH
