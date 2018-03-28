@@ -10,6 +10,7 @@
     "watch": "nodemon .",
     "stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
     "poststop": "rm db/log/*",
+    "production": "node .",
     "build": "cross-env NODE_ENV=development webpack-cli --progress --config webpack.config.js --hide-modules",
     "build-watch": "cross-env NODE_ENV=development webpack-cli --progress --watch --config webpack.config.js --hide-modules",
     "build-prod": "cross-env NODE_ENV=production webpack-cli --progress --config webpack.config.js --hide-modules",
