@@ -11,7 +11,15 @@ before_install:
   - npm install -g captainduckduck
 install:
   - npm install
-script:
-  - npm run build-prod
-after_success:
-  - captainduckduck deploy -s -h $DEPLOY_HOST -a $DEPLOY_NAME -p $DEPLOY_PASS -b $DEPLOY_BRANCH
+
+jobs:
+  include:
+    - stage: lint JS
+      script:
+      - npm run lint
+    - stage: build assets
+      script:
+      - npm run build-prod
+    - stage: deploy to captainduckduck
+      script:
+      - captainduckduck deploy -s -h $DEPLOY_HOST -a $DEPLOY_NAME -p $DEPLOY_PASS -b $DEPLOY_BRANCH
