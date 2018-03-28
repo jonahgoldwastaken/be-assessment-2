@@ -1,3 +1,4 @@
+sudo: required
 language: node_js
 node_js:
 - 8.9.4
@@ -7,9 +8,15 @@ notifications:
 branches:
   only:
   - master
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install .gyp python make g++-7.2 gcc-7.2
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-5
+    - g++-5
+before_script:
+  - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
 
 jobs:
   include:
