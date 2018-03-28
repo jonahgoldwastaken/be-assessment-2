@@ -21,5 +21,9 @@ jobs:
       script:
       - npm run build-prod
     - stage: deploy to captainduckduck
+      env:
+      - DEPLOY_HOST=https://captain.captain.jonahmeijers.nl
+      - DEPLOY_NAME=date
+      - DEPLOY_BRANCH=master
       script:
       - captainduckduck deploy -s -h $DEPLOY_HOST -a $DEPLOY_NAME -p $DEPLOY_PASS -b $DEPLOY_BRANCH
