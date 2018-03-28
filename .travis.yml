@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- 8.9.4
+notifications:
+  email:
+    on_failure: change
+branches:
+  only:
+  - master
+before_install:
+  - yarn global add captainduckduck
+install:
+  - yarn install
+script:
+  - npm run build-prod
+after_success:
+  - captainduckduck deploy -s -h DEPLOY_HOST -a DEPLOY_NAME -p DEPLOY_PASS -b DEPLOY_BRANCH
