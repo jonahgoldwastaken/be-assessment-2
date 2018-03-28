@@ -14,20 +14,20 @@ jobs:
   include:
     - stage: lint JS
       install:
-      - npm install
+      - yarn install
       script:
-      - npm run lint
+      - yarn lint
     - stage: build assets
       install:
-      - npm install
+      - yarn install
       script:
-      - npm run build-prod
+      - yarn build-prod
     - stage: deploy to captainduckduck
       env:
       - DEPLOY_HOST=https://captain.captain.jonahmeijers.nl
       - DEPLOY_NAME=date
       - DEPLOY_BRANCH=master
       install:
-      - npm install -g captainduckduck
+      - yarn global add captainduckduck
       script:
       - captainduckduck deploy -s -h $DEPLOY_HOST -a $DEPLOY_NAME -p $DEPLOY_PASS -b $DEPLOY_BRANCH
