@@ -11,12 +11,12 @@ branches:
 
 jobs:
   include:
-    - stage: lint JS
+    - stage: lint
       install:
       - npm install
       script:
       - yarn lint
-    - stage: build assets
+    - stage: build
       install:
       - npm install
       script:
@@ -30,3 +30,9 @@ jobs:
       - yarn global add captainduckduck
       script:
       - captainduckduck deploy -s -h $DEPLOY_HOST -a $DEPLOY_NAME -p $DEPLOY_PASS -b $DEPLOY_BRANCH
+
+stages:
+  - lint
+  - build
+  - name: deploy
+    if: branch = master
