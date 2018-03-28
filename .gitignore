@@ -6,4 +6,3 @@ mongo.log.*
 yarn-error.log
 package-lock.json
 assets
-deploy

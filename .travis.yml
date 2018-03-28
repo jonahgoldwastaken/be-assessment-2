@@ -7,6 +7,8 @@ notifications:
 branches:
   only:
   - master
+before_install:
+  - sudo apt-get install .gyp python make g++
 
 jobs:
   include:
@@ -25,7 +27,7 @@ jobs:
       - DEPLOY_HOST=https://captain.captain.jonahmeijers.nl
       - DEPLOY_NAME=date
       - DEPLOY_BRANCH=master
-      before_script:
+      install:
       - npm install -g captainduckduck
       script:
       - captainduckduck deploy -s -h $DEPLOY_HOST -a $DEPLOY_NAME -p $DEPLOY_PASS -b $DEPLOY_BRANCH

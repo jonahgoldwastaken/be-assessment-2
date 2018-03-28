@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const mongoUtil = require('./utils/mongoUtil')
 const multerUtil = require('./utils/multerUtil')
-console.log(process.env)
 mongoUtil.connect(err => {
     err && console.error(err)
     multerUtil.createInstance()
