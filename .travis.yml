@@ -7,17 +7,17 @@ notifications:
 branches:
   only:
   - master
-before_install:
-  - npm install -g captainduckduck
-install:
-  - npm install
 
 jobs:
   include:
     - stage: lint JS
+      install:
+      - npm install
       script:
       - npm run lint
     - stage: build assets
+      install:
+      - npm install
       script:
       - npm run build-prod
     - stage: deploy to captainduckduck
@@ -25,5 +25,7 @@ jobs:
       - DEPLOY_HOST=https://captain.captain.jonahmeijers.nl
       - DEPLOY_NAME=date
       - DEPLOY_BRANCH=master
+      before_script:
+      - npm install -g captainduckduck
       script:
       - captainduckduck deploy -s -h $DEPLOY_HOST -a $DEPLOY_NAME -p $DEPLOY_PASS -b $DEPLOY_BRANCH
