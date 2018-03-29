@@ -13,36 +13,28 @@ module.exports = router
     .get('/hobbies', (req, res) => res.render('hobbies/list'))
     .get('/hobbies/:hobby/personalise', (req, res) => res.render('hobbies/list'))
     .get('/settings', (req, res) => res.render('account/settings'))
-    .get('/', userProfile)
+    .get('/', profile)
 
-function login (req, res, next) {
+async function login (req, res, next) {
     const email = req.body.email
     const password = req.body.password
-    Account.findOne({ email: email }, (err, user) => {
-        err
-            ? next(err)
-            : argon2.verify(user.password, password)
-                .then(match => {
-                    if (match) {
-                        mongoUtil.loginUser(req, user._id)
-                        res.status(200).redirect('/home')
-                    } else {
-                        res.status(400).redirect('/account/login')
-                    }
-                })
-                .catch(err => console.error(err))
-    })
+    const user = await Account.findByEmail(email).catch(err => next(err))
+    const match = await argon2.verify(user.password, password).catch(err => next(err))
+    if (match) {
+        mongoUtil.loginUser(req, user._id)
+        res.status(200).redirect('/home')
+    } else {
+        res.status(400).redirect('/account/login')
+    }
 }
 
-function userProfile (req, res, next) {
-    mongoUtil.getLoggedInUser(req)
-        .then(data =>
-            !data
-                ? res.redirect('/')
-                : data)
-        .then(data =>
-            res.render('account/profile', {
-                data: data
-            }))
-        .catch(err => next(err))
+async function profile (req, res, next) {
+    const data = await mongoUtil.getLoggedInUser(req).catch(err => next(err))
+    if (!data) {
+        res.redirect('/')
+    } else {
+        res.render('account/profile', {
+            data: data
+        })
+    }
 }

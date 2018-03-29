@@ -11,7 +11,7 @@ module.exports = router
     .post('/:step', upload.single('avatar'), registerSession)
     .post('/', registerUser)
 
-function accountForms (req, res) {
+async function accountForms (req, res) {
     let step = +req.params.step
     let registrationData = null
     if (req.session.registration) {
@@ -20,25 +20,36 @@ function accountForms (req, res) {
     }
     switch (step) {
         case 3:
-            Hobby.findAllAndSort()
-                .then(hobbies => 
-                    res.render('account/create-account/step-3', {
-                        partialUser: registrationData,
-                        data: hobbies
-                    }))
+            stepThree()
             break
         case 2:
-            res.render('account/create-account/step-2', {
-                partialUser: registrationData
-            })
+            stepTwo()
             break
         default:
-            res.render('account/create-account/step-1')
+            stepOne()
             break
+    }
+
+    function stepOne () {
+        res.render('account/create-account/step-1')
+    }
+
+    function stepTwo () {
+        res.render('account/create-account/step-2', {
+            partialUser: registrationData
+        })
+    }
+
+    async function stepThree () {
+        const hobbies = await Hobby.findAllAndSort()
+        res.render('account/create-account/step-3', {
+            partialUser: registrationData,
+            data: hobbies
+        })
     }
 }
 
-function registerUser (req, res) {
+function registerUser (req, res, next) {
     req.session.registration =  Object.assign(req.session.registration, {
         hobbies: req.body.hobbies || []
     })
@@ -46,7 +57,7 @@ function registerUser (req, res) {
     const newUser = new Account(req.session.registration)
     newUser.save((err, user) => {
         if (err) {
-            console.error(err)
+            next(err)
         } else {
             delete req.session.registration
             req.session.user = {
@@ -69,6 +80,18 @@ function registerSession (req, res, next) {
     }
     return
 
+    async function stepOne () {
+        const email = req.body.email
+        const password = req.body.password
+        const hashedPassword = await argon.hash(password).catch(err => next(err))
+        req.session.registration = {
+            step: 2,
+            email: email,
+            password: hashedPassword
+        }
+        res.status(200).redirect('/account/create/2')
+    }
+
     function stepTwo () {
         req.session.registration = Object.assign(req.session.registration, {
             step: 3,
@@ -81,20 +104,5 @@ function registerSession (req, res, next) {
             avatar: req.file.filename
         })
         res.status(200).redirect('/account/create/3')
-    }
-
-    function stepOne () {
-        const email = req.body.email
-        const password = req.body.password
-        argon.hash(password)
-            .then(hashedPassword => {
-                req.session.registration = {
-                    step: 2,
-                    email: email,
-                    password: hashedPassword
-                }
-                res.status(200).redirect('/account/create/2')
-            })
-            .catch(err => next(err))
     }
 }
