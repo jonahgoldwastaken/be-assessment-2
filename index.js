@@ -20,7 +20,7 @@ mongoUtil.connect(err => {
         .set('view engine', 'ejs')
         .set('views', 'views')
         .use(express.static('assets'))
-        .use('images', express.static('uploads'))
+        .use('userpics', express.static('uploads'))
         .use(bodyParser.urlencoded({ extended: true }))
         .use(session({
             resave: false,
