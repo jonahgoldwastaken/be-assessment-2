@@ -18,7 +18,7 @@ jobs:
       - npm install
       script:
       - yarn build-prod
-    - stage: deploy to captainduckduck
+    - stage: deploy
       env:
       - DEPLOY_HOST=https://captain.captain.jonahmeijers.nl
       - DEPLOY_NAME=date
