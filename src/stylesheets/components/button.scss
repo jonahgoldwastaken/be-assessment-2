@@ -7,6 +7,7 @@ button {
 }
 
 .btn {
+    display: block;
     padding: 0.8rem 1rem;
     border-radius: 0.4em;
     border: none;
@@ -29,6 +30,11 @@ button {
     background: var(--red);
 }
 
+.btn--green {
+    color: white;
+    background: var(--green);
+}
+
 .btn--large {
     font-size: 1.25em;
     padding: 0.8em 1.5em;
@@ -49,8 +55,9 @@ button {
 }
 
 .btn-group .btn {
-    flex: 1;
+    flex: 0 0 50%;
     border-radius: 0;
+    white-space: nowrap;
 }
 
 .btn-group .btn:first-child {

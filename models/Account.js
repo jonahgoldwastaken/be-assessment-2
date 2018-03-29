@@ -36,8 +36,9 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
+    filters: [mongoose.Schema.Types.ObjectId],
     hobbies: [{
-        id: {
+        hobby: {
             type: mongoose.Schema.Types.ObjectId,
             required: true
         },
@@ -47,5 +48,13 @@ const schema = new mongoose.Schema({
     likes: [mongoose.Schema.Types.ObjectId],
     dislikes: [mongoose.Schema.Types.ObjectId]
 })
-const Account = mongoose.model('user', schema)
+
+const Account = mongoose.model('Account', schema)
+
+Account.getPopularity = account =>
+    account.hobbies.reduce((popularity, hobby) => popularity + hobby.hobby.popularity) / account.hobbies.length
+
+Account.countUsersOnHobbies = (id, cb) => 
+    Account.count({ hobbies: { hobby: id } }, cb)
+
 module.exports = Account

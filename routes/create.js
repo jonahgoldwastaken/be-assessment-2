@@ -3,10 +3,12 @@ const router = require('express').Router()
 const argon = require('argon2')
 const upload = require('../utils/multerUtil').getInstance()
 const Account = require('../models/Account')
+const Hobby = require('../models/Hobby')
 
 module.exports = router
+    .get('/', (req, res) => res.redirect('/account/create/1'))
     .get('/:step', accountForms)
-    .post('/:step', upload.single('image'), registerSession)
+    .post('/:step', upload.single('avatar'), registerSession)
     .post('/', registerUser)
 
 function accountForms (req, res) {
@@ -14,13 +16,16 @@ function accountForms (req, res) {
     let registrationData = null
     if (req.session.registration) {
         registrationData = req.session.registration
-        step == 1 ? step = 2 : null
+        step != registrationData.step ? res.redirect(`/account/create/${registrationData.step}`) : ''
     }
     switch (step) {
         case 3:
-            res.render('account/create-account/step-3', {
-                partialUser: registrationData
-            })
+            Hobby.findAllAndSort()
+                .then(hobbies => 
+                    res.render('account/create-account/step-3', {
+                        partialUser: registrationData,
+                        data: hobbies
+                    }))
             break
         case 2:
             res.render('account/create-account/step-2', {
@@ -35,7 +40,7 @@ function accountForms (req, res) {
 
 function registerUser (req, res) {
     req.session.registration =  Object.assign(req.session.registration, {
-        hobbies: req.body.hobbies
+        hobbies: req.body.hobbies || []
     })
     delete req.session.registration.step
     const newUser = new Account(req.session.registration)
@@ -43,10 +48,9 @@ function registerUser (req, res) {
         if (err) {
             console.error(err)
         } else {
-            req.session.destroy()
+            delete req.session.registration
             req.session.user = {
-                _id: user._id,
-                name: user.name
+                _id: user._id
             }
             res.status(201).redirect('/home')
         }
@@ -74,7 +78,7 @@ function registerSession (req, res, next) {
             location: req.body.location,
             sex: req.body.sex,
             sexPref: req.body.sex_pref,
-            image: req.file.filename
+            avatar: req.file.filename
         })
         res.status(200).redirect('/account/create/3')
     }
