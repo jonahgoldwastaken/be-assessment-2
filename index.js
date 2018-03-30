@@ -36,8 +36,6 @@ mongoUtil.connect(err => {
         .use('/hobbies', hobbyCategories)
         .use('/messages', messages)
         .get('/', (req, res) => res.render('onboarding'))
-        .use((err, req, res, next) => {
-            console.error(err)
-        })
+        // TODO: add error handling function
         .listen(port)
 })
