@@ -49,18 +49,22 @@ const schema = new mongoose.Schema({
     dislikes: [mongoose.Schema.Types.ObjectId]
 })
 
-const Account = mongoose.model('Account', schema)
-
-module.exports = Account
-
-module.exports.findByEmail = email =>
+const findByEmail = email =>
     new Promise((resolve, reject) => Account.findOne({email: email}, (err, data) =>
         err ? reject(err) : resolve(data)))
 
-module.exports.calcPopularity = account =>
+const calcPopularity = account =>
     account.hobbies.reduce((popularity, hobby) =>
         popularity + (hobby.hobby.popularity / account.hobbies.length))
 
-module.exports.countUsersOnHobbies = id => 
+const countUsersOnHobbies = id => 
     new Promise((resolve, reject) => Account.count({ hobbies: { hobby: id } }, (err, data) =>
         err ? reject(err) : resolve(data)))
+
+const Account = mongoose.model('Account', schema)
+
+Account.findByEmail = findByEmail
+Account.calcPopularity = calcPopularity
+Account.countUsersOnHobbies = countUsersOnHobbies
+
+module.exports = Account

@@ -8,9 +8,7 @@ module.exports = {
         const id = req.session.userId
         return new Promise((resolve, reject) =>
             Account.findOne({ _id: id }, (err, data) =>
-                err
-                    ? reject(err)
-                    : resolve(data)))
+                err ? reject(err) : resolve(data)))
     },
     loginUser (req, id) {
         return req.session.userId = id

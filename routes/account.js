@@ -15,11 +15,11 @@ module.exports = router
     .get('/settings', (req, res) => res.render('account/settings'))
     .get('/', profile)
 
-async function login (req, res, next) {
+const login = async (req, res, next) => {
     const email = req.body.email
     const password = req.body.password
-    const user = await Account.findByEmail(email).catch(err => next(err))
-    const match = await argon2.verify(user.password, password).catch(err => next(err))
+    const user = await Account.findByEmail(email).catch(next)
+    const match = await argon2.verify(user.password, password).catch(next)
     if (match) {
         mongoUtil.loginUser(req, user._id)
         res.status(200).redirect('/home')
@@ -28,8 +28,8 @@ async function login (req, res, next) {
     }
 }
 
-async function profile (req, res, next) {
-    const data = await mongoUtil.getLoggedInUser(req).catch(err => next(err))
+const profile = async (req, res, next) => {
+    const data = await mongoUtil.getLoggedInUser(req).catch(next)
     if (!data) {
         res.redirect('/')
     } else {

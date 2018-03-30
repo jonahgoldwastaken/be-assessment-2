@@ -83,7 +83,7 @@ function registerSession (req, res, next) {
     async function stepOne () {
         const email = req.body.email
         const password = req.body.password
-        const hashedPassword = await argon.hash(password).catch(err => next(err))
+        const hashedPassword = await argon.hash(password).catch(next)
         req.session.registration = {
             step: 2,
             email: email,
