@@ -1,12 +1,16 @@
-const mongo = require('mongodb')
-const url = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`
-let _db
+const mongoose = require('mongoose')
+const url = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
+const Account = require('../models/Account')
 module.exports = {
     connect: callback =>
-        mongo.MongoClient.connect(url, (err, client) => {
-            err && console.error(err)
-            _db = client.db(process.env.DB_NAME)
-            callback(err)
-        }),
-    getInstance: () => _db
+        mongoose.connect(url, callback),
+    getLoggedInUser (req) {
+        const id = req.session.userId
+        return new Promise((resolve, reject) =>
+            Account.findOne({ _id: id }, (err, data) =>
+                err ? reject(err) : resolve(data)))
+    },
+    loginUser (req, id) {
+        return req.session.userId = id
+    }
 }

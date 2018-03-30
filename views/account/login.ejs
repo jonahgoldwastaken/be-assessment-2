@@ -1,3 +1,20 @@
 <%- include('../layouts/head.ejs', { title: 'Log in - HDate' }) %>
 
+<header class="header">
+    <h1 class="header__chat-heading">Log in</h1>
+</header>
+<main class="container">
+    <form action="/account/login" method="post">
+        <label class="form-group">
+            E-mailadres
+            <input class="form-group__input" type="email" name="email" required>
+        </label>
+        <label class="form-group">
+            Password
+            <input class="form-group__input" type="password" name="password" required>
+        </label>
+        <button class="absolute absolute--bottom absolute--centre btn btn--large btn--blue btn--center" type="submit">Log in</button>
+    </form>
+</main>
+
 <%- include('../layouts/tail.ejs') %>

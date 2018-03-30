@@ -32,4 +32,4 @@ stages:
   - lint
   - build
   - name: deploy
-    if: branch = master
+    if: branch = master AND type = push
