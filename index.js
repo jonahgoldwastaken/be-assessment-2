@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express = require('express')
 const port = process.env.PORT || 3000
+const compression = require('compression')
+const logger = require('morgan')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const mongoUtil = require('./utils/mongoUtil')
@@ -19,8 +21,10 @@ mongoUtil.connect(err => {
     module.exports = app
         .set('view engine', 'ejs')
         .set('views', 'views')
-        .use(express.static('assets'))
-        .use('userpics', express.static('uploads'))
+        .use(compression())
+        .use(logger('tiny'))
+        .use('/images', express.static('uploads'))
+        .use('/', express.static('assets'))
         .use(bodyParser.urlencoded({ extended: true }))
         .use(session({
             resave: false,
@@ -32,5 +36,8 @@ mongoUtil.connect(err => {
         .use('/hobbies', hobbyCategories)
         .use('/messages', messages)
         .get('/', (req, res) => res.render('onboarding'))
+        .use((err, req, res, next) => {
+            console.error(err)
+        })
         .listen(port)
 })
