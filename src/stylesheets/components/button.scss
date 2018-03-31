@@ -13,57 +13,57 @@ button {
     border: none;
     text-align: center;
     text-decoration: none;
-}
 
-.btn--pink {
-    color: white;
-    background: var(--pink);
-}
+    &--pink {
+        color: white;
+        background: var(--pink);
+    }
 
-.btn--blue {
-    color: white;
-    background: var(--blue);
-}
+    &--blue {
+        color: white;
+        background: var(--blue);
+    }
 
-.btn--red {
-    color: white;
-    background: var(--red);
-}
+    &--red {
+        color: white;
+        background: var(--red);
+    }
 
-.btn--green {
-    color: white;
-    background: var(--green);
-}
+    &--green {
+        color: white;
+        background: var(--green);
+    }
 
-.btn--large {
-    font-size: 1.25em;
-    padding: 0.8em 1.5em;
-}
+    &--large {
+        font-size: 1.25em;
+        padding: 0.8em 1.5em;
+    }
 
-.btn--noborder {
-    border-radius: 0;
-}
+    &--noborder {
+        border-radius: 0;
+    }
 
-.btn--center {
-    display: inline-block;
-    margin: 0 auto;
+    &--center {
+        display: inline-block;
+        margin: 0 auto;
+    }
 }
 
 .btn-group {
     display: flex;
     justify-content: space-between;
-}
 
-.btn-group .btn {
-    flex: 0 0 50%;
-    border-radius: 0;
-    white-space: nowrap;
-}
+    .btn {
+        flex: 0 0 50%;
+        border-radius: 0;
+        white-space: nowrap;
 
-.btn-group .btn:first-child {
-    border-radius: .4em 0 0 .4em;
-}
+        &:first-child {
+            border-radius: .4em 0 0 .4em;
+        }
 
-.btn-group .btn:last-child {
-    border-radius: 0 .4em .4em 0;
+        &:last-child {
+            border-radius: 0 .4em .4em 0;
+        }
+    }
 }

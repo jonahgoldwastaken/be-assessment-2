@@ -2,10 +2,10 @@
     width: calc(100% - 5rem);
     margin-left: 2.5rem;
     margin-top: 1rem;
-}
 
-.list__item {
-    text-align: center;
-    font-size: 1.1em;
-    margin-bottom: 3rem;
+    &__item {
+        text-align: center;
+        font-size: 1.1em;
+        margin-bottom: 3rem;
+    }
 }

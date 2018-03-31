@@ -13,9 +13,8 @@
     padding: 0 1.5em;
     display: flex;
     justify-content: space-around;
-}
 
-.button-footer__button {
+    &__button {
     width: 5rem;
     height: 5rem;
     border: 0.2rem solid black;
@@ -27,16 +26,17 @@
     font-size: 1.5rem;
     font-weight: bold;
     text-decoration: none;
-}
 
-.button-footer__button--dislike {
-    border-color: var(--pink) !important;
-    color: var(--pink);
-}
+        &--dislike {
+            border-color: var(--pink) !important;
+            color: var(--pink);
+        }
 
-.button-footer__button--like {
-    border-color: var(--blue) !important;
-    color: var(--blue);
+        &--like {
+            border-color: var(--blue) !important;
+            color: var(--blue);
+        }
+    }
 }
 
 .navigation-footer {

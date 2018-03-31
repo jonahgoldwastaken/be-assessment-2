@@ -2,18 +2,20 @@ p {
     margin-bottom: 1.8em;
 }
 
-.text--center {
-    text-align: center;
-}
+.text {
+    &--center {
+        text-align: center;
+    }
 
-.text--bold {
-    font-weight: bold;
-}
+    &--bold {
+        font-weight: bold;
+    }
 
-.text--mb {
-    margin-bottom: 0.6em;
-}
+    &--mb {
+        margin-bottom: 0.6em;
+    }
 
-.text--mt {
-    margin-top: 3em;
+    &--mt {
+        margin-top: 3em;
+    }
 }
