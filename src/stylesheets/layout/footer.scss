@@ -14,18 +14,19 @@
     display: flex;
     justify-content: space-around;
 
-    &__button {
-    width: 5rem;
-    height: 5rem;
-    border: 0.2rem solid black;
-    color: black;
-    border-radius: 50%;
-    box-shadow: var(--button-shadow);
-    text-align: center;
-    line-height: 4.6rem;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
+    &__btn {
+        width: 5rem;
+        height: 5rem;
+        background-color: white;
+        border: 0.2rem solid black;
+        color: black;
+        border-radius: 50%;
+        box-shadow: var(--button-shadow);
+        text-align: center;
+        line-height: 4.6rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
 
         &--dislike {
             border-color: var(--pink) !important;
