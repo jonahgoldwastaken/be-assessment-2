@@ -6,9 +6,14 @@ module.exports = {
         mongoose.connect(url, callback),
     getLoggedInUser (req) {
         const id = req.session.userId
-        return new Promise((resolve, reject) =>
-            Account.findOne({ _id: id }, (err, data) =>
-                err ? reject(err) : resolve(data)))
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = await Account.fetchUser(id)
+                resolve(user)
+            } catch (err) {
+                reject(new Error(err))
+            }
+        })
     },
     loginUser (req, id) {
         return req.session.userId = id

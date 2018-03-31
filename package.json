@@ -4,10 +4,10 @@
   "description": "A dating site for hobbyists",
   "private": true,
   "scripts": {
-    "prestart": "mongod --dbpath db --fork --logpath db/log/mongo.log",
+    "startDB": "mongod --dbpath db --fork --logpath db/log/mongo.log",
     "start": "node .",
-    "prewatch": "mongod --dbpath db --fork --logpath db/log/mongo.log && yarn build",
-    "watch": "nodemon .",
+    "prewatch": "yarn build",
+    "watch": "nodemon --inspect .",
     "stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
     "poststop": "rm db/log/*",
     "production": "node .",

@@ -11,24 +11,12 @@
     <section>
         <h2 class="header__heading">Hobbies</h2>
         <ul class="hobbies-list">
-            <li class="hobbies-list__item">
-                <img src="/images/knitting.jpg" alt="Foto van iemand die breidt.">
-                <h3 title="Hobby">Breien</h3>
-                <h4 title="Categorie">Handwerk</h4>
-            </li>
-            <li class="hobbies-list__item">
-                <img src="/images/filming.jpg" alt="Foto van iemand die filmt.">
-                <h3 title="Hobby">Filmen</h3>
-                <h4 title="Categorie">Film</h4>
-            </li>
-            <li class="hobbies-list__item">
-                <img src="/images/editing.jpg" alt="Foto van iemand die monteert.">
-                <h3 title="Hobby">Montage</h3>
-                <h4 title="Categorie">Film</h4>
-            </li>
-            <li class="hobbies-list__more">
-                <a href="#">En 1 meer...</a>
-            </li>
+            <% data.hobbies.forEach(function (hobby) { %>
+                <li class="hobbies-list__item">
+                    <img src="/images/<%= hobby.image %>" alt="Foto van iemand die breidt.">
+                    <h3 title="Hobby"><%= hobby.name %></h3>
+                </li>
+            <% }) %>
         </ul>
     </section>
 </main>
