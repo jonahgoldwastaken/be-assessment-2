@@ -38,7 +38,7 @@ const schema = new mongoose.Schema({
     },
     filters: [mongoose.Schema.Types.ObjectId],
     hobbies: [{
-        hobby: {
+        _id: {
             type: mongoose.Schema.Types.ObjectId,
             required: true
         },
@@ -51,19 +51,24 @@ const schema = new mongoose.Schema({
 
 const findByEmail = email =>
     new Promise((resolve, reject) => Account.findOne({email: email}, (err, data) =>
-        err ? reject(err) : resolve(data)))
+        err ? reject(new Error(err)) : resolve(data)))
 
+const countEmails = email =>
+    new Promise((resolve, reject) => Account.count({email: email}, (err, count) =>
+        err ? reject(new Error(err)) : resolve(count)))
+        
 const calcPopularity = account =>
     account.hobbies.reduce((popularity, hobby) =>
         popularity + (hobby.hobby.popularity / account.hobbies.length))
 
 const countUsersOnHobbies = id => 
     new Promise((resolve, reject) => Account.count({ hobbies: { hobby: id } }, (err, data) =>
-        err ? reject(err) : resolve(data)))
+        err ? reject(new Error(err)) : resolve(data)))
 
 const Account = mongoose.model('Account', schema)
 
 Account.findByEmail = findByEmail
+Account.countEmails = countEmails
 Account.calcPopularity = calcPopularity
 Account.countUsersOnHobbies = countUsersOnHobbies
 

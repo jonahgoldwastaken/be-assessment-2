@@ -22,7 +22,7 @@ mongoUtil.connect(err => {
         .set('view engine', 'ejs')
         .set('views', 'views')
         .use(compression())
-        .use(logger('tiny'))
+        .use(logger('dev'))
         .use('/images', express.static('uploads'))
         .use('/', express.static('assets'))
         .use(bodyParser.urlencoded({ extended: true }))

@@ -10,12 +10,14 @@ const login = async (req, res, next) => {
     const password = req.body.password
     try {
         const user = await Account.findByEmail(email)
-        const match = await argon2.verify(user.password, password)
-        if (match) {
-            mongoUtil.loginUser(req, user._id)
-            res.status(200).redirect('/home')
-        } else {
-            res.status(400).redirect('/account/login')
+        if (user) {
+            const match = await argon2.verify(user.password, password)
+            if (match) {
+                mongoUtil.loginUser(req, user._id)
+                res.status(200).redirect('/home')
+            } else {
+                res.status(400).redirect('/account/login')
+            }
         }
     } catch (err) {
         next(err)
