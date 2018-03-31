@@ -44,11 +44,9 @@ const accountForms = async (req, res, next) => {
 
 const registerUser = (req, res, next) => {
     req.session.registration =  Object.assign(req.session.registration, {
-        hobbies: typeof req.body.hobbies == 'string' ? [{
-            _id: req.body.hobbies
-        }] : req.body.hobbies.map(hobby => ({
-            _id: hobby
-        }))
+        hobbies: typeof req.body.hobbies == 'string'
+            ? [req.body.hobbies]
+            : req.body.hobbies
     })
     delete req.session.registration.step
     const newUser = new Account(req.session.registration)
@@ -71,7 +69,7 @@ const registerSession = (req, res, next) => {
         const email = req.body.email
         const password = req.body.password
         try {
-            const emailExists = await Account.findByEmail(email)
+            const emailExists = await Account.countEmails(email)
             if (!emailExists) {
                 const hashedPassword = await argon.hash(password)
                 req.session.registration = {
