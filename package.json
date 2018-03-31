@@ -15,7 +15,7 @@
     "build-watch": "cross-env NODE_ENV=development webpack-cli --progress --watch --config webpack.config.js --hide-modules",
     "build-prod": "cross-env NODE_ENV=production webpack-cli --progress --config webpack.config.js --hide-modules",
     "clean-up": "rm -r assets && rm db/log/*",
-    "lint": "eslint *.js --fix"
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
