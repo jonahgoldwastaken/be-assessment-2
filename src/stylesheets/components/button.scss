@@ -17,21 +17,25 @@ button {
     &--pink {
         color: white;
         background: var(--pink);
+        border-color: var(--pink);
     }
 
     &--blue {
         color: white;
         background: var(--blue);
+        border-color: var(--blue);
     }
 
     &--red {
         color: white;
         background: var(--red);
+        border-color: var(--red);
     }
 
     &--green {
         color: white;
         background: var(--green);
+        border-color: var(--green) !important;
     }
 
     &--large {
@@ -46,6 +50,45 @@ button {
     &--center {
         display: inline-block;
         margin: 0 auto;
+    }
+
+    &--circle {
+        width: 4rem;
+        height: 4rem;
+        background-color: white;
+        color: black;
+        border-color: black;
+        border-width: 0.2rem;
+        border-style: solid;
+        border-radius: 50%;
+        box-shadow: var(--button-shadow);
+        text-align: center;
+        line-height: 2.1rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+
+        &.btn {
+            &--pink {
+                color: var(--pink);
+                border-color: var(--pink);
+            }
+
+            &--blue {
+                color: var(--blue);
+                border-color: var(--blue);
+            }
+
+            &--red {
+                color: var(--red);
+                border-color: var(--red);
+            }
+
+            &--green {
+                color: var(--green);
+                border-color: var(--green);
+            }
+        }
     }
 }
 

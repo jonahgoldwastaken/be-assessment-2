@@ -101,6 +101,10 @@
         }
     }
 
+    &--range {
+        color: transparent;
+    }
+
     &--checkbox {
         display: flex;
         align-items: baseline;

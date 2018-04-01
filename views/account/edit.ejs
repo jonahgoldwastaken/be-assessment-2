@@ -1,4 +1,4 @@
-<%- include('../layouts/head.ejs', { title: 'Profiel bewerken - HDate' })>
+<%- include('../layouts/head.ejs', { title: 'Profiel bewerken - HDate' }) %>
 
 <form action="/account">
     <header class="header">
@@ -15,33 +15,57 @@
             <legend class="fieldset__legend">Jouw gegevens</legend>
             <label class="form-group">
                 Voornaam
-                <input autocomplete="given-name" class="form-group__input" type="text" name="first-name" value="Michael" required>
+                <input autocomplete="given-name" class="form-group__input" type="text" name="first_name" value="<%= data.firstName %>" required>
             </label>
             <label class="form-group">
                 Achternaam
-                <input autocomplete="family-name" class="form-group__input" type="text" name="last-name" value="Jorgan" required>
+                <input autocomplete="family-name" class="form-group__input" type="text" name="last_name" value="<%= data.lastName %>" required>
             </label>
             <div class="form-combine">
                 <label class="form-group form-group--age">
                     Leeftijd
-                    <input class="form-group__input" min="18" value="20" max="99" type="number" name="age" required>
+                    <input class="form-group__input" min="18" value="<%= data.age %>" max="99" type="number" name="age" required>
                 </label>
                 <label class="form-group form-group--location">
                     Woonplaats
-                    <input autocomplete="address-level2" class="form-group__input" type="text" value="Castricum" name="residence">
+                    <input autocomplete="address-level2" class="form-group__input" type="text" value="<%= data.location %>" name="location">
                 </label>
             </div>
         </fieldset>
-        <fieldset class="fieldset">
-            <legend class="fieldset__legend">Sexuele voorkeur</legend>
+        <fieldset class="fieldset" required>
+            <legend class="fieldset__legend">Je bent een...</legend>
             <div class="form-combine">
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="man" checked>
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="male" <% if (data.sex == 'male') { %> checked <% } %>> Man
+                </label>
+                <label class="form-group form-group--checkbox">
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="female" <% if (data.sex == 'female') { %> checked <% } %>> Vrouw
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset" required>
+            <legend class="fieldset__legend">en valt op...</legend>
+            <div class="form-combine">
+                <label class="form-group form-group--checkbox">
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="male" <% if (data.sexPref == 'male') { %> checked <% } %>>
                     Mannen
                 </label>
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="woman" checked>
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="female" <% if (data.sexPref == 'female') { %> checked <% } %>>
                     Vrouwen
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset" required>
+            <legend class="fieldset__legend">tussen de...</legend>
+            <div class="form-combine">
+                <label class="form-group form-group--age form-group--range">
+                    Minimale leeftijd
+                    <input type="number" class="form-group__input" value="<%= data.ageRange.min %>" max="99" min="18" name="age_min">
+                </label>
+                <label class="form-group form-group--age form-group--range">
+                    Maximale leeftijd
+                    <input type="number" class="form-group__input" value="<%= data.ageRange.max %>" max="99" min="18" name="age_max">
                 </label>
             </div>
         </fieldset>

@@ -15,6 +15,9 @@ module.exports = {
             }
         })
     },
+    isLoggedIn (req) {
+        return !!req.session.userId
+    },
     loginUser (req, id) {
         return req.session.userId = id
     }

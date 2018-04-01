@@ -95,6 +95,10 @@ const registerSession = (req, res, next) => {
             location: req.body.location,
             sex: req.body.sex,
             sexPref: req.body.sex_pref,
+            ageRange: {
+                min: req.body.age_min,
+                max: req.body.age_max
+            },
             avatar: req.file.filename
         })
         res.status(200).redirect('/account/create/3')

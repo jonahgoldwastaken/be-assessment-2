@@ -12,13 +12,50 @@
 
 }
 
+.fixed {
+    position: fixed;
+
+    &--top {
+        top: 1rem;
+    }
+    
+    &--right {
+        right: 1rem;
+    }
+
+    &--bottom {
+        bottom: 1rem;
+    }
+
+    &--left {
+        left: 1rem;
+    }
+}
+
 .static {
     position: static;
 }
 
 .sticky {
+    position: relative;
     position: -webkit-sticky;
     position: sticky;
+
+    &--top {
+        top: 1rem;
+    }
+
+    &--right {
+        right: 1rem;
+    }
+
+    &--bottom {
+        bottom: 1rem;
+    }
+
+    &--left {
+        left: 1rem;
+    }
 }
 
 .centre-content {

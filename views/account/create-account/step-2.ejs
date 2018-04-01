@@ -1,7 +1,7 @@
 <%- include('../../layouts/head.ejs', { title: 'Profiel instellen - HDate' }) %>
 
 <header class="header">
-    <a href="/logged-out/profile.html"><i class="fa fa-angle-left"></i> Annuleren</a>
+    <a href="/"><i class="fa fa-angle-left"></i> Annuleren</a>
     <h1 class="header__chat-heading">Profiel Opzetten</h1>
 </header>
 <main class="container">
@@ -54,6 +54,19 @@
                 <label class="form-group form-group--checkbox">
                     <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="female">
                     Vrouwen
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset" required>
+            <legend class="fieldset__legend">tussen de...</legend>
+            <div class="form-combine">
+                <label class="form-group form-group--age form-group--range">
+                    Minimale leeftijd
+                    <input type="number" class="form-group__input" value="18" max="99" min="18" name="age_min">
+                </label>
+                <label class="form-group form-group--age form-group--range">
+                    Maximale leeftijd
+                    <input type="number" class="form-group__input" value="99" max="99" min="18" name="age_max">
                 </label>
             </div>
         </fieldset>

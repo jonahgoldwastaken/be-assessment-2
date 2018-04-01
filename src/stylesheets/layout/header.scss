@@ -81,8 +81,11 @@
         color: black;
     }
 
-    a[href="#"] {
-        font-weight: 900;
+    a[href="#"] i {
+        background: var(--gradient-icon);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     li a {
@@ -92,7 +95,6 @@
 
     li a i {
         font-size: inherit;
-        width: 1em;
         line-height: 1em;
     }
 
@@ -100,10 +102,6 @@
         display: flex;
         justify-content: flex-start;
         align-items: baseline;
-    }
-
-    a > i {
-        width: 1rem;
     }
 
     .submit-button {

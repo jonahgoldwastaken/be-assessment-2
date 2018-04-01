@@ -35,7 +35,21 @@ const profile = async (req, res, next) => {
             })
         }
     } catch (err) {
-        console.error(err)
+        next(err)
+    }
+}
+
+const editForm = async (req, res, next) => {
+    try {
+        const data = await mongoUtil.getLoggedInUser(req)
+        if (!data) {
+            res.redirect('/')
+        } else {
+            res.render('account/edit', {
+                data: data
+            })
+        }
+    } catch (err) {
         next(err)
     }
 }
@@ -44,7 +58,7 @@ module.exports = router
     .use('/create', create)
     .get('/login', (req, res) => res.render('account/login'))
     .post('/login', login)
-    .get('/edit', (req, res) => res.render('account/edit'))
+    .get('/edit', editForm)
     .get('/hobbies', (req, res) => res.render('hobbies/list'))
     .get('/hobbies/:hobby/personalise', (req, res) => res.render('hobbies/list'))
     .get('/settings', (req, res) => res.render('account/settings'))
