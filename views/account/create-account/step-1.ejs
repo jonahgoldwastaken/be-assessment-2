@@ -1,7 +1,6 @@
 <%- include('../../layouts/head.ejs', { title: 'Account aanmaken - HDate' }) %>
 
 <header class="header">
-    <a href="/"><i class="fa fa-angle-left"></i> Annuleren</a>
     <h1 class="header__chat-heading">Registreren</h1>
 </header>
 <main class="container">
@@ -14,9 +13,14 @@
             Wachtwoord
             <input autocomplete="new-password" class="form-group__input" minlength="6" type="password" name="password" required>
         </label>
-        <button class="submit-button sticky absolute--bottom right-content" type="submit">
-            Doorgaan <i class="fa fa-angle-right"></i>
-        </button>
+        <footer class="navigation-footer">
+            <a href="/" class="navigation-footer__link">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <button type="submit" class="navigation-footer__link">
+                <i class="fa fa-angle-right"></i>
+            </button>
+        </footer>
     </form>
 </main>
 

@@ -1,7 +1,6 @@
 <%- include('../../layouts/head.ejs', { title: 'Profiel instellen - HDate' }) %>
 
 <header class="header">
-    <a href="/"><i class="fa fa-angle-left"></i> Annuleren</a>
     <h1 class="header__chat-heading">Profiel Opzetten</h1>
 </header>
 <main class="container">
@@ -62,20 +61,29 @@
         <fieldset class="fieldset" required>
             <legend class="fieldset__legend">tussen de...</legend>
             <div class="form-combine form-combine--around">
-                <label for="age_min" class="form-group form-group--age form-group--range">
-                    Minimale leeftijd
-                </label>
-                <input for="age_min" type="number" class="form-group__input form-group__input--number" value="18" max="99" min="18" name="age_min" required>
+                <div class="form-group form-group--age form-group--range">
+                    <label for="age_min" class="form-group__label form-group__label--range">
+                        Minimale leeftijd
+                    </label>
+                    <input for="age_min" type="number" class="form-group__input" value="18" max="99" min="18" name="age_min" required>
+                </div>
                 <p class="text--large">en</p>
-                <label for="age_max" class="form-group form-group--age form-group--range">
-                    Maximale leeftijd
-                </label>
-                <input id="age_max" type="number" class="form-group__input form-group__input--number" value="99" max="99" min="18" name="age_max" required>
+                <div class="form-group form-group--age form-group--range">
+                    <label for="age_max" class="form-group__label form-group__label--range">
+                        Maximale leeftijd
+                    </label>
+                    <input id="age_max" type="number" class="form-group__input" value="99" max="99" min="18" name="age_max" required>
+                </div>
             </div>
         </fieldset>
-        <button type="submit" class="submit-button right-content">
-            <i class="fa fa-angle-right"></i>
-        </button>
+        <footer class="navigation-footer">
+            <a href="/account/create/1" class="navigation-footer__link">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <button type="submit" class="navigation-footer__link">
+                <i class="fa fa-angle-right"></i>
+            </button>
+        </footer>
     </form>
 </main>
 
