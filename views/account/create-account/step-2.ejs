@@ -6,12 +6,14 @@
 </header>
 <main class="container">
     <form action="/account/create/2" method="POST" enctype="multipart/form-data">
-        <label class="form-group--image">
-            Profielfoto Toevoegen
-            <input autocomplete="photo" type="file" name="avatar" accept="image/*">
-        </label>
         <fieldset class="fieldset">
             <legend class="fieldset__legend">Jouw gegevens</legend>
+            <div class="form-group form-group--image">
+                <input id="avatar" class="form-group__input" autocomplete="photo" type="file" name="avatar" accept="image/*" value="">
+                <label for="avatar" class="form-group__label">
+                    Profielfoto Toevoegen
+                </label>
+            </div>
             <label class="form-group">
                 Voornaam
                 <input autocomplete="given-name" class="form-group__input" type="text" name="first_name" required>
@@ -44,7 +46,7 @@
                 </label>
             </div>
         </fieldset>
-        <fieldset class="fieldset" required>
+        <fieldset class="fieldset">
             <legend class="fieldset__legend">en valt op...</legend>
             <div class="form-combine">
                 <label class="form-group form-group--checkbox">
@@ -59,15 +61,16 @@
         </fieldset>
         <fieldset class="fieldset" required>
             <legend class="fieldset__legend">tussen de...</legend>
-            <div class="form-combine">
-                <label class="form-group form-group--age form-group--range">
+            <div class="form-combine form-combine--around">
+                <label for="age_min" class="form-group form-group--age form-group--range">
                     Minimale leeftijd
-                    <input type="number" class="form-group__input" value="18" max="99" min="18" name="age_min">
                 </label>
-                <label class="form-group form-group--age form-group--range">
+                <input for="age_min" type="number" class="form-group__input form-group__input--number" value="18" max="99" min="18" name="age_min" required>
+                <p class="text--large">en</p>
+                <label for="age_max" class="form-group form-group--age form-group--range">
                     Maximale leeftijd
-                    <input type="number" class="form-group__input" value="99" max="99" min="18" name="age_max">
                 </label>
+                <input id="age_max" type="number" class="form-group__input form-group__input--number" value="99" max="99" min="18" name="age_max" required>
             </div>
         </fieldset>
         <button type="submit" class="submit-button right-content">

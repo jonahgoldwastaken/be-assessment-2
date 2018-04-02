@@ -11,12 +11,12 @@
                 Wat doe je graag?
             </label>
         </div>
-        <ul class="hobbies">
+        <ul class="hobby-list">
             <% data.forEach(function (hobby) { %>
-            <li>
-                <label>
+            <li class="hobby-list__item">
+                <input class="hobby-list__checkbox" type="checkbox" id="<%= hobby._id %>" name="hobbies" value="<%= hobby._id %>">
+                <label for="<%= hobby._id %>" class="hobby-list__label">
                     <%= hobby.name %>
-                    <input type="checkbox" name="hobbies" value="<%= hobby._id %>">
                 </label>
             </li>
             <% }) %>

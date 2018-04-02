@@ -99,7 +99,7 @@
     &__submit {
         padding: 0.2em 0.5rem;
         font-size: 1em;
-        transition: background 50ms ease-in-out;
+        transition: background 50ms var(--transition);
 
         &:focus {
             outline: none;

@@ -19,6 +19,7 @@
         padding-bottom: 0.4em;
         height: 100%;
         width: 100%;
+        transition: border-bottom 0.4s var(--transition);
 
         &:focus {
             outline: none;
@@ -27,6 +28,80 @@
             ~ .hobby-search__label {
                 color: transparent;
                 position: relative;
+            }
+        }
+    }
+}
+
+.hobby-list {
+    display: block;
+    width: 100%;
+
+    &__item {
+        font-size: 1.5rem;
+        margin-bottom: 0.5em;
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        height: 2em;
+        border-radius: 1em;
+        padding: 0.5rem;
+        border: 3px solid var(--blue);
+        box-shadow: var(--button-shadow);
+    }
+
+    &__label {
+        font-size: inherit;
+        display: block;
+        width: calc(100% - 1em);
+        color: black;
+        transition: color 0.4s var(--transition);
+    }
+
+    &__checkbox {
+        position: relative;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        margin: 0;
+        font-family: Font Awesome\ 5 Free;
+        font-weight: 900;
+        font-size: inherit;
+        border-radius: 50%;
+        border: 1px solid black;
+        width: 1.5rem;
+        height: 1em;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:before {
+            content: "\f067";
+            position: absolute;
+            color: black;
+            width: calc(1.5em - 2px);
+            height: calc(1.5em - 2px);
+            top: 0;
+            left: 0;
+            line-height: calc(1.5em - 2px);
+            text-align: center;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: transform 0.4s var(--transition), color 0.4s var(--transition);
+            transform: rotate(0deg);
+        }
+
+        &:checked {
+            border-color: var(--green);
+
+            &:before {
+                color: var(--green);
+                transform: rotate(45deg);
+            }
+
+            ~.hobby-list__label {
+                color: var(--green);
             }
         }
     }

@@ -4,25 +4,33 @@
     margin-bottom: 1em;
     font-size: 1.2rem;
 
+    &__label {
+        font-size: 1.2rem;
+    }
+
     &__input {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
         margin-top: 0.3em;
-        border: 2px solid var(--pink);
+        border: 1px solid var(--blue);
         padding: 0.3rem 0.4rem;
         width: 100%;
         border-radius: 0.4rem;
         font-size: 1.4rem;
-        transition: border 0.2s ease-in-out;
+        transition: border 0.4s var(--transition);
 
         &:focus {
             outline: none;
-            border-color: var(--blue);
+            border-width: 3px;
         }
 
         &:valid {
             border-color: var(--green);
+        }
+
+        &--number {
+            width: 3.5rem;
         }
     }
 
@@ -35,8 +43,8 @@
         width: 1rem;
         height: 1rem;
         background: none;
-        transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
-        border: 2px solid var(--blue);
+        transition: background 0.4s var(--transition), border 0.4s var(--transition);
+        border: 1px solid var(--blue);
         border-radius: 0.2rem;
         margin-right: 0.5rem;
 
@@ -44,51 +52,76 @@
             position: absolute;
             top: 0;
             left: 0;
-            bottom: 0;
-            right: 0;
+            width: calc(1rem - 2px);
+            height: calc(1rem - 2px);
             text-align: center;
-            line-height: .78rem;
             color: white;
             content: '\f00c';
-            font-size: .9em;
+            line-height: calc(1rem - 2px);
+            font-size: inherit;
             transform: scale(0, 0);
-            transition: transform 0.2s ease-in-out;
+            transition: transform 0.4s var(--transition),
+                width 0.4s var(--transition),
+                height 0.4s var(--transition),
+                line-height 0.4s var(--transition);
         }
 
         &:focus {
             outline: none;
+            border-width: 3px;
+
+            &:before {
+                width: calc(1rem - 6px);
+                height: calc(1rem - 6px);
+                line-height: calc(1rem - 6px);
+            }
         }
 
         &:checked {
-            border: 2px solid var(--pink);
-            background: var(--pink);
-        }
+            border: 1px solid var(--green);
+            background: var(--green);
 
-        &:checked:before {
-            transform: scale(1, 1);
+            &:focus {
+                background-color: var(--blue);
+                border-width: 3px;
+            }
+            
+            &:before {
+                transform: scale(1, 1);
+            }
         }
     }
 
     &--image {
-        height: 8rem;
-        width: 8rem;
-        margin: 0 auto;
-        margin-bottom: 1.2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        border: 2px dashed var(--blue);
-        border-radius: 50%;
-        font-size: 1.2rem;
-        text-align: center;
-
-        &--filled {
-            background: url('/images/profile-4.jpg') no-repeat center/cover;
+        &:not(.enabled) {
+            display: flex;
+            flex-direction: column-reverse;
         }
+        
+        &.enabled {
+            .form-group__input {
+                display: none;
 
-        input {
-            display: none;
+                &.filled {
+                    border-style: solid;
+                    border-color: var(--green);
+                }
+            }
+
+            .form-group__label {
+                height: 8rem;
+                width: 8rem;
+                margin: 0 auto;
+                margin-bottom: 1.2rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                border: 2px dashed var(--blue);
+                border-radius: 50%;
+                font-size: 1.2rem;
+                text-align: center;
+            }
         }
     }
 
@@ -102,7 +135,7 @@
     }
 
     &--range {
-        color: transparent;
+        display: none;
     }
 
     &--checkbox {
@@ -115,6 +148,11 @@
 .form-combine {
     display: flex;
     align-items: flex-end;
+
+    &--around {
+        justify-content: space-around;
+        align-items: center;
+    }
 }
 
 .fieldset {
@@ -130,6 +168,7 @@
         text-decoration: underline;
         margin-bottom: 0.5em;
         width: 100%;
+        transition: color 0.4s var(--transition);
 
         a {
             display: flex;
@@ -143,6 +182,12 @@
         &--bb {
             border-bottom: 2px solid black;
             text-decoration: none;
+        }
+    }
+
+    &:valid {
+        .fieldset__legend {
+            color: var(--green);
         }
     }
 }
