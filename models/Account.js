@@ -110,10 +110,10 @@ const fetchUser = id =>
     new Promise((resolve, reject) =>
         Account.findOne({_id: id})
             .populate('hobbies')
-            .exec(async (err, data) => {
+            .exec((err, data) => {
                 if (err) reject(new Error(err))
                 try {
-                    data = await helpers.compress.hobbies(data)
+                    data = helpers.compress.hobbies(data)
                     resolve(data)
                 } catch (err) {
                     reject(new Error(err))
