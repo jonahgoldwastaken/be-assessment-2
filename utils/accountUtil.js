@@ -12,7 +12,8 @@ const filterUsersWithDislikes = (user, users) =>
     })
 
 const filterLoggedInUser = (user, users) =>
-    users.filter(currentUser => user != currentUser)
+    users.filter(currentUser =>
+        !(user._id.equals(currentUser._id)))
 
 const filterAgeRange = (user, users) =>
     users.filter(currentUser => {
