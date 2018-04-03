@@ -7,8 +7,8 @@
         <a href="/account/user">
             <div class="card__header">
                 <img src="/images/<%= data.avatar %>" alt="Profielfoto Daniëlle Schinkels">
-                <h2>Daniëlle Schinkels</h2>
-                <h3>21 jaar</h3>
+                <h2><%= data.firstName + data.lastName %></h2>
+                <h3><%= data.age %> jaar</h3>
             </div>
             <ul>
                 <% data.hobbies.forEach(function (hobby) { %>
@@ -29,9 +29,9 @@
 </main>
 <% if (data) { %>
     <footer class="button-footer">
-        <a class="btn btn--circle btn--red" href="/home/other"><i class="fa fa-thumbs-down"></i></a>
+        <button data-dislike class="btn btn--circle btn--red"><i class="fa fa-thumbs-down"></i></button>
         <a class="btn btn--circle" href="/hobbies/filter"><i class="fa fa-filter"></i></a>
-        <a class="btn btn--circle btn--green" href="/home/match"><i class="fa fa-thumbs-up"></i></a>
+        <button data-like class="btn btn--circle btn--green"><i class="fa fa-thumbs-up"></i></button>
     </footer>
 <% } %>
 

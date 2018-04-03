@@ -62,8 +62,18 @@ const schema = new mongoose.Schema({
             description: String
         }
     },
-    likes: [mongoose.Schema.Types.ObjectId],
-    dislikes: [mongoose.Schema.Types.ObjectId]
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account'
+    }],
+    dislikes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account'
+    }],
+    matches: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account'
+    }]
 })
 
 const findByEmail = email =>
@@ -89,10 +99,7 @@ const fetchAllUsers = () =>
             .exec((err, data) => {
                 if (err) reject(new Error(err))
                 try {
-                    const users = data.map(async user => {
-                        const compressedUser = await helpers.compress.hobbies(user)
-                        return compressedUser
-                    })
+                    const users = data.map(user => helpers.compress.hobbies(user))
                     resolve(users)
                 } catch (err) {
                     reject(new Error(err))
@@ -128,12 +135,11 @@ const processUserList = (loggedInUser, users) =>
 
 const Account = mongoose.model('Account', schema)
 
-Account.findByEmail = findByEmail
-Account.countEmails = countEmails
-Account.calcPopularity = calcPopularity
-Account.countUsersOnHobbies = countUsersOnHobbies
-Account.fetchUser = fetchUser
-Account.fetchAllUsers = fetchAllUsers
-Account.processUserList = processUserList
-
 module.exports = Account
+module.exports.findByEmail = findByEmail
+module.exports.countEmails = countEmails
+module.exports.calcPopularity = calcPopularity
+module.exports.countUsersOnHobbies = countUsersOnHobbies
+module.exports.fetchUser = fetchUser
+module.exports.fetchAllUsers = fetchAllUsers
+module.exports.processUserList = processUserList
