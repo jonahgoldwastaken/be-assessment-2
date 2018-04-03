@@ -13,7 +13,7 @@
             <ul>
                 <% data.hobbies.forEach(function (hobby) { %>
                     <li class="gallery-item gallery-item--card">
-                        <img src="/images/<%= hobby.image %>.jpg" role="presentation">
+                        <img src="/images/<%= hobby.image %>" role="presentation">
                         <h3 title="Hobby"><%= hobby.name %></h3>
                         <% if (hobby.description) { %>
                             <p><%= hobby.description %></p>
