@@ -1,0 +1,17 @@
+.bg {
+    &--red {
+        background-color: var(--red);
+    }
+
+    &--green {
+        background-color: var(--green);
+    }
+
+    &--blue {
+        background-color: var(--blue);
+    }
+
+    &--pink {
+        background-color: var(--pink);
+    }
+}

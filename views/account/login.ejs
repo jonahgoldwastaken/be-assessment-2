@@ -7,11 +7,17 @@
     <form action="/account/login" method="post">
         <label class="form-group">
             E-mailadres
-            <input class="form-group__input" type="email" name="email" required>
+            <input class="form-group__input" type="email" name="email" value="<%= email %>" required>
+            <% if (error && error.email) { %>
+                <small class="error text--light bg--red"><%= error.email %></small>
+            <% } %>
         </label>
         <label class="form-group">
             Password
             <input class="form-group__input" type="password" name="password" required>
+            <% if (error && error.password) { %>
+                <small class="error text--light bg--red"><%= error.password %></small>
+            <% } %>
         </label>
         <button class="absolute absolute--bottom absolute--centre btn btn--large btn--blue btn--center" type="submit">Log in</button>
     </form>

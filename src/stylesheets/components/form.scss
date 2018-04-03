@@ -232,3 +232,10 @@
         align-items: baseline;
     }
 }
+
+.error {
+    --padding: .25em .5em;
+    display: inline-block;
+    margin-top: .25em;
+    padding: var(--padding);
+}

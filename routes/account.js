@@ -16,11 +16,16 @@ const login = async (req, res, next) => {
                 mongoUtil.loginUser(req, user._id)
                 res.status(200).redirect('/home')
             } else {
-                res.status(400).redirect('/account/login')
+                throw { password: 'Wachtwoord is ongeldig.'}
             }
+        } else {
+            throw { email: 'E-mailadres niet gevonden.' }
         }
     } catch (err) {
-        next(err)
+        res.render('account/login', {
+            error: err,
+            email: email
+        })
     }
 }
 
@@ -56,7 +61,8 @@ const editForm = async (req, res, next) => {
 
 module.exports = router
     .use('/create', create)
-    .get('/login', (req, res) => res.render('account/login'))
+    .get('/login', (req, res) =>
+        res.render('account/login', { error: {}, email: '' }))
     .post('/login', login)
     .get('/edit', editForm)
     .get('/hobbies', (req, res) => res.render('hobbies/list'))
