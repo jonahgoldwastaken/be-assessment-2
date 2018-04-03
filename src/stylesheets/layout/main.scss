@@ -5,4 +5,8 @@
     &--vert-center {
         margin-top: 33vh;
     }
+
+    @media screen and (min-width: 60rem) {
+        width: 30rem;
+    }
 }

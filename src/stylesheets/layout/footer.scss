@@ -5,7 +5,7 @@
 }
 
 .button-footer {
-    position: fixed;
+    position: absolute;
     bottom: 1rem;
     left: 0;
     right: 0;
@@ -16,9 +16,8 @@
 }
 
 .navigation-footer {
-    position: -webkit-sticky;
-    position: sticky;
-    top: calc(100vh - 4rem);
+    position: absolute;
+    bottom: 1rem;
     left: 0;
     width: 100%;
     display: flex;
