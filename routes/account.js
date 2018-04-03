@@ -59,6 +59,23 @@ const editForm = async (req, res, next) => {
     }
 }
 
+const userProfile = async (req, res, next) => {
+    const id = req.params.id
+    try {
+        const data = await Account.fetchUser(id)
+        if (!data) {
+            res.redirect('/home')
+        } else {
+            res.render('home/user-profile', {
+                data: data,
+                back: req.header('Referer')
+            })
+        }
+    } catch (err) {
+        next(err)
+    }
+}
+
 module.exports = router
     .use('/create', create)
     .get('/login', (req, res) =>
@@ -68,4 +85,5 @@ module.exports = router
     .get('/hobbies', (req, res) => res.render('hobbies/list'))
     .get('/hobbies/:hobby/personalise', (req, res) => res.render('hobbies/list'))
     .get('/settings', (req, res) => res.render('account/settings'))
+    .get('/:id', userProfile)
     .get('/', profile)
