@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "startDB": "mongod --dbpath db --fork --logpath db/log/mongo.log",
+    "prestart": "yarn build-prod",
     "start": "node .",
     "prewatch": "yarn build",
     "watch": "nodemon --inspect .",
