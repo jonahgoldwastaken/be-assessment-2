@@ -1,18 +1,33 @@
 <%- include('../layouts/head.ejs', { title: 'Profiel bewerken - HDate' }) %>
 
-<form action="/account">
-    <header class="header">
-        <a href="/account">Annuleren</a>
-        <h1 class="header__chat-heading">Profiel Bewerken</h1>
-        <button type="submit" class="submit-button">Opslaan</button>
-    </header>
-    <main class="container">
-        <label class="form-group--image form-group--image--filled">
-            Profielfoto aanpassen
-            <input autocomplete="photo" type="file" name="profile-image" accept="image/*">
-        </label>
+<header class="header">
+    <a href="/account">Annuleren</a>
+    <h1 class="header__chat-heading">Profiel Bewerken</h1>
+</header>
+<main>
+    <form class="two-column" action="/account">
         <fieldset class="fieldset">
-            <legend class="fieldset__legend">Jouw gegevens</legend>
+            <legend class="fieldset__legend">Accountgegevens</legend>
+            <label class="form-group">
+                <input autocomplete="email" type="email" name="email" class="form-group__input" value="<%= data.email %>" required>
+            </label>
+            <label class="form-group">
+                Oud wachtwoord
+                <input type="password" name="password_old" class="form-group__input">
+            </label>
+            <label class="form-group">
+                Nieuw wachtwoord
+                <input type="password" name="password_new" class="form-group__input">
+            </label>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset__legend">Persoonlijke info</legend>
+            <div class="form-group form-group--image">
+                <input id="avatar" class="form-group__input" autocomplete="photo" type="file" name="avatar" accept="image/*" value="">
+                <label for="avatar" class="form-group__label">
+                    Profielfoto Toevoegen
+                </label>
+            </div>
             <label class="form-group">
                 Voornaam
                 <input autocomplete="given-name" class="form-group__input" type="text" name="first_name" value="<%= data.firstName %>" required>
@@ -32,53 +47,51 @@
                 </label>
             </div>
         </fieldset>
-        <fieldset class="fieldset" required>
+        <fieldset class="fieldset fieldset--small" required>
             <legend class="fieldset__legend">Je bent een...</legend>
             <div class="form-combine">
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="male" <% if (data.sex == 'male') { %> checked <% } %>> Man
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="male" <% if (data.sex=='male' ) { %> checked
+                    <% } %>> Man
                 </label>
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="female" <% if (data.sex == 'female') { %> checked <% } %>> Vrouw
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="female" <% if (data.sex=='female' ) { %> checked
+                    <% } %>> Vrouw
                 </label>
             </div>
         </fieldset>
-        <fieldset class="fieldset" required>
+        <fieldset class="fieldset fieldset--small" required>
             <legend class="fieldset__legend">en valt op...</legend>
             <div class="form-combine">
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="male" <% if (data.sexPref == 'male') { %> checked <% } %>>
-                    Mannen
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="male" <% if (data.sexPref=='male' ) { %> checked
+                    <% } %>> Mannen
                 </label>
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="female" <% if (data.sexPref == 'female') { %> checked <% } %>>
-                    Vrouwen
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="female" <% if (data.sexPref=='female' ) { %> checked
+                    <% } %>> Vrouwen
                 </label>
             </div>
         </fieldset>
-        <fieldset class="fieldset" required>
+        <fieldset class="fieldset fieldset--small" required>
             <legend class="fieldset__legend">tussen de...</legend>
-            <div class="form-combine">
-                <label class="form-group form-group--age form-group--range">
-                    Minimale leeftijd
-                    <input type="number" class="form-group__input" value="<%= data.ageRange.min %>" max="99" min="18" name="age_min">
-                </label>
-                <label class="form-group form-group--age form-group--range">
-                    Maximale leeftijd
-                    <input type="number" class="form-group__input" value="<%= data.ageRange.max %>" max="99" min="18" name="age_max">
-                </label>
+            <div class="form-combine form-combine--between">
+                <div class="form-group form-group--age form-group--range">
+                    <label for="age_min" class="form-group__label form-group__label--range">
+                        Minimale leeftijd
+                    </label>
+                    <input for="age_min" type="number" class="form-group__input" value="18" max="99" min="18" name="age_min" required>
+                </div>
+                <p class="text--large">en</p>
+                <div class="form-group form-group--age form-group--range">
+                    <label for="age_max" class="form-group__label form-group__label--range">
+                        Maximale leeftijd
+                    </label>
+                    <input id="age_max" type="number" class="form-group__input" value="99" max="99" min="18" name="age_max" required>
+                </div>
             </div>
         </fieldset>
-        <fieldset class="fieldset">
-            <legend class="fieldset__legend fieldset__legend--bb"><a href="/hobbies">Hobbies <i class="fa fa-angle-right"></i></a></legend>
-            <ul class="selected-hobbies">
-                <li class="selected-hobbies__hobby">Breien <button type="button">X</button></li>
-                <li class="selected-hobbies__hobby">Filmen <button type="button">X</button></li>
-                <li class="selected-hobbies__hobby">Montage <button type="button">X</button></li>
-                <li class="selected-hobbies__hobby">Koken <button type="button">X</button></li>
-            </ul>
-        </fieldset>
-    </main>
-</form>
+    </form>
+</main>
 
 <%- include('../layouts/tail.ejs') %>
