@@ -8,6 +8,10 @@
     top: 0px;
     z-index: 999;
 
+    @media screen and (min-width: 60rem) {
+        box-shadow: var(--desktop-shadow);
+    }
+
     * {
         width: 100%;
     }
@@ -35,6 +39,7 @@
         margin-top: 1em;
         margin-bottom: 0.3em;
         text-decoration: underline;
+        
         &--underline {
             text-decoration: underline;
         }

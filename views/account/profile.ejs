@@ -8,9 +8,9 @@
         <h2 class="user-info__age"><%= data.age %></h2>
         <h2 class="user-info__location"><%= data.location %></h2>
     </section>
-    <section>
-        <h2 class="header__heading">Hobbies</h2>
-        <ul>
+    <section class="gallery--profile">
+        <h2 class="header__heading gallery__heading">Hobbies</h2>
+        <ul class="gallery">
             <% data.hobbies.forEach(function (hobby) { %>
                 <li class="gallery-item gallery-item--profile">
                     <img role="presentation" src="/images/<%= hobby.image %>">

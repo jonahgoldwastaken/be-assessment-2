@@ -7,10 +7,11 @@
         <a href="/home/user/<%= data._id %>">
             <div class="card__header">
                 <img src="/images/<%= data.avatar %>" alt="Profielfoto Daniëlle Schinkels">
-                <h2><%= data.firstName + data.lastName %></h2>
+                <h2><%= data.firstName %></h2>
                 <h3><%= data.age %> jaar</h3>
+                <h4><%= data.location %></h4>
             </div>
-            <ul>
+            <ul class="gallery gallery--card">
                 <% data.hobbies.forEach(function (hobby) { %>
                     <li class="gallery-item gallery-item--card">
                         <img src="/images/<%= hobby.image %>" role="presentation">
