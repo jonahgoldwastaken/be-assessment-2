@@ -1,8 +1,12 @@
 .container {
-    width: calc(100% - 2.5rem);
+    width: calc(100% - 2rem);
     margin: 0 auto;
     
     &--vert-center {
         margin-top: 33vh;
+    }
+
+    @media screen and (min-width: 60rem) {
+        width: 30rem;
     }
 }

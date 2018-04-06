@@ -3,14 +3,16 @@ const router = require('express').Router()
 const argon = require('argon2')
 const upload = require('../utils/multerUtil').getInstance()
 const Account = require('../models/Account')
-const Hobby = require('../models/Hobby')
+const accountUtil = require('../utils/accountUtil')
+const hobbyUtil = require('../utils/hobbyUtil')
 
 const accountForms = async (req, res, next) => {
-    let step = +req.params.step
+    const step = +req.params.step
     let registrationData = null
     if (req.session.registration) {
         registrationData = req.session.registration
-        step != registrationData.step ? res.redirect(`/account/create/${registrationData.step}`) : ''
+        if (step !== registrationData.step)
+            res.redirect(`/account/create/${registrationData.step}`)
     }
     const stepOne = () =>
         res.render('account/create-account/step-1')
@@ -20,7 +22,7 @@ const accountForms = async (req, res, next) => {
         })
     const stepThree = async () => {
         try {
-            const hobbies = await Hobby.findAllAndSort()
+            const hobbies = await hobbyUtil.find.all()
             res.render('account/create-account/step-3', {
                 partialUser: registrationData,
                 data: hobbies
@@ -43,8 +45,8 @@ const accountForms = async (req, res, next) => {
 }
 
 const registerUser = (req, res, next) => {
-    req.session.registration =  Object.assign(req.session.registration, {
-        hobbies: typeof req.body.hobbies == 'string'
+    req.session.registration = Object.assign(req.session.registration, {
+        hobbies: typeof req.body.hobbies === 'string'
             ? [req.body.hobbies]
             : req.body.hobbies
     })
@@ -66,20 +68,18 @@ const registerUser = (req, res, next) => {
 const registerSession = (req, res, next) => {
     const step = +req.params.step
     const stepOne = async () => {
-        const email = req.body.email
-        const password = req.body.password
+        const { email, password } = req.body
         try {
-            const emailExists = await Account.countEmails(email)
+            const emailExists = await accountUtil.find.byEmail(email)
             if (!emailExists) {
                 const hashedPassword = await argon.hash(password)
                 req.session.registration = {
                     step: 2,
-                    email: email,
+                    email,
                     password: hashedPassword
                 }
                 res.status(200).redirect('/account/create/2')
-            }
-            else {
+            } else {
                 res.status(400).redirect('/account/create/1')
             }
         } catch (err) {
@@ -94,7 +94,13 @@ const registerSession = (req, res, next) => {
             age: req.body.age,
             location: req.body.location,
             sex: req.body.sex,
-            sexPref: req.body.sex_pref,
+            sexPref: typeof req.body.sex_pref === 'string'
+                ? [req.body.sex_pref]
+                : req.body.sex_pref,
+            ageRange: {
+                min: req.body.age_min,
+                max: req.body.age_max
+            },
             avatar: req.file.filename
         })
         res.status(200).redirect('/account/create/3')
@@ -103,7 +109,7 @@ const registerSession = (req, res, next) => {
         case 2:
             stepTwo()
             break
-        case 1:
+        default:
             stepOne()
             break
     }

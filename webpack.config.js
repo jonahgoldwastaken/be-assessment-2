@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const webpack = require('webpack')
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')

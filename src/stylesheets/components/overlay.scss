@@ -9,11 +9,11 @@
     padding: 1rem;
     border-radius: 0.4em;
     box-shadow: var(--box-shadow);
-}
 
-.overlay--blur ~ * {
-    user-select: none;
-    pointer-events: none;
-    -webkit-filter: blur(5px);
-    filter: blur(5px);
+    &--blur~* {
+        user-select: none;
+        pointer-events: none;
+        -webkit-filter: blur(5px);
+        filter: blur(5px);
+    }
 }

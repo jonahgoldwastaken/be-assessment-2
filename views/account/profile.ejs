@@ -8,21 +8,18 @@
         <h2 class="user-info__age"><%= data.age %></h2>
         <h2 class="user-info__location"><%= data.location %></h2>
     </section>
-    <section>
-        <h2 class="header__heading">Hobbies</h2>
-        <ul class="hobbies-list">
+    <section class="gallery--profile">
+        <h2 class="header__heading gallery__heading">Hobbies</h2>
+        <ul class="gallery">
             <% data.hobbies.forEach(function (hobby) { %>
-                <li class="hobbies-list__item">
-                    <img src="/images/<%= hobby.image %>" alt="Foto van iemand die breidt.">
+                <li class="gallery-item gallery-item--profile">
+                    <img role="presentation" src="/images/<%= hobby.image %>">
                     <h3 title="Hobby"><%= hobby.name %></h3>
                 </li>
             <% }) %>
         </ul>
     </section>
 </main>
-<footer class="container btn-group">
-    <a class="btn btn--blue" href="/account/edit">Profiel bewerken</a>
-    <a class="btn btn--pink" href="/account/settings">Instellingen</a>
-</footer>
+<a class="fixed fixed--bottom fixed--right btn btn--circle btn--pink" href="/account/edit"><i class="fas fa-pencil-alt"></i></a>
 
 <%- include('../layouts/tail.ejs') %>

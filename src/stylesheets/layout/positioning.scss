@@ -12,13 +12,54 @@
 
 }
 
+.fixed {
+    position: fixed;
+
+    @media screen and (min-width: 60rem) {
+        position: absolute;
+    }
+
+    &--top {
+        top: 1rem;
+    }
+    
+    &--right {
+        right: 1rem;
+    }
+
+    &--bottom {
+        bottom: 1rem;
+    }
+
+    &--left {
+        left: 1rem;
+    }
+}
+
 .static {
     position: static;
 }
 
 .sticky {
+    position: relative;
     position: -webkit-sticky;
     position: sticky;
+
+    &--top {
+        top: 1rem;
+    }
+
+    &--right {
+        right: 1rem;
+    }
+
+    &--bottom {
+        bottom: 1rem;
+    }
+
+    &--left {
+        left: 1rem;
+    }
 }
 
 .centre-content {
@@ -35,4 +76,21 @@
 
 .container .centre-content, .container .right-content {
     width: calc(100% - 2.5rem);
+}
+
+.two-column {
+    @media screen and (min-width: 60rem) {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        padding: 0 1rem;
+    
+        .fieldset {
+            flex: 0 0 25rem;
+    
+            &--small {
+                flex: 0 0 15rem;
+            }
+        }
+    }
 }

@@ -1,23 +1,27 @@
 require('dotenv').config()
 const express = require('express')
-const port = process.env.PORT || 3000
 const compression = require('compression')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const mongoUtil = require('./utils/mongoUtil')
+const mongoose = require('mongoose')
+
 const multerUtil = require('./utils/multerUtil')
-mongoUtil.connect(err => {
+const home = require('./routes/home')
+const account = require('./routes/account')
+const hobbyCategories = require('./routes/hobbies')
+const messages = require('./routes/messages')
+
+const url = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
+const port = process.env.PORT || 3000
+
+mongoose.connect(url, (err) => {
     if (err) {
         console.error(err)
         return
     }
     multerUtil.createInstance()
     const app = express()
-    const home = require('./routes/home')
-    const account = require('./routes/account')
-    const hobbyCategories = require('./routes/hobbies')
-    const messages = require('./routes/messages')
     module.exports = app
         .set('view engine', 'ejs')
         .set('views', 'views')

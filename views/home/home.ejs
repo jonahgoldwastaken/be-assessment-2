@@ -2,27 +2,42 @@
 
 <%- include('../layouts/homeHeader', { url: 'home' }) %>
 <main class="container">
+    <% if (data) { %>
     <article class="card">
-        <a href="/account/user">
+        <a href="/account/<%= data._id %>">
             <div class="card__header">
-                <img src="/images/profile-1.jpg" alt="Profielfoto Daniëlle Schinkels">
-                <h2>Daniëlle Schinkels</h2>
-                <h3>21 jaar</h3>
+                <img src="/images/<%= data.avatar %>" alt="Profielfoto Daniëlle Schinkels">
+                <h2><%= data.firstName %></h2>
+                <h3><%= data.age %> jaar</h3>
+                <h4><%= data.hobbies.length %> hobbies, waaronder:</h4>
             </div>
-            <ul class="card__gallery">
-                <li>
-                    <img src="/images/fishing.jpg" alt="Foto van iemand die vist.">
-                    <h3 title="Hobby">Vissen</h3>
-                    <h4 title="Categorie">Buiten</h4>
-                </li>
+            <ul class="gallery gallery--card">
+                <% data.hobbies.some(function (hobby, i) { %>
+                    <li class="gallery-item gallery-item--card">
+                        <img src="/images/<%= hobby.image %>" role="presentation">
+                        <h3 title="Hobby"><%= hobby.name %></h3>
+                        <% if (hobby.description) { %>
+                            <p><%= hobby.description %></p>
+                        <% } %>
+                    </li>
+                    <% return i >= 2 %>
+                <% }) %>
             </ul>
         </a>
     </article>
+    <% } else { %>
+    <article class="card">
+        <h2>Geen gebruikers over</h2>
+        <p>Je hebt alle mogelijke gebruikers gehad.</p>
+    </article>
+    <% } %>
 </main>
-<footer class="button-footer">
-    <a class="button-footer__button button-footer__button--dislike" href="/home/other"><i class="fa fa-thumbs-down"></i></a>
-    <a class="button-footer__button" href="/hobbies/filter"><i class="fa fa-filter"></i></a>
-    <a class="button-footer__button button-footer__button--like" href="/home/match"><i class="fa fa-thumbs-up"></i></a>
-</footer>
+<% if (data) { %>
+    <footer class="button-footer">
+        <button data-dislike class="btn btn--circle btn--red"><i class="fa fa-thumbs-down"></i></button>
+        <a class="btn btn--circle" href="/hobbies/filter"><i class="fa fa-filter"></i></a>
+        <button data-like class="btn btn--circle btn--green"><i class="fa fa-thumbs-up"></i></button>
+    </footer>
+<% } %>
 
 <%- include('../layouts/tail.ejs') %>

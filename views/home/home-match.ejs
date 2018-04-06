@@ -8,8 +8,8 @@
         <img class="new-match__avatar" src="/images/profile-1.jpg" alt="">
     </div>
     <div class="btn-group">
-        <a class="btn btn--blue" href="/messages/chat">Berichtje sturen</a>
-        <a class="btn btn--pink" href="/home/other">Verder swipen</a>
+        <a class="btn-group_btn btn btn--blue" href="/messages/chat">Berichtje sturen</a>
+        <a class="btn-group_btn btn btn--pink" href="/home/other">Verder swipen</a>
     </div>
 </div>
 <header class="header header--home">
@@ -31,18 +31,17 @@
             </div>
             <ul class="card__gallery">
                 <li>
-                    <img src="/images/motorcross.jpg" alt="Foto van iemand die motorcrosst.">
+                    <img role="presentation" src="/images/motorcross.jpg">
                     <h3 title="Hobby">Motorcross</h3>
-                    <h4 title="Categorie">Sport</h4>
                 </li>
             </ul>
         </a>
     </article>
 </main>
 <footer class="button-footer">
-    <a class="button-footer__button button-footer__button--dislike" href="/home"><i class="fa fa-thumbs-down"></i></a>
-    <a class="button-footer__button" href="/hobbies/filter"><i class="fa fa-filter"></i></a>
-    <a class="button-footer__button button-footer__button--like" href="/home"><i class="fa fa-thumbs-up"></i></a>
+    <a class="btn--circle btn--circle--dislike" href="/home"><i class="fa fa-thumbs-down"></i></a>
+    <a class="btn--circle" href="/hobbies/filter"><i class="fa fa-filter"></i></a>
+    <a class="btn--circle btn--circle--like" href="/home"><i class="fa fa-thumbs-up"></i></a>
 </footer>
 
 <%- include('../layouts/tail.ejs') %>

@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "startDB": "mongod --dbpath db --fork --logpath db/log/mongo.log",
+    "prestart": "yarn build-prod",
     "start": "node .",
     "prewatch": "yarn build",
     "watch": "nodemon --inspect .",
@@ -29,21 +30,23 @@
   },
   "homepage": "https://github.com/theonejonahgold/hdate#readme",
   "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.10.0",
+    "extract-text-webpack-plugin": "4.0.0-beta.0",
+    "nodemon": "^1.17.2"
+  },
+  "dependencies": {
+    "sass-loader": "^6.0.7",
+    "webpack": "^4.2.0",
+    "webpack-cli": "^2.0.13",
+    "node-sass": "^4.8.3",
     "@babel/core": "^7.0.0-beta.42",
     "@babel/preset-env": "^7.0.0-beta.42",
     "babel-loader": "^8.0.0-beta",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
-    "eslint": "^4.19.1",
-    "eslint-loader": "^2.0.0",
-    "extract-text-webpack-plugin": "4.0.0-beta.0",
-    "node-sass": "^4.8.3",
-    "nodemon": "^1.17.2",
-    "sass-loader": "^6.0.7",
-    "webpack": "^4.2.0",
-    "webpack-cli": "^2.0.13"
-  },
-  "dependencies": {
     "argon2": "^0.17.2",
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.2",

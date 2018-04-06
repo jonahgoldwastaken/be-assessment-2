@@ -2,18 +2,53 @@ p {
     margin-bottom: 1.8em;
 }
 
-.text--center {
-    text-align: center;
-}
+.text {
+    &--center {
+        text-align: center;
+    }
 
-.text--bold {
-    font-weight: bold;
-}
+    &--right {
+        text-align: right;
+    }
 
-.text--mb {
-    margin-bottom: 0.6em;
-}
+    &--bold {
+        font-weight: bold;
+    }
 
-.text--mt {
-    margin-top: 3em;
+    &--mb {
+        margin-bottom: 0.6em;
+    }
+
+    &--mt {
+        margin-top: 3em;
+    }
+
+    &--large {
+        font-size: 1.5em;
+        margin-bottom: 0;
+    }
+
+    &--red {
+        color: var(--red);
+    }
+
+    &--green {
+        color: var(--green);
+    }
+
+    &--blue {
+        color: var(--blue);
+    }
+
+    &--pink {
+        color: var(--pink);
+    }
+
+    &--dark {
+        color: black;
+    }
+
+    &--light {
+        color: white;
+    }
 }

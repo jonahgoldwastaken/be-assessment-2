@@ -7,41 +7,41 @@
     border-top: 1px solid black;
     color: black;
     text-decoration: none;
-}
 
-.chat--first {
-    border-top: 0;
-}
+    &__avatar {
+        grid-row: 1 / span 2;
+        width: 4em;
+        height: 4em;
+        object-fit: cover;
+        align-self: center;
+        justify-self: start;
+        border-radius: 50%;
+    }
 
-.chat__avatar {
-    grid-row: 1 / span 2;
-    width: 4em;
-    height: 4em;
-    object-fit: cover;
-    align-self: center;
-    justify-self: start;
-    border-radius: 50%;
-}
+    &__user {
+        font-size: 1em;
+        grid-row: 1 / span 1;
+        grid-column: 2 / span 1;
+        align-self: center;
+    }
+    
+    &__message {
+        grid-column: 2 / span 2;
+        grid-row: 2;
+        align-self: center;
+        margin-bottom: 0;
+    }
+    
+    &--first {
+        border-top: 0;
+    }
 
-.chat__user {
-    font-size: 1em;
-    grid-row: 1 / span 1;
-    grid-column: 2 / span 1;
-    align-self: center;
-}
-
-.chat__message {
-    grid-column: 2 / span 2;
-    grid-row: 2;
-    align-self: center;
-    margin-bottom: 0;
-}
-
-.chat__timestamp {
-    grid-row: 2;
-    grid-column: 3;
-    text-align: right;
-    align-self: center;
+    &__timestamp {
+        grid-row: 2;
+        grid-column: 3;
+        text-align: right;
+        align-self: center;
+    }
 }
 
 .message-container {
@@ -58,80 +58,85 @@
     background: darkgrey;
     color: white;
     line-height: 1.1em;
-}
 
-.message:last-child {
-    margin-bottom: 4rem;
-}
+    &--match {
+        background: var(--pink);
+        align-self: flex-start;
+    }
 
-.message--match {
-    background: var(--pink);
-    align-self: flex-start;
-}
+    &--user {
+        background: var(--blue);
+        align-self: flex-end;
+    }
 
-.message--user {
-    background: var(--blue);
-    align-self: flex-end;
+    &:last-child {
+        margin-bottom: 4rem;
+    }
 }
 
 .message-form {
     position: fixed;
     bottom: 0;
     left: 0;
-    right: 0;
+    width: 100%;
     background: white;
     display: flex;
     justify-content: space-between;
-}
 
-.message-form__input {
-    flex: 1;
-    padding: 0.4rem;
-    margin: 0;
-    font-size: 1rem;
-    border: 2px solid var(--blue);
-}
+    @media screen and (min-width: 60rem) {
+        width: 60rem;
+        left: calc(50vw - 30rem);
+    }
 
-.message-form__input:focus {
-    outline: none;
-    border-color: var(--pink);
-}
+    &__input {
+        flex: 1;
+        padding: 0.4rem;
+        margin: 0;
+        font-size: 1rem;
+        border: 2px solid var(--blue);
 
-.message-form__submit {
-    padding: 0.2em 0.5rem;
-    font-size: 1em;
-    transition: background 50ms ease-in-out;
-}
+        &:focus {
+            outline: none;
+            border-color: var(--pink);
+        }
+    }
 
-.message-form__submit:focus {
-    outline: none;
-    background: var(--pink);
+    &__submit {
+        padding: 0.2em 0.5rem;
+        font-size: 1em;
+        transition: background 50ms var(--transition);
+
+        &:focus {
+            outline: none;
+            background: var(--pink);
+        }
+    }
 }
 
 .matches {
     display: flex;
     margin-top: 1rem;
-}
 
-.matches__match {
-    margin-right: 1rem;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    font-weight: 900;
-    font-size: 0.8rem;
-}
+    &__match {
+        margin-right: 1rem;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        font-weight: 900;
+        font-size: 0.8rem;
 
-.matches__match a {
-    color: black;
-    text-decoration: none;
-}
+        a {
+            color: black;
+            text-decoration: none;
+        }
 
-.matches__match img {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    margin-bottom: 0.3rem;
+        img {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            margin-bottom: 0.3rem;
+        }
+    }
 }
 
 .new-match {
@@ -139,11 +144,11 @@
     margin: 2rem auto;
     display: flex;
     justify-content: space-around;
-}
 
-.new-match__avatar {
-    width: 6rem;
-    height: 6rem;
-    border-radius: 50%;
-    object-fit: cover;
+    &__avatar {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
 }
