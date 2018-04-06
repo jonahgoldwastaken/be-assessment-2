@@ -1,10 +1,56 @@
 const Account = require('../models/Account')
 
+const findByEmail = email =>
+    new Promise((resolve, reject) => Account.findOne({ email: email }, (err, data) =>
+        err ? reject(new Error(err)) : resolve(data)))
+
+const fetchAllUsers = () =>
+    new Promise((resolve, reject) =>
+        Account.find({})
+            .populate('hobbies')
+            .exec((err, data) => {
+                if (err) reject(new Error(err))
+                try {
+                    const users = data.map(user => compressHobbies(user))
+                    resolve(users)
+                } catch (err) {
+                    reject(new Error(err))
+                }
+            }))
+
+const findById = id =>
+    new Promise((resolve, reject) =>
+        Account.findOne({ _id: id })
+            .populate('hobbies')
+            .exec((err, data) => {
+                if (err) reject(new Error(err))
+                try {
+                    data = compressHobbies(data)
+                    resolve(data)
+                } catch (err) {
+                    reject(new Error(err))
+                }
+            }))
+
+const countUsers = () =>
+    new Promise((resolve, reject) => Account.count({}, (err, count) =>
+        err ? reject(new Error(err)) : resolve(count)))
+
+const countEmails = email =>
+    new Promise((resolve, reject) => Account.count({ email: email }, (err, count) =>
+        err ? reject(new Error(err)) : resolve(count)))
+
+const countUsersOnHobbies = id =>
+    new Promise((resolve, reject) => Account.count({ hobbies: { _id: id } }, (err, data) =>
+        err ? reject(new Error(err)) : resolve(data)))
+
 const sortUsersOnLikes = (user, users) =>
-    users.sort(currentUser => (!!currentUser.likes && user.id in currentUser.likes))
+    users.sort(currentUser =>
+        (!!currentUser.likes && user.id in currentUser.likes))
 
 const sortOnPopularity = users =>
-    users.sort((a, b) => a.popularity > b.popularity)
+    users.sort((a, b) =>
+        calcPopularity(a) > calcPopularity(b))
 
 const filterUsersWithDislikes = (user, users) =>
     users.filter(currentUser => {
@@ -40,6 +86,20 @@ const compressHobbies = user => {
     }
 }
 
+const processUserList = (loggedInUser, users) =>
+    new Promise((resolve, reject) => {
+        try {
+            const usersWithoutLoggedInUser = filterLoggedInUser(loggedInUser, users)
+            const usersWithoutDislikedUser = filterUsersWithDislikes(loggedInUser, usersWithoutLoggedInUser)
+            const usersOnRightGender = filterSex(loggedInUser, usersWithoutDislikedUser)
+            const sortedUsers = sortOnPopularity(sortUsersOnLikes(loggedInUser, usersOnRightGender))
+            const usersWithinAgeRange = filterAgeRange(loggedInUser, sortedUsers)
+            resolve(usersWithinAgeRange)
+        } catch (err) {
+            reject(new Error(err))
+        }
+    })
+
 const getLoggedInUser = req =>
     new Promise(async (resolve, reject) => {
         try {
@@ -55,6 +115,19 @@ const logInUser = (req, id) => void (req.session.userId = id)
 const logOutUser = (req) => void req.session.destroy()
 
 module.exports = {
+    find: {
+        all: fetchAllUsers,
+        byEmail: findByEmail,
+        byId: findById
+    },
+    count: {
+        all: countUsers,
+        emails: countEmails,
+        hobbies: countUsersOnHobbies
+    },
+    process: {
+        list: processUserList
+    },
     filter: {
         loggedIn: filterLoggedInUser,
         withDislikes: filterUsersWithDislikes,
@@ -75,3 +148,10 @@ module.exports = {
         logOut: logOutUser
     }
 }
+
+/*
+    LOGIC HELPERS
+*/
+const calcPopularity = account =>
+    account.hobbies.reduce((popularity, hobby) =>
+        popularity + (hobby.hobby.popularity / account.hobbies.length))

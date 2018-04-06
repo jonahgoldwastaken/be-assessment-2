@@ -3,7 +3,8 @@ const router = require('express').Router()
 const argon = require('argon2')
 const upload = require('../utils/multerUtil').getInstance()
 const Account = require('../models/Account')
-const Hobby = require('../models/Hobby')
+const accountUtil = require('../utils/accountUtil')
+const hobbyUtil = require('../utils/hobbyUtil')
 
 const accountForms = async (req, res, next) => {
     let step = +req.params.step
@@ -20,7 +21,7 @@ const accountForms = async (req, res, next) => {
         })
     const stepThree = async () => {
         try {
-            const hobbies = await Hobby.findAllAndSort()
+            const hobbies = await hobbyUtil.find.all()
             res.render('account/create-account/step-3', {
                 partialUser: registrationData,
                 data: hobbies
@@ -69,7 +70,7 @@ const registerSession = (req, res, next) => {
         const email = req.body.email
         const password = req.body.password
         try {
-            const emailExists = await Account.countEmails(email)
+            const emailExists = await accountUtil.find.byEmail(email)
             if (!emailExists) {
                 const hashedPassword = await argon.hash(password)
                 req.session.registration = {

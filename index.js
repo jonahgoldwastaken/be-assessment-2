@@ -1,13 +1,16 @@
 require('dotenv').config()
 const express = require('express')
-const port = process.env.PORT || 3000
 const compression = require('compression')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const mongoUtil = require('./utils/mongoUtil')
+const mongoose = require('mongoose')
+
 const multerUtil = require('./utils/multerUtil')
-mongoUtil.connect(err => {
+const url = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
+const port = process.env.PORT || 3000
+
+mongoose.connect(url, err => {
     if (err) {
         console.error(err)
         return

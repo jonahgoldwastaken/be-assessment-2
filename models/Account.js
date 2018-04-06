@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const helpers = require('../utils/accountUtil')
 const schema = new mongoose.Schema({
     email: {
         type: String,
@@ -76,71 +75,6 @@ const schema = new mongoose.Schema({
     }]
 })
 
-const findByEmail = email =>
-    new Promise((resolve, reject) => Account.findOne({email: email}, (err, data) =>
-        err ? reject(new Error(err)) : resolve(data)))
-
-const countEmails = email =>
-    new Promise((resolve, reject) => Account.count({email: email}, (err, count) =>
-        err ? reject(new Error(err)) : resolve(count)))
-
-const calcPopularity = account =>
-    account.hobbies.reduce((popularity, hobby) =>
-        popularity + (hobby.hobby.popularity / account.hobbies.length))
-
-const countUsersOnHobbies = id =>
-    new Promise((resolve, reject) => Account.count({ hobbies: { _id: id } }, (err, data) =>
-        err ? reject(new Error(err)) : resolve(data)))
-
-const fetchAllUsers = () =>
-    new Promise((resolve, reject) =>
-        Account.find({})
-            .populate('hobbies')
-            .exec((err, data) => {
-                if (err) reject(new Error(err))
-                try {
-                    const users = data.map(user => helpers.compress.hobbies(user))
-                    resolve(users)
-                } catch (err) {
-                    reject(new Error(err))
-                }
-            }))
-
-const fetchUser = id =>
-    new Promise((resolve, reject) =>
-        Account.findOne({_id: id})
-            .populate('hobbies')
-            .exec((err, data) => {
-                if (err) reject(new Error(err))
-                try {
-                    data = helpers.compress.hobbies(data)
-                    resolve(data)
-                } catch (err) {
-                    reject(new Error(err))
-                }
-            }))
-
-const processUserList = (loggedInUser, users) =>
-    new Promise((resolve, reject) => {
-        try {
-            const usersWithoutLoggedInUser = helpers.filter.loggedIn(loggedInUser, users)
-            const usersWithoutDislikedUser = helpers.filter.withDislikes(loggedInUser, usersWithoutLoggedInUser)
-            const usersOnRightGender = helpers.filter.sex(loggedInUser, usersWithoutDislikedUser)
-            const sortedUsers = helpers.sort.popularity(helpers.sort.likes(loggedInUser, usersOnRightGender))
-            const usersWithinAgeRange = helpers.filter.ageRange(loggedInUser, sortedUsers)
-            resolve(usersWithinAgeRange)
-        } catch (err) {
-            reject(new Error(err))
-        }
-    })
-
 const Account = mongoose.model('Account', schema)
 
 module.exports = Account
-module.exports.findByEmail = findByEmail
-module.exports.countEmails = countEmails
-module.exports.calcPopularity = calcPopularity
-module.exports.countUsersOnHobbies = countUsersOnHobbies
-module.exports.fetchUser = fetchUser
-module.exports.fetchAllUsers = fetchAllUsers
-module.exports.processUserList = processUserList

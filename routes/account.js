@@ -2,15 +2,13 @@
 const router = require('express').Router()
 const create = require('./create')
 const argon2 = require('argon2')
-const Account = require('../models/Account')
-const mongoUtil = require('../utils/mongoUtil')
 const accountUtil = require('../utils/accountUtil')
 
 const login = async (req, res) => {
     const email = req.body.email
     const password = req.body.password
     try {
-        const user = await Account.findByEmail(email)
+        const user = await accountUtil.find.byEmail(email)
         if (user) {
             const match = await argon2.verify(user.password, password)
             if (match) {
@@ -65,7 +63,7 @@ const editForm = async (req, res, next) => {
 const userProfile = async (req, res, next) => {
     const id = req.params.id
     try {
-        const data = await Account.fetchUser(id)
+        const data = await accountUtil.find.byId(id)
         if (!data) {
             res.redirect('/home')
         } else {

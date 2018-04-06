@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Account = require('./Account')
+const accountUtil = require('../utils/accountUtil')
 const schema = new mongoose.Schema({
     name: {
         type: String,
@@ -8,46 +8,20 @@ const schema = new mongoose.Schema({
     image: {
         type: String,
         required: true
-    },
-    popularity: {
-        type: Number,
-        default: 0,
-        required: false
     }
 })
 
-const calculatePopularity = () =>
-    new Promise(async (resolve, reject) => {
-        const hobbies = await Hobby.findAllHobbies().catch(reject)
-        hobbies.forEach(async (hobby, i) => {
-            hobby.popularity = await Account.countUsersOnHobbies(hobby.id).catch(console.error)
-            await Hobby.updateHobby(hobby.id, hobby).catch(reject)
-            if (i == hobbies.length - 1) resolve()
-        })
-    })
+schema.virtual('popularity').get(async () => {
+    try {
+        return await accountUtil.count.hobbies(this._id) / await accountUtil.count.all()
+    } catch (err) {
+        console.error(err)
+    }
+})
 
-const updateHobby = (id, hobby) =>
-    new Promise((resolve, reject) =>
-        this.model('Hobby').findByIdAndUpdate(hobby.id, hobby, (err, data) =>
-            err ? reject(err) : resolve(data)))
-
-const findAllHobbies = () =>
-    new Promise((resolve, reject) =>
-        Hobby.find({}, (err, hobbies) =>
-            err ? reject(err) : resolve(hobbies)))
-
-const findAllAndSort = () =>
-    new Promise((resolve, reject) =>
-        Hobby.find({}, (err, hobbies) =>
-            err ? reject(err)
-                : resolve(hobbies.sort((a, b) =>
-                    a.popularity < b.popularity))))
+schema.set('toObject', { virtuals: true })
+schema.set('toJSON', { virtuals: true })
 
 const Hobby = mongoose.model('Hobby', schema)
-
-Hobby.calculatePopularity = calculatePopularity
-Hobby.updateHobby = updateHobby
-Hobby.findAllHobbies = findAllHobbies
-Hobby.findAllAndSort = findAllAndSort
 
 module.exports = Hobby
