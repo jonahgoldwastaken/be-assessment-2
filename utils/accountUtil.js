@@ -1,3 +1,5 @@
+const Account = require('../models/Account')
+
 const sortUsersOnLikes = (user, users) =>
     users.sort(currentUser => (!!currentUser.likes && user.id in currentUser.likes))
 
@@ -16,10 +18,12 @@ const filterLoggedInUser = (user, users) =>
         !(user._id.equals(currentUser._id)))
 
 const filterAgeRange = (user, users) =>
-    users.filter(currentUser => {
-        if (currentUser.age >= user.ageRange.min && currentUser.age <= user.ageRange.max) return 1
-        else return -1
-    })
+    users.filter(currentUser =>
+        (currentUser.age >= user.ageRange.min && currentUser.age <= user.ageRange.max))
+
+const filterSex = (user, users) =>
+    users.filter(currentUser =>
+        !(currentUser.sex in user.sexPref))
 
 const compressHobbies = user => {
     try {
@@ -36,17 +40,38 @@ const compressHobbies = user => {
     }
 }
 
+const getLoggedInUser = req =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const user = await Account.fetchUser(req.session.userId)
+            resolve(user)
+        } catch (err) {
+            reject(new Error(err))
+        }
+    })
+
+const isUserLoggedIn = (req) => !!req.session.userId
+const logInUser = (req, id) => void (req.session.userId = id)
+const logOutUser = (req) => void req.session.destroy()
+
 module.exports = {
     filter: {
-        loggedInUser: filterLoggedInUser,
-        usersWithDislikes: filterUsersWithDislikes,
-        ageRange: filterAgeRange
+        loggedIn: filterLoggedInUser,
+        withDislikes: filterUsersWithDislikes,
+        ageRange: filterAgeRange,
+        sex: filterSex
     },
     sort: {
-        onLikes: sortUsersOnLikes,
-        onPopularity: sortOnPopularity
+        likes: sortUsersOnLikes,
+        popularity: sortOnPopularity
     },
     compress: {
         hobbies: compressHobbies
+    },
+    currentUser: {
+        isLoggedIn: isUserLoggedIn,
+        get: getLoggedInUser,
+        logIn: logInUser,
+        logOut: logOutUser
     }
 }

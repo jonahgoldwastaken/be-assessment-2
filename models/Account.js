@@ -26,7 +26,7 @@ const schema = new mongoose.Schema({
         required: true
     },
     sexPref: {
-        type: String,
+        type: [String],
         required: true
     },
     ageRange: {
@@ -123,10 +123,11 @@ const fetchUser = id =>
 const processUserList = (loggedInUser, users) =>
     new Promise((resolve, reject) => {
         try {
-            const usersWithoutLoggedInUser = helpers.filter.loggedInUser(loggedInUser, users)
-            const usersWithoutDislikedUser = helpers.filter.usersWithDislikes(loggedInUser, usersWithoutLoggedInUser)
-            const usersWithSortedLikesAndPopularity = helpers.sort.onPopularity(helpers.sort.onLikes(loggedInUser, usersWithoutDislikedUser))
-            const usersWithinAgeRange = helpers.filter.ageRange(loggedInUser, usersWithSortedLikesAndPopularity)
+            const usersWithoutLoggedInUser = helpers.filter.loggedIn(loggedInUser, users)
+            const usersWithoutDislikedUser = helpers.filter.withDislikes(loggedInUser, usersWithoutLoggedInUser)
+            const usersOnRightGender = helpers.filter.sex(loggedInUser, usersWithoutDislikedUser)
+            const sortedUsers = helpers.sort.popularity(helpers.sort.likes(loggedInUser, usersOnRightGender))
+            const usersWithinAgeRange = helpers.filter.ageRange(loggedInUser, sortedUsers)
             resolve(usersWithinAgeRange)
         } catch (err) {
             reject(new Error(err))

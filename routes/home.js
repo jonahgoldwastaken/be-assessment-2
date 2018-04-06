@@ -1,12 +1,12 @@
 /* eslint-disable new-cap */
 const router = require('express').Router()
 const Account = require('../models/Account')
-const mongoUtil = require('../utils/mongoUtil')
+const accountUtil = require('../utils/accountUtil')
 
 const homePage = async (req, res, next) => {
-    if (mongoUtil.isLoggedIn(req)) {
+    if (accountUtil.currentUser.isLoggedIn(req)) {
         try {
-            const loggedInUser = await mongoUtil.getLoggedInUser(req)
+            const loggedInUser = await accountUtil.currentUser.get(req)
             const fetchedUsers = await Account.fetchAllUsers()
             const processedUsers = await Account.processUserList(loggedInUser, fetchedUsers)
             res.render('home/home', {

@@ -94,7 +94,9 @@ const registerSession = (req, res, next) => {
             age: req.body.age,
             location: req.body.location,
             sex: req.body.sex,
-            sexPref: req.body.sex_pref,
+            sexPref: typeof req.body.sex_pref == 'string'
+                ? [req.body.sex_pref]
+                : req.body.sex_pref,
             ageRange: {
                 min: req.body.age_min,
                 max: req.body.age_max

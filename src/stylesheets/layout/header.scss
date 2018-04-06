@@ -10,6 +10,10 @@
 
     @media screen and (min-width: 60rem) {
         box-shadow: var(--desktop-shadow);
+        
+        a, .header__chat-heading {
+            font-size: 2rem !important;
+        }
     }
 
     * {

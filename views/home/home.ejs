@@ -9,10 +9,10 @@
                 <img src="/images/<%= data.avatar %>" alt="Profielfoto Daniëlle Schinkels">
                 <h2><%= data.firstName %></h2>
                 <h3><%= data.age %> jaar</h3>
-                <h4><%= data.location %></h4>
+                <h4><%= data.hobbies.length %> hobbies, waaronder:</h4>
             </div>
             <ul class="gallery gallery--card">
-                <% data.hobbies.forEach(function (hobby) { %>
+                <% data.hobbies.some(function (hobby, i) { %>
                     <li class="gallery-item gallery-item--card">
                         <img src="/images/<%= hobby.image %>" role="presentation">
                         <h3 title="Hobby"><%= hobby.name %></h3>
@@ -20,6 +20,7 @@
                             <p><%= hobby.description %></p>
                         <% } %>
                     </li>
+                    <% return i >= 2 %>
                 <% }) %>
             </ul>
         </a>

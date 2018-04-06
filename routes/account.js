@@ -4,8 +4,9 @@ const create = require('./create')
 const argon2 = require('argon2')
 const Account = require('../models/Account')
 const mongoUtil = require('../utils/mongoUtil')
+const accountUtil = require('../utils/accountUtil')
 
-const login = async (req, res, next) => {
+const login = async (req, res) => {
     const email = req.body.email
     const password = req.body.password
     try {
@@ -13,13 +14,13 @@ const login = async (req, res, next) => {
         if (user) {
             const match = await argon2.verify(user.password, password)
             if (match) {
-                mongoUtil.loginUser(req, user._id)
+                accountUtil.currentUser.logIn(req, user._id)
                 res.status(200).redirect('/home')
             } else {
-                throw { password: 'Wachtwoord is ongeldig.'}
+                throw { password: 'Het opgegeven wachtwoord is onjuist.'}
             }
         } else {
-            throw { email: 'E-mailadres niet gevonden.' }
+            throw { email: 'Het ingevoerde e-mailadres is niet gevonden.' }
         }
     } catch (err) {
         res.render('account/login', {
@@ -30,23 +31,25 @@ const login = async (req, res, next) => {
 }
 
 const profile = async (req, res, next) => {
-    try {
-        const data = await mongoUtil.getLoggedInUser(req)
-        if (!data) {
-            res.redirect('/')
-        } else {
-            res.render('account/profile', {
-                data: data
-            })
+    if (accountUtil.currentUser.isLoggedIn(req)) {
+        try {
+            const data = await accountUtil.currentUser.get(req)
+            if (!data) {
+                res.redirect('/')
+            } else {
+                res.render('account/profile', {
+                    data: data
+                })
+            }
+        } catch (err) {
+            next(err)
         }
-    } catch (err) {
-        next(err)
     }
 }
 
 const editForm = async (req, res, next) => {
     try {
-        const data = await mongoUtil.getLoggedInUser(req)
+        const data = await accountUtil.currentUser.get(req)
         if (!data) {
             res.redirect('/')
         } else {
