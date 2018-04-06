@@ -1,8 +1,34 @@
 const Account = require('../models/Account')
 
+const compressHobbies = (user) => {
+    try {
+        user.hobbies.map((hobby) => {
+            if (user.hobbyCustom && hobby._id in user.hobbyCustom) {
+                const customHobby = user.hobbyCustom[hobby._id]
+                return {
+                    name: hobby.name,
+                    image: customHobby.image,
+                    description: customHobby.description
+                }
+            }
+            return hobby
+        })
+        return user
+    } catch (err) {
+        throw err
+    }
+}
+
+/*
+    LOGIC HELPERS
+*/
+const calcPopularity = account =>
+    account.hobbies.reduce((popularity, hobby) =>
+        popularity + (hobby.hobby.popularity / account.hobbies.length))
+
 const findByEmail = email =>
-    new Promise((resolve, reject) => Account.findOne({ email: email }, (err, data) =>
-        err ? reject(new Error(err)) : resolve(data)))
+    new Promise((resolve, reject) => Account.findOne({ email }, (err, data) =>
+        (err ? reject(new Error(err)) : resolve(data))))
 
 const fetchAllUsers = () =>
     new Promise((resolve, reject) =>
@@ -13,8 +39,8 @@ const fetchAllUsers = () =>
                 try {
                     const users = data.map(user => compressHobbies(user))
                     resolve(users)
-                } catch (err) {
-                    reject(new Error(err))
+                } catch (error) {
+                    reject(new Error(error))
                 }
             }))
 
@@ -25,24 +51,24 @@ const findById = id =>
             .exec((err, data) => {
                 if (err) reject(new Error(err))
                 try {
-                    data = compressHobbies(data)
-                    resolve(data)
-                } catch (err) {
-                    reject(new Error(err))
+                    const parsedData = compressHobbies(data)
+                    resolve(parsedData)
+                } catch (error) {
+                    reject(new Error(error))
                 }
             }))
 
 const countUsers = () =>
     new Promise((resolve, reject) => Account.count({}, (err, count) =>
-        err ? reject(new Error(err)) : resolve(count)))
+        (err ? reject(new Error(err)) : resolve(count))))
 
 const countEmails = email =>
-    new Promise((resolve, reject) => Account.count({ email: email }, (err, count) =>
-        err ? reject(new Error(err)) : resolve(count)))
+    new Promise((resolve, reject) => Account.count({ email }, (err, count) =>
+        (err ? reject(new Error(err)) : resolve(count))))
 
 const countUsersOnHobbies = id =>
     new Promise((resolve, reject) => Account.count({ hobbies: { _id: id } }, (err, data) =>
-        err ? reject(new Error(err)) : resolve(data)))
+        (err ? reject(new Error(err)) : resolve(data))))
 
 const sortUsersOnLikes = (user, users) =>
     users.sort(currentUser =>
@@ -53,11 +79,8 @@ const sortOnPopularity = users =>
         calcPopularity(a) > calcPopularity(b))
 
 const filterUsersWithDislikes = (user, users) =>
-    users.filter(currentUser => {
-        if (currentUser.dislikes && user in currentUser.dislikes) return 0
-        else if (currentUser.dislikes && !(user in currentUser.dislikes)) return 1
-        else if (!currentUser.dislikes) return 1
-    })
+    users.filter(currentUser =>
+        !(currentUser.dislikes && user in currentUser.dislikes))
 
 const filterLoggedInUser = (user, users) =>
     users.filter(currentUser =>
@@ -71,26 +94,12 @@ const filterSex = (user, users) =>
     users.filter(currentUser =>
         !(currentUser.sex in user.sexPref))
 
-const compressHobbies = user => {
-    try {
-        user.hobbies.forEach(hobby => {
-            if (user.hobbyCustom && hobby._id in user.hobbyCustom) {
-                const customHobby = user.hobbyCustom[hobby._id]
-                hobby.image = customHobby.image
-                hobby.description = customHobby.description
-            }
-        })
-        return user
-    } catch (err) {
-        throw err
-    }
-}
-
 const processUserList = (loggedInUser, users) =>
     new Promise((resolve, reject) => {
         try {
             const usersWithoutLoggedInUser = filterLoggedInUser(loggedInUser, users)
-            const usersWithoutDislikedUser = filterUsersWithDislikes(loggedInUser, usersWithoutLoggedInUser)
+            const usersWithoutDislikedUser =
+                filterUsersWithDislikes(loggedInUser, usersWithoutLoggedInUser)
             const usersOnRightGender = filterSex(loggedInUser, usersWithoutDislikedUser)
             const sortedUsers = sortOnPopularity(sortUsersOnLikes(loggedInUser, usersOnRightGender))
             const usersWithinAgeRange = filterAgeRange(loggedInUser, sortedUsers)
@@ -110,9 +119,9 @@ const getLoggedInUser = req =>
         }
     })
 
-const isUserLoggedIn = (req) => !!req.session.userId
-const logInUser = (req, id) => void (req.session.userId = id)
-const logOutUser = (req) => void req.session.destroy()
+const isUserLoggedIn = req => !!req.session.userId
+const logInUser = (req, id) => { req.session.userId = id }
+const logOutUser = req => req.session.destroy()
 
 module.exports = {
     find: {
@@ -148,10 +157,3 @@ module.exports = {
         logOut: logOutUser
     }
 }
-
-/*
-    LOGIC HELPERS
-*/
-const calcPopularity = account =>
-    account.hobbies.reduce((popularity, hobby) =>
-        popularity + (hobby.hobby.popularity / account.hobbies.length))

@@ -1,5 +1,5 @@
 {
-    "extends": "eslint:recommended",
+    "extends": "airbnb-base",
     "globals": {
         "window": true,
         "process": true
@@ -43,6 +43,7 @@
                 "functions": "ignore"
             }
         ],
+        "no-underscore-dangle": "off",
         "curly": ["error", "multi-or-nest", "consistent"],
         "space-before-function-paren": [
             "warn",

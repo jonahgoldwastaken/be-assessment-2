@@ -7,8 +7,8 @@ const sortHobbies = hobbies =>
 const findAllHobbies = () =>
     new Promise((resolve, reject) =>
         Hobby.find({}, (err, hobbies) =>
-            err ? reject(err)
-                : resolve(sortHobbies(hobbies))))
+            (err ? reject(err)
+                : resolve(sortHobbies(hobbies)))))
 
 module.exports = {
     find: {

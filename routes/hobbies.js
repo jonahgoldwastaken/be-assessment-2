@@ -8,8 +8,8 @@ const requestHobby = (req, res, next) => {
         name: req.body.name,
         image: req.file.filename
     })
-    newHobby.save(err => {
-        err && next(err)
+    newHobby.save((err) => {
+        if (err) next(err)
         res.redirect('/', 201)
     })
 }

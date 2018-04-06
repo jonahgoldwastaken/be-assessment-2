@@ -5,8 +5,7 @@ const argon2 = require('argon2')
 const accountUtil = require('../utils/accountUtil')
 
 const login = async (req, res) => {
-    const email = req.body.email
-    const password = req.body.password
+    const { email, password } = req.body
     try {
         const user = await accountUtil.find.byEmail(email)
         if (user) {
@@ -15,15 +14,15 @@ const login = async (req, res) => {
                 accountUtil.currentUser.logIn(req, user._id)
                 res.status(200).redirect('/home')
             } else {
-                throw { password: 'Het opgegeven wachtwoord is onjuist.'}
+                throw new Error({ password: 'Het opgegeven wachtwoord is onjuist.' })
             }
         } else {
-            throw { email: 'Het ingevoerde e-mailadres is niet gevonden.' }
+            throw new Error({ email: 'Het ingevoerde e-mailadres is niet gevonden.' })
         }
     } catch (err) {
         res.render('account/login', {
             error: err,
-            email: email
+            email
         })
     }
 }
@@ -36,7 +35,7 @@ const profile = async (req, res, next) => {
                 res.redirect('/')
             } else {
                 res.render('account/profile', {
-                    data: data
+                    data
                 })
             }
         } catch (err) {
@@ -52,7 +51,7 @@ const editForm = async (req, res, next) => {
             res.redirect('/')
         } else {
             res.render('account/edit', {
-                data: data
+                data
             })
         }
     } catch (err) {
@@ -61,14 +60,14 @@ const editForm = async (req, res, next) => {
 }
 
 const userProfile = async (req, res, next) => {
-    const id = req.params.id
+    const { id } = req.params
     try {
         const data = await accountUtil.find.byId(id)
         if (!data) {
             res.redirect('/home')
         } else {
             res.render('home/user-profile', {
-                data: data,
+                data,
                 back: req.header('Referer')
             })
         }

@@ -21,4 +21,4 @@ const homePage = async (req, res, next) => {
 
 module.exports = router
     .get('/', homePage)
-    
+

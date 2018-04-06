@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const accountUtil = require('../utils/accountUtil')
+
 const schema = new mongoose.Schema({
     name: {
         type: String,
@@ -16,6 +17,7 @@ schema.virtual('popularity').get(async () => {
         return await accountUtil.count.hobbies(this._id) / await accountUtil.count.all()
     } catch (err) {
         console.error(err)
+        return false
     }
 })
 

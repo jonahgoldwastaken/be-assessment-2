@@ -1,16 +1,18 @@
 const multer = require('multer')
-let _upload
 
-const createInstance = () =>
-    _upload = multer({
+let upload
+
+const createInstance = () => {
+    upload = multer({
         dest: 'uploads',
         fileFilter: (req, file, cb) =>
             cb(null, file.mimetype.split('/')[0] === 'image')
     })
+}
 
-const getInstance = () => _upload
+const getInstance = () => upload
 
 module.exports = {
-    createInstance: createInstance,
-    getInstance: getInstance
+    createInstance,
+    getInstance
 }
