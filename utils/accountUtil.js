@@ -103,7 +103,7 @@ const processUserList = (loggedInUser, users) =>
 const getLoggedInUser = req =>
     new Promise(async (resolve, reject) => {
         try {
-            const user = await Account.fetchUser(req.session.userId)
+            const user = await findById(req.session.userId)
             resolve(user)
         } catch (err) {
             reject(new Error(err))
