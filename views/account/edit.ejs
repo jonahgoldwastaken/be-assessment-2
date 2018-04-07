@@ -5,7 +5,7 @@
     <h1 class="header__chat-heading">Profiel Bewerken</h1>
 </header>
 <main>
-    <form class="two-column" action="/account">
+    <form class="two-column" action="/account?_method=PATCH" method="POST">
         <fieldset class="fieldset">
             <legend class="fieldset__legend">Accountgegevens</legend>
             <label class="form-group">
@@ -23,7 +23,7 @@
         <fieldset class="fieldset">
             <legend class="fieldset__legend">Persoonlijke info</legend>
             <div class="form-group form-group--image">
-                <input id="avatar" class="form-group__input" autocomplete="photo" type="file" name="avatar" accept="image/*" value="">
+                <input id="avatar" class="form-group__input" autocomplete="photo" type="file" name="avatar" accept="image/*" value="<%= data.avatar %>">
                 <label for="avatar" class="form-group__label">
                     Profielfoto Toevoegen
                 </label>
@@ -51,11 +51,11 @@
             <legend class="fieldset__legend">Je bent een...</legend>
             <div class="form-combine">
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="male" <% if (data.sex=='male' ) { %> checked
+                    <input class="form-group__radio fa" type="radio" name="sex" value="male" <% if (data.sex=='male' ) { %> checked
                     <% } %>> Man
                 </label>
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="female" <% if (data.sex=='female' ) { %> checked
+                    <input class="form-group__radio fa" type="radio" name="sex" value="female" <% if (data.sex=='female' ) { %> checked
                     <% } %>> Vrouw
                 </label>
             </div>
@@ -91,6 +91,7 @@
                 </div>
             </div>
         </fieldset>
+        <input type="submit" class="btn btn--large btn--green" value="Wijzigingen opslaan">
     </form>
 </main>
 
