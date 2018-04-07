@@ -24,6 +24,7 @@
         border-radius: 0.4rem;
         font-size: 1.4rem;
         transition: border 0.4s var(--transition);
+        resize: vertical;
 
         &:focus {
             outline: none;
@@ -39,7 +40,7 @@
         }
     }
 
-    &__checkbox {
+    &__checkbox, &__radio {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
@@ -95,6 +96,23 @@
             &:before {
                 transform: scale(1, 1);
             }
+        }
+    }
+
+    &__radio {
+        border-radius: 50%;
+        width: 1rem;
+
+        &:before {
+            content: '\f111';
+            font-size: 0.5rem;
+            width: calc(1rem - 1px);
+        }
+
+        &:focus:before {
+            width: calc(1rem - 5px);
+            height: calc(1rem - 5px);
+            line-height: calc(1rem - 5px);
         }
     }
 
@@ -183,6 +201,7 @@
 .fieldset {
     border: none;
     padding: 0;
+    margin-bottom: 1em;
 
     &__legend {
         display: block;

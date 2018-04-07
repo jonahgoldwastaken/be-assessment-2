@@ -62,11 +62,14 @@ const accountForms = async (req, res, next) => {
  */
 const registerUser = async (req, res, next) => {
     const { hobbies } = req.body
+    const parsedHobbies = typeof hobbies === 'string'
+        ? [hobbies]
+        : hobbies
     req.session.registration = Object.assign(req.session.registration, {
-        hobbies: typeof hobbies === 'string'
-            ? [hobbies]
-            : hobbies,
-        hobbyCustom: { ...hobbies }
+        hobbies: parsedHobbies,
+        hobbyCustom: parsedHobbies.map(_id => ({
+            _id
+        }))
     })
     delete req.session.registration.step
 

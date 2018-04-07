@@ -1,7 +1,7 @@
 <%- include('../layouts/head.ejs', { title: data.name + ' - HDate' }) %>
 
 <header class="header">
-    <a href="/account/hobby"><i class="fa fa-angle-left"></i></a>
+    <a href="/account/hobbies"><i class="fa fa-angle-left"></i></a>
     <h1 class="header__chat-heading"><%= data.name %></h1>
 </header>
 <main class="container">
@@ -13,7 +13,8 @@
             </label>
         </div>
         <label class="form-group">
-            <textarea class="form-group__input" name="description" value="<%= data.description %>"></textarea>
+            Kort verhaaltje over je hobby:
+            <textarea class="form-group__input" name="description"><%= data.description %></textarea>
         </label>
         <button type="submit" class="btn btn--large btn--green">Opslaan</button>
     </form>

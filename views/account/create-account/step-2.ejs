@@ -3,19 +3,19 @@
 <header class="header">
     <h1 class="header__chat-heading">Profiel Opzetten</h1>
 </header>
-<main class="container">
-    <form action="/account/create/2" method="POST" enctype="multipart/form-data">
+<main>
+    <form class="two-column" action="/account/create/2" method="POST" enctype="multipart/form-data">
         <fieldset class="fieldset">
             <legend class="fieldset__legend">Jouw gegevens</legend>
             <div class="form-group form-group--image">
-                <input id="avatar" class="form-group__input" autocomplete="photo" type="file" name="avatar" accept="image/*" value="">
+                <input id="avatar" class="form-group__input" autocomplete="photo" type="file" name="avatar" accept="image/*" value="" required>
                 <label for="avatar" class="form-group__label">
                     Profielfoto Toevoegen
                 </label>
             </div>
             <label class="form-group">
                 Voornaam
-                <input autocomplete="given-name" class="form-group__input" type="text" name="first_name" required>
+                <input autofocus autocomplete="given-name" class="form-group__input" type="text" name="first_name" required>
             </label>
             <label class="form-group">
                 Achternaam
@@ -32,15 +32,16 @@
                 </label>
             </div>
         </fieldset>
+        <div class="column">
         <fieldset class="fieldset" required>
             <legend class="fieldset__legend">Je bent een...</legend>
             <div class="form-combine">
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="male">
+                    <input class="form-group__radio fa" type="checkbox" name="sex" value="male">
                     Man
                 </label>
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex" value="female">
+                    <input class="form-group__radio fa" type="checkbox" name="sex" value="female">
                     Vrouw
                 </label>
             </div>
@@ -76,6 +77,7 @@
                 </div>
             </div>
         </fieldset>
+        </div>
         <footer class="navigation-footer">
             <a href="/account/create/1" class="navigation-footer__link">
                 <i class="fa fa-angle-left"></i>

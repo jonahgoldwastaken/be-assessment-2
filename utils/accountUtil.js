@@ -15,7 +15,7 @@ const compressHobbies = (user) => {
                 return {
                     _id: hobby._id,
                     name: hobby.name,
-                    image: customHobby.image,
+                    image: customHobby.image || hobby.image,
                     description: customHobby.description
                 }
             }

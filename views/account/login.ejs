@@ -7,7 +7,7 @@
     <form action="/account/login" method="post">
         <label class="form-group">
             E-mailadres
-            <input class="form-group__input" type="email" name="email" value="<%= email %>" required>
+            <input autofocus class="form-group__input" type="email" name="email" value="<%= email %>" required>
             <% if (error && error.email) { %>
                 <small class="error text--light bg--red"><%= error.email %></small>
             <% } %>
