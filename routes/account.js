@@ -108,14 +108,14 @@ const updateProfile = async (req, res, next) => {
 const userProfile = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         try {
-            const { params: { id }, header } = req
+            const { params: { id } } = req
             const data = await account.find.byId(id)
             if (!data) {
                 res.redirect('/home')
             } else {
                 res.render('home/user-profile', {
                     data,
-                    back: header('Referer')
+                    back: req.header('Referer')
                 })
             }
         } catch (err) {
