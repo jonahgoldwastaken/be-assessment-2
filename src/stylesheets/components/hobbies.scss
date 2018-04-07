@@ -56,6 +56,14 @@
         width: calc(100% - 1em);
         color: black;
         transition: color 0.4s var(--transition);
+
+        &:only-child {
+            width: 100%;
+        }
+
+        &--both {
+            width: calc(100% - 3rem);
+        }
     }
 
     &__checkbox {
@@ -69,8 +77,12 @@
         font-size: inherit;
         border-radius: 50%;
         border: 1px solid black;
-        width: 1.5rem;
+        width: 1em;
         height: 1em;
+
+        &:not(:only-of-type) {
+            margin-left: 1em;
+        }
 
         &:focus {
             outline: none;
@@ -80,14 +92,14 @@
             content: "\f067";
             position: absolute;
             color: black;
-            width: calc(1.5em - 2px);
-            height: calc(1.5em - 2px);
+            height: calc(1.5rem - 2px);
+            width: calc(1.5rem - 2px);
             top: 0;
             left: 0;
-            line-height: calc(1.5em - 2px);
             text-align: center;
             font-family: inherit;
             font-size: 1rem;
+            line-height: calc(1.5rem - 2px);
             transition: transform 0.4s var(--transition), color 0.4s var(--transition);
             transform: rotate(0deg);
         }
@@ -103,6 +115,19 @@
             ~.hobby-list__label {
                 color: var(--green);
             }
+        }
+
+        &--remove {
+            margin-left: .2em;
+
+            &:before {
+                transform: rotate(45deg);
+            }
+        }
+
+        &--edit:before {
+            content: '\f303';
+            font-size: 0.5em;
         }
     }
 }

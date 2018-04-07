@@ -9,12 +9,24 @@
         <h2 class="header__heading">Toegevoegd</h2>
         <ul class="hobby-list">
             <% own.forEach(function (hobby) { %>
-                <li class="hobby-list__item">
-                    <input class="hobby-list__checkbox" type="checkbox" id="<%= hobby._id %>" name="hobbies" value="<%= hobby._id %>">
-                    <label for="<%= hobby._id %>" class="hobby-list__label">
-                        <%= hobby.name %>
-                    </label>
-                </li>
+                <% if (own.length > 1) { %>
+                    <li>
+                        <form class="hobby-list__item" action="/account/hobby/<%= hobby._id %>?_method=DELETE" method="post">
+                            <button class="hobby-list__checkbox hobby-list__checkbox--remove" type="submit"></button>
+                            <a href="/hobby/<%= hobby._id %>" class="hobby-list__checkbox hobby-list__checkbox--edit"></a>
+                            <label class="hobby-list__label hobby-list__label--both">
+                                <%= hobby.name %>
+                            </label>
+                        </form>
+                    </li>
+                <% } else { %>
+                    <li class="hobby-list__item">
+                        <a href="/hobby/<%= hobby._id %>" class="hobby-list__checkbox hobby-list__checkbox--edit"></a>
+                        <label class="hobby-list__label">
+                            <%= hobby.name %>
+                        </label>
+                    </li>
+                <% } %>
             <% }) %>
         </ul>
     </section>
@@ -22,11 +34,13 @@
         <h2 class="header__heading">Hobbbies toevoegen</h2>
         <ul>
             <% all.forEach(function (hobby) { %>
-                <li class="hobby-list__item">
-                    <input class="hobby-list__checkbox" type="checkbox" id="<%= hobby._id %>" name="hobbies" value="<%= hobby._id %>">
-                    <label for="<%= hobby._id %>" class="hobby-list__label">
-                        <%= hobby.name %>
-                    </label>
+                <li>
+                    <form method="POST" class="hobby-list__item" action="/account/hobby/<%= hobby._id %>">
+                        <button class="hobby-list__checkbox" type="submit" id="<%= hobby._id %>"></button>
+                        <label for="<%= hobby._id %>" class="hobby-list__label">
+                            <%= hobby.name %>
+                        </label>
+                    </form>
                 </li>
             <% }) %>
         </ul>
