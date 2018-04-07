@@ -19,7 +19,7 @@
         padding-bottom: 0.4em;
         height: 100%;
         width: 100%;
-        transition: border-bottom 0.4s var(--transition);
+        transition: border-bottom 0.3s var(--transition);
 
         &:focus {
             outline: none;
@@ -55,7 +55,7 @@
         display: block;
         width: calc(100% - 1em);
         color: black;
-        transition: color 0.4s var(--transition);
+        transition: color 0.3s var(--transition);
 
         &:only-child {
             width: 100%;
@@ -100,7 +100,7 @@
             font-family: inherit;
             font-size: 1rem;
             line-height: calc(1.5rem - 2px);
-            transition: transform 0.4s var(--transition), color 0.4s var(--transition);
+            transition: transform 0.3s var(--transition), color 0.3s var(--transition);
             transform: rotate(0deg);
         }
 
