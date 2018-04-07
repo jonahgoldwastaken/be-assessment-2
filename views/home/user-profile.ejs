@@ -16,10 +16,18 @@
         <h2 class="header__heading gallery__heading">Hobbies</h2>
         <ul class="gallery">
             <% data.hobbies.forEach(function (hobby) { %>
+                <% if (hobby.description) { %>
+                <li class="gallery-item gallery-item--profile gallery-item--description">
+                    <img role="presentation" src="/images/<%= hobby.image %>">
+                    <h3 title="Hobby"><%= hobby.name %></h3>
+                    <p><%= hobby.description %></p>
+                </li>
+                <% } else { %>
                 <li class="gallery-item gallery-item--profile">
                     <img role="presentation" src="/images/<%= hobby.image %>">
                     <h3 title="Hobby"><%= hobby.name %></h3>
                 </li>
+                <% } %>
             <% }) %>
         </ul>
     </section>
