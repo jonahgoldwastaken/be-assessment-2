@@ -107,25 +107,54 @@ const hobbyList = async (req, res, next) => {
     }
 }
 
+const addHobby = async (req, res, next) => {
+    const { id: newHobby } = req.params
+    try {
+        const loggedInUser = await account.currentUser.getWithoutHobbies(req)
+        const { hobbies } = loggedInUser
+        hobbies.push(newHobby)
+        await loggedInUser.update({ $set: { hobbies } })
+        res.redirect('back')
+    } catch (err) {
+        next(err)
+    }
+}
+
+
+const deleteHobby = async (req, res, next) => {
+    const { params: { id: hobbyToDelete } } = req
+    try {
+        const loggedInUser = await account.currentUser.getWithoutHobbies(req)
+        const { hobbies } = loggedInUser
+        hobbies.splice(hobbies.indexOf(hobbyToDelete), 1)
+        await loggedInUser.update({ $set: { hobbies } })
+        res.redirect('back')
+    } catch (err) {
+        next(err)
+    }
+}
+
 /**
  * Renders user profile
  * @param {Request} req
  * @param {Response} res
  * @param {Function} next
  */
-const userProfile = async ({ req: { header, params: { id } } }, res, next) => {
-    try {
-        const data = await account.find.byId(id)
-        if (!data) {
-            res.redirect('/home')
-        } else {
-            res.render('home/user-profile', {
-                data,
-                back: header('Referer')
-            })
+const userProfile = async ({ header, params: { id } }, res, next) => {
+    if (account.currentUser.isLoggedIn) {
+        try {
+            const data = await account.find.byId(id)
+            if (!data) {
+                res.redirect('/home')
+            } else {
+                res.render('home/user-profile', {
+                    data,
+                    back: header('Referer')
+                })
+            }
+        } catch (err) {
+            next(err)
         }
-    } catch (err) {
-        next(err)
     }
 }
 
@@ -136,6 +165,8 @@ module.exports = router
     .post('/login', login)
     .get('/edit', editForm)
     .get('/hobbies', hobbyList)
+    .post('/hobby/:id', addHobby)
+    .delete('/hobby/:id', deleteHobby)
     .get('/hobbies/:hobby/personalise', (req, res) => res.render('hobbies/list'))
     .get('/settings', (req, res) => res.render('account/settings'))
     .get('/:id', userProfile)

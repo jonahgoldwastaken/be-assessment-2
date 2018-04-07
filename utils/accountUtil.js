@@ -80,6 +80,16 @@ const findById = id =>
             }))
 
 /**
+ * Finds a user without compressing it
+ * @param {String} id An Account model ID
+ */
+const findByIdWithoutHobbbies = id =>
+    new Promise((resolve, reject) =>
+        Account.findOne({ _id: id }, (err, data) => {
+            if (err) reject(new Error(err))
+            resolve(data)
+        }))
+/**
  * Counts the amount of records inside the database
  * @returns {Promise} Promise resolving to corresponding amount of Account models
  */
@@ -205,6 +215,16 @@ const getLoggedInUser = ({ session: { userId } }) =>
         }
     })
 
+const getLoggedInUserWithoutHobbies = ({ session: { userId } }) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const user = await findByIdWithoutHobbbies(userId)
+            resolve(user)
+        } catch (err) {
+            reject(new Error(err))
+        }
+    })
+
 /**
  * Sets user session
  * @param {Request} req Express Request
@@ -255,6 +275,7 @@ module.exports = {
     currentUser: {
         isLoggedIn: isUserLoggedIn,
         get: getLoggedInUser,
+        getWithoutHobbies: getLoggedInUserWithoutHobbies,
         logIn: logInUser,
         logOut: logOutUser
     },
