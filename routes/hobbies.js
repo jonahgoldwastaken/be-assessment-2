@@ -3,6 +3,12 @@ const router = require('express').Router()
 const upload = require('../utils/multerUtil').getInstance()
 const Hobby = require('../models/Hobby')
 
+/**
+ * Saves requested hobby
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
 const requestHobby = (req, res, next) => {
     const newHobby = new Hobby({
         name: req.body.name,

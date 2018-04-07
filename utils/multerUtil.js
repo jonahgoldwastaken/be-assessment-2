@@ -2,6 +2,9 @@ const multer = require('multer')
 
 let upload
 
+/**
+ * Creates Multer instance for use throughout the application
+ */
 const createInstance = () => {
     upload = multer({
         dest: 'uploads',
@@ -10,6 +13,9 @@ const createInstance = () => {
     })
 }
 
+/**
+ * @returns {Object} Multer instance
+ */
 const getInstance = () => upload
 
 module.exports = {

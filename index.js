@@ -5,8 +5,10 @@ const logger = require('morgan')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const mongoose = require('mongoose')
-
 const multerUtil = require('./utils/multerUtil')
+
+multerUtil.createInstance()
+
 const home = require('./routes/home')
 const account = require('./routes/account')
 const hobbyCategories = require('./routes/hobbies')
@@ -14,13 +16,11 @@ const messages = require('./routes/messages')
 
 const url = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
 const port = process.env.PORT || 3000
-
 mongoose.connect(url, (err) => {
     if (err) {
         console.error(err)
         return
     }
-    multerUtil.createInstance()
     const app = express()
     module.exports = app
         .set('view engine', 'ejs')

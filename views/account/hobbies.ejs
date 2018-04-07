@@ -1,0 +1,36 @@
+<%- include('../layouts/head.ejs', { title: 'Hobbies bewerken - HDate' }) %>
+
+<header class="header">
+    <a href="/account"><i class="fa fa-angle-left"></i></a>
+    <h1 class="header__chat-heading">Jouw hobbies</h1>
+</header>
+<main class="container">
+    <section>
+        <h2 class="header__heading">Toegevoegd</h2>
+        <ul class="hobby-list">
+            <% own.forEach(function (hobby) { %>
+                <li class="hobby-list__item">
+                    <input class="hobby-list__checkbox" type="checkbox" id="<%= hobby._id %>" name="hobbies" value="<%= hobby._id %>">
+                    <label for="<%= hobby._id %>" class="hobby-list__label">
+                        <%= hobby.name %>
+                    </label>
+                </li>
+            <% }) %>
+        </ul>
+    </section>
+    <section>
+        <h2 class="header__heading">Hobbbies toevoegen</h2>
+        <ul>
+            <% all.forEach(function (hobby) { %>
+                <li class="hobby-list__item">
+                    <input class="hobby-list__checkbox" type="checkbox" id="<%= hobby._id %>" name="hobbies" value="<%= hobby._id %>">
+                    <label for="<%= hobby._id %>" class="hobby-list__label">
+                        <%= hobby.name %>
+                    </label>
+                </li>
+            <% }) %>
+        </ul>
+    </section>
+</main>
+
+<%- include('../layouts/tail.ejs') %>

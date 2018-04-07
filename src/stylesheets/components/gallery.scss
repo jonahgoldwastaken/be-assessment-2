@@ -43,10 +43,12 @@
         &--profile {
             height: 16rem;
             border-radius: 0.4em;
+            margin-bottom: 1rem;
 
             @media screen and (min-width: 60rem) {
                 width: 28rem;
                 box-shadow: var(--box-shadow);
+                margin-bottom: 2rem;
             }
         }
     }
@@ -75,6 +77,7 @@
             .gallery {
                 display: flex;
                 flex-wrap: wrap;
+                justify-content: space-between;
             }
         }
     }
