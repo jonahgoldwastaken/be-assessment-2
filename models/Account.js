@@ -76,6 +76,4 @@ const schema = new mongoose.Schema({
     }]
 })
 
-const Account = mongoose.model('Account', schema)
-
-module.exports = Account
+module.exports = mongoose.model('Account', schema)

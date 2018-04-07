@@ -2,6 +2,12 @@
 const router = require('express').Router()
 const accountUtil = require('../utils/accountUtil')
 
+/**
+ * Renders homepage
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
 const homePage = async (req, res, next) => {
     if (accountUtil.currentUser.isLoggedIn(req)) {
         try {
