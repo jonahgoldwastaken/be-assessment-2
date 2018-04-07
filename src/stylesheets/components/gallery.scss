@@ -55,6 +55,10 @@
             border-radius: 0.4em;
             margin-bottom: 1rem;
 
+            h3 {
+                font-size: 3em;
+            }
+
             @media screen and (min-width: 60rem) {
                 width: 28rem;
                 box-shadow: var(--box-shadow);
@@ -102,6 +106,11 @@
                 h3 {
                     font-size: 1.5em;
                     opacity: 0.75;
+                    padding: 0 1rem;
+
+                    @media screen and (min-width: 60rem) {
+                        padding: 0 4rem;
+                    }
                 }
 
                 p {
