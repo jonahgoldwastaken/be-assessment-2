@@ -1,8 +1,9 @@
 /* eslint-disable new-cap */
 const router = require('express').Router()
-const create = require('./create')
 const argon2 = require('argon2')
 const account = require('../utils/accountUtil')
+
+const create = require('./create')
 const hobby = require('./hobby')
 
 /**
@@ -83,6 +84,12 @@ const editForm = async (req, res, next) => {
     }
 }
 
+/**
+ * Updates user profile with provided data
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
 const updateProfile = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         try {
