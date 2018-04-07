@@ -4,7 +4,7 @@ const hobby = require('../utils/hobbyUtil')
 const upload = require('../utils/multerUtil').getInstance()
 
 /**
- * Renders hobby list page with all hobbies except own from user
+ * Renders hobby list page with all hobbies, seperated by if in logged in Account document
  * @param {Request} req
  * @param {Response} res
  * @param {Function} next
@@ -31,6 +31,13 @@ const hobbyList = async (req, res, next) => {
     }
 }
 
+/**
+ * Renders the edit hobby form
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
+
 const editHobbyForm = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         const { id } = req.params
@@ -48,6 +55,13 @@ const editHobbyForm = async (req, res, next) => {
         res.status(403).redirect('/account/login')
     }
 }
+
+/**
+ * Adds/updates custom properties of the provided hobby id to the logged in Account document
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
 
 const editHobby = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
@@ -75,6 +89,12 @@ const editHobby = async (req, res, next) => {
     }
 }
 
+/**
+ * Adds the provided hobby id to the logged in Account document
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
 const addHobby = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         const { id: newHobby } = req.params
@@ -92,6 +112,12 @@ const addHobby = async (req, res, next) => {
     }
 }
 
+/**
+ * Deletes the provided hobby id from the logged in Account document
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
 const deleteHobby = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         const { params: { id: hobbyToDelete } } = req
