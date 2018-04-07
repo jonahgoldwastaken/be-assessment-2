@@ -2,9 +2,8 @@
 const router = require('express').Router()
 const argon = require('argon2')
 const upload = require('../utils/multerUtil').getInstance()
-const Account = require('../models/Account')
-const accountUtil = require('../utils/accountUtil')
-const hobbyUtil = require('../utils/hobbyUtil')
+const account = require('../utils/accountUtil')
+const hobby = require('../utils/hobbyUtil')
 
 /**
  * Renders registration forms
@@ -32,7 +31,7 @@ const accountForms = async (req, res, next) => {
 
     const stepThree = async () => {
         try {
-            const hobbies = await hobbyUtil.find.all()
+            const hobbies = await hobby.find.all()
             res.render('account/create-account/step-3', {
                 partialUser: registrationData,
                 data: hobbies
@@ -61,7 +60,7 @@ const accountForms = async (req, res, next) => {
  * @param {Response} res
  * @param {Function} next
  */
-const registerUser = (req, res, next) => {
+const registerUser = async (req, res, next) => {
     const { hobbies } = req.body
     req.session.registration = Object.assign(req.session.registration, {
         hobbies: typeof hobbies === 'string'
@@ -70,18 +69,15 @@ const registerUser = (req, res, next) => {
     })
     delete req.session.registration.step
 
-    const newUser = new Account(req.session.registration)
-    newUser.save((err, user) => {
-        if (err) {
-            next(err)
-        } else {
-            delete req.session.registration
-            req.session.user = {
-                _id: user._id
-            }
-            res.status(201).redirect('/home')
-        }
-    })
+    const newUser = account.new(req.session.registration)
+    try {
+        const user = await newUser.save()
+        delete req.session.registration
+        account.currentUser.logIn(user._id)
+        res.status(201).redirect('/home')
+    } catch (err) {
+        next(err)
+    }
 }
 
 /**
@@ -96,7 +92,7 @@ const registerSession = (req, res, next) => {
     const stepOne = async () => {
         const { email, password } = req.body
         try {
-            const emailExists = await accountUtil.find.byEmail(email)
+            const emailExists = await account.find.byEmail(email)
             if (!emailExists) {
                 const hashedPassword = await argon.hash(password)
                 req.session.registration = {

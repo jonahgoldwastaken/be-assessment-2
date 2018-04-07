@@ -1,5 +1,5 @@
 const Hobby = require('../models/Hobby')
-const accountUtil = require('./accountUtil')
+const account = require('./accountUtil')
 
 /**
  * Filter out hobbies that a user already has.
@@ -18,8 +18,8 @@ const filterHobbiesOnUser = (hobbies, { hobbies: userHobbies }) =>
 const calculatePopularity = async (hobbies) => {
     const promises = hobbies.map(async (hobby) => {
         try {
-            const popularity = (await accountUtil.count.hobbies(hobby._id)
-                / await accountUtil.count.all()) * 100
+            const popularity = (await account.count.hobbies(hobby._id)
+                / await account.count.all()) * 100
             const parsedHobby = hobby
             parsedHobby.popularity = popularity
             return parsedHobby
@@ -53,6 +53,13 @@ const findAllHobbies = () =>
             resolve(sortedHobbies)
         }))
 
+/**
+ * Creates a new Hobby model based on provided data
+ * @param {Object} data Object with data to put into Hobby object
+ */
+const newHobby = data =>
+    new Hobby(data)
+
 module.exports = {
     find: {
         all: findAllHobbies
@@ -62,5 +69,6 @@ module.exports = {
     },
     filter: {
         user: filterHobbiesOnUser
-    }
+    },
+    new: newHobby
 }

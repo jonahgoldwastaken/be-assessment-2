@@ -2,7 +2,7 @@
 const router = require('express').Router()
 const create = require('./create')
 const argon2 = require('argon2')
-const accountUtil = require('../utils/accountUtil')
+const account = require('../utils/accountUtil')
 const hobbyUtil = require('../utils/hobbyUtil')
 
 /**
@@ -13,11 +13,11 @@ const hobbyUtil = require('../utils/hobbyUtil')
 const login = async (req, res) => {
     const { email, password } = req.body
     try {
-        const user = await accountUtil.find.byEmail(email)
+        const user = await account.find.byEmail(email)
         if (user) {
             const match = await argon2.verify(user.password, password)
             if (match) {
-                accountUtil.currentUser.logIn(req, user._id)
+                account.currentUser.logIn(req, user._id)
                 res.status(200).redirect('/home')
             } else {
                 throw new Error({ password: 'Het opgegeven wachtwoord is onjuist.' })
@@ -40,9 +40,9 @@ const login = async (req, res) => {
  * @param {Function} next
  */
 const profile = async (req, res, next) => {
-    if (accountUtil.currentUser.isLoggedIn(req)) {
+    if (account.currentUser.isLoggedIn(req)) {
         try {
-            const data = await accountUtil.currentUser.get(req)
+            const data = await account.currentUser.get(req)
             if (!data) {
                 res.status(403).redirect('/account/login')
             } else {
@@ -66,7 +66,7 @@ const profile = async (req, res, next) => {
  */
 const editForm = async (req, res, next) => {
     try {
-        const data = await accountUtil.currentUser.get(req)
+        const data = await account.currentUser.get(req)
         if (!data) {
             res.status(500).redirect('/')
         } else {
@@ -86,16 +86,16 @@ const editForm = async (req, res, next) => {
  * @param {Function} next
  */
 const hobbyList = async (req, res, next) => {
-    if (accountUtil.currentUser.isLoggedIn(req)) {
+    if (account.currentUser.isLoggedIn(req)) {
         try {
-            const account = await accountUtil.currentUser.get(req)
+            const loggedInUser = await account.currentUser.get(req)
             const allHobbies = await hobbyUtil.find.all()
-            const filteredHobbies = hobbyUtil.filter.user(allHobbies, account)
-            if (!account) {
+            const filteredHobbies = hobbyUtil.filter.user(allHobbies, loggedInUser)
+            if (!loggedInUser) {
                 res.status(500).redirect('/account/login')
             } else {
                 res.render('account/hobbies', {
-                    own: account.hobbies,
+                    own: loggedInUser.hobbies,
                     all: filteredHobbies
                 })
             }
@@ -115,7 +115,7 @@ const hobbyList = async (req, res, next) => {
  */
 const userProfile = async ({ req: { header, params: { id } } }, res, next) => {
     try {
-        const data = await accountUtil.find.byId(id)
+        const data = await account.find.byId(id)
         if (!data) {
             res.redirect('/home')
         } else {

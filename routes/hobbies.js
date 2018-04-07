@@ -1,7 +1,7 @@
 /* eslint-disable new-cap */
 const router = require('express').Router()
 const upload = require('../utils/multerUtil').getInstance()
-const Hobby = require('../models/Hobby')
+const hobby = require('../utils/hobbyUtil')
 
 /**
  * Saves requested hobby
@@ -9,15 +9,17 @@ const Hobby = require('../models/Hobby')
  * @param {Response} res
  * @param {Function} next
  */
-const requestHobby = (req, res, next) => {
-    const newHobby = new Hobby({
+const requestHobby = async (req, res, next) => {
+    const newHobby = hobby.new({
         name: req.body.name,
         image: req.file.filename
     })
-    newHobby.save((err) => {
-        if (err) next(err)
-        res.redirect('/', 201)
-    })
+    try {
+        await newHobby.save()
+        res.status(201).redirect('/')
+    } catch (err) {
+        next(err)
+    }
 }
 
 module.exports = router

@@ -1,6 +1,6 @@
 /* eslint-disable new-cap */
 const router = require('express').Router()
-const accountUtil = require('../utils/accountUtil')
+const account = require('../utils/accountUtil')
 
 /**
  * Renders homepage
@@ -9,11 +9,11 @@ const accountUtil = require('../utils/accountUtil')
  * @param {Function} next
  */
 const homePage = async (req, res, next) => {
-    if (accountUtil.currentUser.isLoggedIn(req)) {
+    if (account.currentUser.isLoggedIn(req)) {
         try {
-            const loggedInUser = await accountUtil.currentUser.get(req)
-            const fetchedUsers = await accountUtil.find.all()
-            const processedUsers = await accountUtil.process.list(loggedInUser, fetchedUsers)
+            const loggedInUser = await account.currentUser.get(req)
+            const fetchedUsers = await account.find.all()
+            const processedUsers = await account.process.list(loggedInUser, fetchedUsers)
             res.render('home/home', {
                 data: processedUsers[0]
             })

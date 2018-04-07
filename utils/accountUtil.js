@@ -218,6 +218,13 @@ const logInUser = (req, id) => { req.session.userId = id }
  */
 const logOutUser = ({ session: { destroy } }) => destroy()
 
+/**
+ * Creates a new Account model based on provided data
+ * @param {Object} data Object with data to put into Account object
+ */
+const newAccount = data =>
+    new Account(data)
+
 module.exports = {
     find: {
         all: fetchAllUsers,
@@ -250,5 +257,6 @@ module.exports = {
         get: getLoggedInUser,
         logIn: logInUser,
         logOut: logOutUser
-    }
+    },
+    new: newAccount
 }
