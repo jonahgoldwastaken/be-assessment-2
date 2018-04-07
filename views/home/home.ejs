@@ -9,7 +9,7 @@
                 <img src="/images/<%= data.avatar %>" alt="Profielfoto Daniëlle Schinkels">
                 <h2><%= data.firstName %></h2>
                 <h3><%= data.age %> jaar</h3>
-                <h4><%= data.hobbies.length %> hobbies, waaronder:</h4>
+                <h4><%= data.hobbies.length > 3 ? `${data.hobbies.length} hobbies, waaronder:` : `${data.hobbies.length} hobbies` %></h4>
             </div>
             <ul class="gallery gallery--card">
                 <% data.hobbies.some(function (hobby, i) { %>
