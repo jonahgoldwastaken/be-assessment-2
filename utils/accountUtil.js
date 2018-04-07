@@ -200,6 +200,44 @@ const processUserList = (loggedInUser, users) =>
     })
 
 /**
+ * Updates two accounts, removing like entry and adding corresponding IDs to matches
+ * @param {Account} loggedInUser Logged in Account document
+ * @param {String} matchId Account document ID from matched account
+ */
+const processMatch = (loggedInUser, matchId) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const match = await findById(matchId)
+            const iOne = loggedInUser.likes.findIndex(like => matchId.equals(like))
+            const iTwo = match.likes.findIndex(like => loggedInUser._id.equals(like))
+            loggedInUser.likes.splice(iOne, 1)
+            match.likes.splice(iTwo, 1)
+            loggedInUser.matches.push(matchId)
+            match.matches.push(loggedInUser._id)
+            await loggedInUser.update(loggedInUser)
+            await match.update(match)
+            resolve()
+        } catch (err) {
+            reject(new Error(err))
+        }
+    })
+
+/**
+ * Checks if certain person likes logged in user.
+ * @param {String} id Logged in Account document ID
+ * @param {String} userId Account document ID to check for likes
+ */
+const checkForMatch = ({ _id: id }, userId) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const { likes: likesToCheck } = await findByIdWithoutHobbbies(userId)
+            resolve(likesToCheck.some(like => like.equals(id)))
+        } catch (err) {
+            reject(new Error(err))
+        }
+    })
+
+/**
  * Returns if user has a session
  * @param {Request} req Express Request
  */
@@ -250,6 +288,7 @@ const newAccount = data =>
     new Account(data)
 
 module.exports = {
+    checkMatch: checkForMatch,
     find: {
         all: fetchAllUsers,
         byEmail: findByEmail,
@@ -261,7 +300,8 @@ module.exports = {
         hobbies: countUsersOnHobbies
     },
     process: {
-        list: processUserList
+        list: processUserList,
+        match: processMatch
     },
     filter: {
         loggedIn: filterLoggedInUser,
