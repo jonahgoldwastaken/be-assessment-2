@@ -7,8 +7,11 @@ const account = require('./accountUtil')
  * @param {Account} user user document
  * @returns {Hobby[]}
  */
-const filterHobbiesOnUser = (hobbies, { hobbies: userHobbies }) =>
-    hobbies.filter(hobby => !(hobby._id in userHobbies))
+const filterHobbiesOnUser = (hobbies, { hobbies: userHobbies }) => {
+    const userHobbyIds = userHobbies.map(hobby => hobby._id)
+    return hobbies.filter(hobby =>
+        !(userHobbyIds.some(id => (hobby._id.equals(id)))))
+}
 
 /**
  * Calculates popularity based on the percentage of people using that particular hobby.
