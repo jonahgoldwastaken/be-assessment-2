@@ -1,0 +1,22 @@
+<%- include('../layouts/head.ejs', { title: data.name + ' - HDate' }) %>
+
+<header class="header">
+    <a href="/account/hobby"><i class="fa fa-angle-left"></i></a>
+    <h1 class="header__chat-heading"><%= data.name %></h1>
+</header>
+<main class="container">
+    <form action="/account/hobbies/<%= data._id %>?_method=PUT" method="post" enctype="multipart/form-data">
+        <div class="form-group form-group--image">
+            <input id="image" class="form-group__input" autocomplete="photo" type="file" name="image" accept="image/*" value="">
+            <label for="image" class="form-group__label">
+                Foto toevoegen
+            </label>
+        </div>
+        <label class="form-group">
+            <textarea class="form-group__input" name="description" value="<%= data.description %>"></textarea>
+        </label>
+        <button type="submit" class="btn btn--large btn--green">Opslaan</button>
+    </form>
+</main>
+
+<%- include('../layouts/tail.ejs') %>

@@ -8,7 +8,8 @@ const schema = new mongoose.Schema({
     image: {
         type: String,
         required: true
-    }
+    },
+    description: String
 })
 
 module.exports = mongoose.model('Hobby', schema)

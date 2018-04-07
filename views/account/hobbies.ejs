@@ -11,9 +11,9 @@
             <% own.forEach(function (hobby) { %>
                 <% if (own.length > 1) { %>
                     <li>
-                        <form class="hobby-list__item" action="/account/hobby/<%= hobby._id %>?_method=DELETE" method="post">
+                        <form class="hobby-list__item" action="/account/hobbies/<%= hobby._id %>?_method=DELETE" method="post">
                             <button class="hobby-list__checkbox hobby-list__checkbox--remove" type="submit"></button>
-                            <a href="/hobby/<%= hobby._id %>" class="hobby-list__checkbox hobby-list__checkbox--edit"></a>
+                            <a href="/account/hobbies/<%= hobby._id %>" class="hobby-list__checkbox hobby-list__checkbox--edit"></a>
                             <label class="hobby-list__label hobby-list__label--both">
                                 <%= hobby.name %>
                             </label>
@@ -21,7 +21,7 @@
                     </li>
                 <% } else { %>
                     <li class="hobby-list__item">
-                        <a href="/hobby/<%= hobby._id %>" class="hobby-list__checkbox hobby-list__checkbox--edit"></a>
+                        <a href="/account/hobbies/<%= hobby._id %>" class="hobby-list__checkbox hobby-list__checkbox--edit"></a>
                         <label class="hobby-list__label">
                             <%= hobby.name %>
                         </label>
@@ -35,7 +35,7 @@
         <ul>
             <% all.forEach(function (hobby) { %>
                 <li>
-                    <form method="POST" class="hobby-list__item" action="/account/hobby/<%= hobby._id %>">
+                    <form method="POST" class="hobby-list__item" action="/account/hobbies/<%= hobby._id %>">
                         <button class="hobby-list__checkbox" type="submit" id="<%= hobby._id %>"></button>
                         <label for="<%= hobby._id %>" class="hobby-list__label">
                             <%= hobby.name %>
