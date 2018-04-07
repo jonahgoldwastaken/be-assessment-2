@@ -13,7 +13,6 @@ const homePage = async (req, res, next) => {
         try {
             const loggedInUser = await account.currentUser.get(req)
             const fetchedUsers = await account.find.all()
-            console.log(fetchedUsers[0]._id)
             const processedUsers = await account.process.list(loggedInUser, fetchedUsers)
             res.render('home/home', {
                 data: processedUsers[0]

@@ -64,9 +64,8 @@ const findAllHobbies = () =>
 const findById = _id =>
     new Promise((resolve, reject) =>
         Hobby.findOne({ _id }, (err, hobby) => {
-            return err
-                ? reject(err)
-                : resolve(hobby)
+            if (err) reject(err)
+            resolve(hobby)
         }))
 
 /**
