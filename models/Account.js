@@ -56,11 +56,15 @@ const schema = new mongoose.Schema({
         }
     ],
     hobbyCustom: {
-        _id: {
-            type: mongoose.Schema.Types.ObjectId,
+        type: [{
+            _id: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true
+            },
             image: String,
             description: String
-        }
+        }],
+        default: []
     },
     likes: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -74,6 +78,6 @@ const schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account'
     }]
-})
+}, { strict: false })
 
 module.exports = mongoose.model('Account', schema)

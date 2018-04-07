@@ -44,8 +44,8 @@ const sortHobbies = hobbies =>
         a.popularity < b.popularity)
 
 /**
- * Fetches all hobbies from DB and parses them.
- * @returns sorted hobbies with popularity property.
+ * Fetches all Hobby documents from DB and parses them.
+ * @returns sorted Hobby documents with popularity property.
  */
 const findAllHobbies = () =>
     new Promise((resolve, reject) =>
@@ -57,15 +57,30 @@ const findAllHobbies = () =>
         }))
 
 /**
- * Creates a new Hobby model based on provided data
+ * Fetches one Hobby document with the provided ID
+ * @param {String} _id Hobby document ID
+ * @returns {Hobby} Hobby document fetched with ID
+ */
+const findById = _id =>
+    new Promise((resolve, reject) =>
+        Hobby.findOne({ _id }, (err, hobby) => {
+            return err
+                ? reject(err)
+                : resolve(hobby)
+        }))
+
+/**
+ * Creates a new Hobby document based on provided data
  * @param {Object} data Object with data to put into Hobby object
+ * @returns {Hobby} New Hobby document
  */
 const newHobby = data =>
     new Hobby(data)
 
 module.exports = {
     find: {
-        all: findAllHobbies
+        all: findAllHobbies,
+        id: findById
     },
     sort: {
         popularity: sortHobbies

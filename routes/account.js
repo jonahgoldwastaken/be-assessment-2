@@ -2,8 +2,9 @@
 const router = require('express').Router()
 const create = require('./create')
 const argon2 = require('argon2')
+const upload = require('../utils/multerUtil').getInstance()
 const account = require('../utils/accountUtil')
-const hobbyUtil = require('../utils/hobbyUtil')
+const hobby = require('../utils/hobbyUtil')
 
 /**
  * Logs user in, creates session and redirects to home.
@@ -44,7 +45,7 @@ const profile = async (req, res, next) => {
         try {
             const data = await account.currentUser.get(req)
             if (!data) {
-                res.status(403).redirect('/account/login')
+                res.status(404).redirect('/account/login')
             } else {
                 res.render('account/profile', {
                     data
@@ -89,8 +90,8 @@ const hobbyList = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         try {
             const loggedInUser = await account.currentUser.get(req)
-            const allHobbies = await hobbyUtil.find.all()
-            const filteredHobbies = hobbyUtil.filter.user(allHobbies, loggedInUser)
+            const allHobbies = await hobby.find.all()
+            const filteredHobbies = hobby.filter.user(allHobbies, loggedInUser)
             if (!loggedInUser) {
                 res.status(500).redirect('/account/login')
             } else {
@@ -104,6 +105,47 @@ const hobbyList = async (req, res, next) => {
         }
     } else {
         res.status(403).redirect('/account/login')
+    }
+}
+
+const editHobbyForm = async (req, res, next) => {
+    if (account.currentUser.isLoggedIn(req)) {
+        const { id } = req.params
+        try {
+            const { hobbyCustom: customProperties } = await account.currentUser.get(req)
+            const hobbyToEdit = Object.assign(await hobby.find.id(id), customProperties[id])
+            res.render('account/hobby', {
+                data: hobbyToEdit
+            })
+        } catch (err) {
+            next(err)
+        }
+    } else {
+        res.status(403).redirect('/account/login')
+    }
+}
+
+const editHobby = async (req, res, next) => {
+    if (account.currentUser.isLoggedIn(req)) {
+        const { params: { id: _id }, body: { description }, file } = req
+        try {
+            const loggedInUser = await account.currentUser.get(req)
+            const { hobbyCustom } = loggedInUser
+            const newCustomProperties = {
+                _id,
+                image: file && file.filename,
+                description
+            }
+            const i = hobbyCustom.findIndex(customHobby => customHobby._id.equals(_id))
+            if (i < 0)
+                hobbyCustom.push(newCustomProperties)
+            else
+                hobbyCustom[i] = newCustomProperties
+            await loggedInUser.update({ $set: { hobbyCustom } })
+            res.redirect('back')
+        } catch (err) {
+            next(err)
+        }
     }
 }
 
@@ -141,7 +183,7 @@ const deleteHobby = async (req, res, next) => {
  * @param {Function} next
  */
 const userProfile = async ({ header, params: { id } }, res, next) => {
-    if (account.currentUser.isLoggedIn) {
+    if (account.currentUser.isLoggedIn(req)) {
         try {
             const data = await account.find.byId(id)
             if (!data) {
@@ -165,9 +207,10 @@ module.exports = router
     .post('/login', login)
     .get('/edit', editForm)
     .get('/hobbies', hobbyList)
-    .post('/hobby/:id', addHobby)
-    .delete('/hobby/:id', deleteHobby)
-    .get('/hobbies/:hobby/personalise', (req, res) => res.render('hobbies/list'))
+    .get('/hobbies/:id', editHobbyForm)
+    .put('/hobbies/:id', upload.single('image'), editHobby)
+    .post('/hobbies/:id', addHobby)
+    .delete('/hobbies/:id', deleteHobby)
     .get('/settings', (req, res) => res.render('account/settings'))
     .get('/:id', userProfile)
     .get('/', profile)

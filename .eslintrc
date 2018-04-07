@@ -52,6 +52,9 @@
                 "named": "always",
                 "asyncArrow": "always"
             }
-        ]
+        ],
+        "no-param-reassign": ["error", {
+            "props": false
+        }]
     }
 }

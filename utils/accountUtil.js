@@ -2,15 +2,18 @@ const Account = require('../models/Account')
 
 /**
  * Compresses hobbies, combining an image and description with corresponding hobby
- * @param {Account} user Account model
- * @returns {Account} Compressed account model
+ * @param {Account} user Account document
+ * @returns {Account} Compressed account document
  */
 const compressHobbies = (user) => {
     try {
-        user.hobbies.map((hobby) => {
-            if (user.hobbyCustom && hobby._id in user.hobbyCustom) {
-                const customHobby = user.hobbyCustom[hobby._id]
+        const parsedHobbies = user.hobbies.map((hobby) => {
+            const i = user.hobbyCustom.findIndex(customProperties =>
+                hobby._id.equals(customProperties._id))
+            if (i !== -1) {
+                const customHobby = user.hobbyCustom[i]
                 return {
+                    _id: hobby._id,
                     name: hobby.name,
                     image: customHobby.image,
                     description: customHobby.description
@@ -18,16 +21,17 @@ const compressHobbies = (user) => {
             }
             return hobby
         })
+        user.hobbies = parsedHobbies
         return user
     } catch (err) {
-        throw err
+        throw new Error(err)
     }
 }
 
 /**
  * Calculates popularity based on the popularity per hobby
- * @param {Account} account Account model
- * @returns {Account} Account model with popularity
+ * @param {Account} account Account document
+ * @returns {Account} Account document with popularity
  */
 const calcPopularity = account =>
     account.hobbies.reduce((popularity, hobby) =>
@@ -36,7 +40,7 @@ const calcPopularity = account =>
 /**
  * Fetches user based on provided e-mail address
  * @param {String} email
- * @returns {Promise} Promise resolving to Account model
+ * @returns {Promise} Promise resolving to Account document
  */
 const findByEmail = email =>
     new Promise((resolve, reject) => Account.findOne({ email }, (err, data) =>
@@ -44,7 +48,7 @@ const findByEmail = email =>
 
 /**
  * Fetches all users and compresses them
- * @returns {Promise} Promise resolving to list of compressed Account models
+ * @returns {Promise} Promise resolving to list of compressed Account documents
  */
 const fetchAllUsers = () =>
     new Promise((resolve, reject) =>
@@ -62,8 +66,8 @@ const fetchAllUsers = () =>
 
 /**
  * Finds and compresses a user
- * @param {String} id An Account model ID
- * @returns {Promise} Promise resolving to compressed Account model
+ * @param {String} id An Account document ID
+ * @returns {Promise} Promise resolving to compressed Account document
  */
 const findById = id =>
     new Promise((resolve, reject) =>
@@ -81,7 +85,7 @@ const findById = id =>
 
 /**
  * Finds a user without compressing it
- * @param {String} id An Account model ID
+ * @param {String} id An Account document ID
  */
 const findByIdWithoutHobbbies = id =>
     new Promise((resolve, reject) =>
@@ -91,7 +95,7 @@ const findByIdWithoutHobbbies = id =>
         }))
 /**
  * Counts the amount of records inside the database
- * @returns {Promise} Promise resolving to corresponding amount of Account models
+ * @returns {Promise} Promise resolving to corresponding amount of Account documents
  */
 const countUsers = () =>
     new Promise((resolve, reject) => Account.count({}, (err, count) =>
@@ -100,7 +104,7 @@ const countUsers = () =>
 /**
  * Counts the amount of users with the same e-mail address
  * @param {String} email
- * @returns {Promise} Promise resolving to corresponding amount of Account models
+ * @returns {Promise} Promise resolving to corresponding amount of Account documents
  */
 const countEmails = email =>
     new Promise((resolve, reject) => Account.count({ email }, (err, count) =>
@@ -109,7 +113,7 @@ const countEmails = email =>
 /**
  * Counts the amount of users who have a certain hobby
  * @param {String} id A hobby ID
- * @returns {Promise} Promise resolving to corresponding amount of Account models
+ * @returns {Promise} Promise resolving to corresponding amount of Account documents
  */
 const countUsersOnHobbies = id =>
     new Promise((resolve, reject) => Account.count({ hobbies: { _id: id } }, (err, data) =>
@@ -117,9 +121,9 @@ const countUsersOnHobbies = id =>
 
 /**
  * Sorts lists of users based on if they like the comparing user.
- * @param {Account} user Account model to compare to
- * @param {Account[]} users All other Account models
- * @returns {Account[]} Sorted list of Account models
+ * @param {Account} user Account document to compare to
+ * @param {Account[]} users All other Account documents
+ * @returns {Account[]} Sorted list of Account documents
  */
 const sortUsersOnLikes = (user, users) =>
     users.sort(currentUser =>
@@ -127,8 +131,8 @@ const sortUsersOnLikes = (user, users) =>
 
 /**
  * Sorts list of users on its popularity
- * @param {Account[]} users List of Account models
- * @returns {Account[]} Sorted list of Account models
+ * @param {Account[]} users List of Account documents
+ * @returns {Account[]} Sorted list of Account documents
  */
 const sortOnPopularity = users =>
     users.sort((a, b) =>
@@ -136,9 +140,9 @@ const sortOnPopularity = users =>
 
 /**
  * Filters users on whether they disliked the comparing user.
- * @param {Account} user Account model to compare to
- * @param {Account[]} users All other Account models
- * @returns {Account[]} Filtered list of Account models
+ * @param {Account} user Account document to compare to
+ * @param {Account[]} users All other Account documents
+ * @returns {Account[]} Filtered list of Account documents
  */
 const filterUsersWithDislikes = (user, users) =>
     users.filter(currentUser =>
@@ -147,8 +151,8 @@ const filterUsersWithDislikes = (user, users) =>
 /**
  * Filters logged in user from Account list
  * @param {Account} user Logged in user
- * @param {Account[]} users All Account models fro mDB
- * @returns {Account[]} Filtered list of Account models
+ * @param {Account[]} users All Account documents fro mDB
+ * @returns {Account[]} Filtered list of Account documents
  */
 const filterLoggedInUser = (user, users) =>
     users.filter(currentUser =>
@@ -156,9 +160,9 @@ const filterLoggedInUser = (user, users) =>
 
 /**
  * Filters on age range
- * @param {Account} user Account models to compare to
- * @param {Account[]} users All other Account models
- * @returns {Account[]} Filtered list of Account models
+ * @param {Account} user Account documents to compare to
+ * @param {Account[]} users All other Account documents
+ * @returns {Account[]} Filtered list of Account documents
  */
 const filterAgeRange = (user, users) =>
     users.filter(currentUser =>
@@ -166,9 +170,9 @@ const filterAgeRange = (user, users) =>
 
 /**
  * Filters on sexual preference
- * @param {Account} user Account model to compare to
- * @param {Account[]} users All other Account models
- * @returns {Account[]} Filtered list of Account models
+ * @param {Account} user Account document to compare to
+ * @param {Account[]} users All other Account documents
+ * @returns {Account[]} Filtered list of Account documents
  */
 const filterSex = (user, users) =>
     users.filter(currentUser =>
@@ -177,8 +181,8 @@ const filterSex = (user, users) =>
 /**
  * Process all users for the matching system to work it's magic.
  * @param {Account} loggedInUser Logged in user
- * @param {Account[]} users All Account models from DB
- * @returns {Account[]} Processed list of Account models
+ * @param {Account[]} users All Account documents from DB
+ * @returns {Account[]} Processed list of Account documents
  */
 const processUserList = (loggedInUser, users) =>
     new Promise((resolve, reject) => {
@@ -228,7 +232,7 @@ const getLoggedInUserWithoutHobbies = ({ session: { userId } }) =>
 /**
  * Sets user session
  * @param {Request} req Express Request
- * @param {String} id Account model ID
+ * @param {String} id Account document ID
  */
 const logInUser = (req, id) => { req.session.userId = id }
 
@@ -239,7 +243,7 @@ const logInUser = (req, id) => { req.session.userId = id }
 const logOutUser = ({ session: { destroy } }) => destroy()
 
 /**
- * Creates a new Account model based on provided data
+ * Creates a new Account document based on provided data
  * @param {Object} data Object with data to put into Account object
  */
 const newAccount = data =>

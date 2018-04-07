@@ -15,7 +15,10 @@
                 <li class="gallery-item gallery-item--profile">
                     <img role="presentation" src="/images/<%= hobby.image %>">
                     <h3 title="Hobby"><%= hobby.name %></h3>
-                </li>
+                    <% if (hobby.description) { %>
+                        <p><%= hobby.description %></p>
+                    <% } %>
+                 </li>
             <% }) %>
         </ul>
     </section>

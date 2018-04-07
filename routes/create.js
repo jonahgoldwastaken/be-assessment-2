@@ -65,7 +65,8 @@ const registerUser = async (req, res, next) => {
     req.session.registration = Object.assign(req.session.registration, {
         hobbies: typeof hobbies === 'string'
             ? [hobbies]
-            : hobbies
+            : hobbies,
+        hobbyCustom: { ...hobbies }
     })
     delete req.session.registration.step
 
@@ -73,7 +74,7 @@ const registerUser = async (req, res, next) => {
     try {
         const user = await newUser.save()
         delete req.session.registration
-        account.currentUser.logIn(user._id)
+        account.currentUser.logIn(req, user._id)
         res.status(201).redirect('/home')
     } catch (err) {
         next(err)
