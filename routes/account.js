@@ -66,17 +66,21 @@ const profile = async (req, res, next) => {
  * @param {Function} next
  */
 const editForm = async (req, res, next) => {
-    try {
-        const data = await account.currentUser.get(req)
-        if (!data) {
-            res.status(500).redirect('/')
-        } else {
-            res.render('account/edit', {
-                data
-            })
+    if (account.currentUser.isLoggedIn(req)) {
+        try {
+            const data = await account.currentUser.get(req)
+            if (!data) {
+                res.status(500).redirect('/')
+            } else {
+                res.render('account/edit', {
+                    data
+                })
+            }
+        } catch (err) {
+            next(err)
         }
-    } catch (err) {
-        next(err)
+    } else {
+        res.redirect('/account/login')
     }
 }
 
@@ -146,33 +150,43 @@ const editHobby = async (req, res, next) => {
         } catch (err) {
             next(err)
         }
+    } else {
+        res.redirect('/account/login')
     }
 }
 
 const addHobby = async (req, res, next) => {
-    const { id: newHobby } = req.params
-    try {
-        const loggedInUser = await account.currentUser.getWithoutHobbies(req)
-        const { hobbies } = loggedInUser
-        hobbies.push(newHobby)
-        await loggedInUser.update({ $set: { hobbies } })
-        res.redirect('back')
-    } catch (err) {
-        next(err)
+    if (account.currentUser.isLoggedIn(req)) {
+        const { id: newHobby } = req.params
+        try {
+            const loggedInUser = await account.currentUser.getWithoutHobbies(req)
+            const { hobbies } = loggedInUser
+            hobbies.push(newHobby)
+            await loggedInUser.update({ $set: { hobbies } })
+            res.redirect('back')
+        } catch (err) {
+            next(err)
+        }
+    } else {
+        res.redirect('/account/login')
     }
 }
 
 
 const deleteHobby = async (req, res, next) => {
-    const { params: { id: hobbyToDelete } } = req
-    try {
-        const loggedInUser = await account.currentUser.getWithoutHobbies(req)
-        const { hobbies } = loggedInUser
-        hobbies.splice(hobbies.indexOf(hobbyToDelete), 1)
-        await loggedInUser.update({ $set: { hobbies } })
-        res.redirect('back')
-    } catch (err) {
-        next(err)
+    if (account.currentUser.isLoggedIn(req)) {
+        const { params: { id: hobbyToDelete } } = req
+        try {
+            const loggedInUser = await account.currentUser.getWithoutHobbies(req)
+            const { hobbies } = loggedInUser
+            hobbies.splice(hobbies.indexOf(hobbyToDelete), 1)
+            await loggedInUser.update({ $set: { hobbies } })
+            res.redirect('back')
+        } catch (err) {
+            next(err)
+        }
+    } else {
+        res.redirect('/account/login')
     }
 }
 
@@ -182,9 +196,10 @@ const deleteHobby = async (req, res, next) => {
  * @param {Response} res
  * @param {Function} next
  */
-const userProfile = async ({ header, params: { id } }, res, next) => {
+const userProfile = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         try {
+            const { params: { id }, header } = req
             const data = await account.find.byId(id)
             if (!data) {
                 res.redirect('/home')
