@@ -6,7 +6,7 @@
                         "WORKDIR /usr/src/app",
                         "COPY ./src/package.json /usr/src/app/",
                         "RUN yarn global add forever",
-                        "RUN apk add --no-cache --virtual .gyp python make g++ && yarn install && apk del .gyp",
+                        "RUN apk add --no-cache --virtual .gyp python make g++ && yarn install --production && apk del .gyp",
                         "COPY ./src /usr/src/app",
                         "RUN yarn build-prod",
                         "ENV NODE_ENV production",
