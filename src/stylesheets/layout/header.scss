@@ -10,7 +10,7 @@
 
     @media screen and (min-width: 60rem) {
         box-shadow: var(--desktop-shadow);
-        
+
         a, .header__chat-heading {
             font-size: 2rem !important;
         }
@@ -43,7 +43,7 @@
         margin-top: 1em;
         margin-bottom: 0.3em;
         text-decoration: underline;
-        
+
         &--underline {
             text-decoration: underline;
         }
@@ -61,7 +61,7 @@
     ul :nth-child(2) {
         text-align: center;
     }
-    
+
     :nth-child(3),
     ul :nth-child(3),
     :nth-child(3) *,
