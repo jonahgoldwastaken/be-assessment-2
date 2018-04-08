@@ -2,7 +2,9 @@
 const router = require('express').Router()
 const argon = require('argon2')
 const Jimp = require('jimp')
-const upload = require('../utils/multerUtil').getInstance()
+const multer = require('../utils/multerUtil')
+
+const upload = multer.getInstance()
 const account = require('../utils/accountUtil')
 const hobby = require('../utils/hobbyUtil')
 
@@ -117,8 +119,10 @@ const registerSession = (req, res, next) => {
     const stepTwo = async () => {
         const { body, file } = req
         try {
-            const newImage = await Jimp.read(`uploads/${file.filename}`)
-            newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${file.filename}`)
+            const newName = `${req.body.first_name}${req.body.location}${req.body.age}`
+            await multer.renameFile(file, newName)
+            const newImage = await Jimp.read(`uploads/${newName}`)
+            newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${newName}`)
             req.session.registration = Object.assign(req.session.registration, {
                 step: 3,
                 firstName: body.first_name,
