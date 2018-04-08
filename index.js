@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const mongoose = require('mongoose')
 const MongoDBStore = require('connect-mongodb-session')(session)
+const httpStatus = require('http-status')
 const multerUtil = require('./utils/multerUtil')
 
 multerUtil.createInstance()
@@ -59,8 +60,14 @@ mongoose.connect(url, (err) => {
         .get('/', (req, res) => res.render('onboarding'))
         // TODO: add error handling function
         .use((reqErr, req, res) => {
-            console.error('request error: ', reqErr)
-            res.redirect('back')
+            if (reqErr.err) {
+                console.error('request error: ', reqErr)
+                reqErr.message = httpStatus[reqErr.status]
+                res.status(reqErr.status).render('error', {
+                    data: reqErr,
+                    back: req.headers('Referer')
+                })
+            }
         })
         .listen(port)
 })

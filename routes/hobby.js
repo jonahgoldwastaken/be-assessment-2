@@ -28,7 +28,7 @@ const hobbyList = async (req, res, next) => {
             next(err)
         }
     } else {
-        res.status(403).redirect('/account/login')
+        res.status(401).redirect('/account/login')
     }
 }
 
@@ -51,10 +51,10 @@ const editHobbyForm = async (req, res, next) => {
                 data: hobbyToEdit
             })
         } catch (err) {
-            next(err)
+            next({ err, status: 500 })
         }
     } else {
-        res.status(403).redirect('/account/login')
+        res.status(401).redirect('/account/login')
     }
 }
 
@@ -86,7 +86,7 @@ const editHobby = async (req, res, next) => {
             await loggedInUser.update({ $set: { hobbyCustom } })
             res.redirect('/account/hobbies')
         } catch (err) {
-            next(err)
+            next({ err, status: 422 })
         }
     } else {
         res.redirect('/account/login')
@@ -109,7 +109,7 @@ const addHobby = async (req, res, next) => {
             await loggedInUser.update({ $set: { hobbies } })
             res.redirect('back')
         } catch (err) {
-            next(err)
+            next({ err, status: 422 })
         }
     } else {
         res.redirect('/account/login')
@@ -132,7 +132,7 @@ const deleteHobby = async (req, res, next) => {
             await loggedInUser.update({ $set: { hobbies } })
             res.redirect('back')
         } catch (err) {
-            next(err)
+            next({ err, status: 400 })
         }
     } else {
         res.redirect('/account/login')
