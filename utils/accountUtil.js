@@ -24,7 +24,7 @@ const compressHobbies = (user) => {
         user.hobbies = parsedHobbies
         return user
     } catch (err) {
-        throw new Error(err)
+        throw err
     }
 }
 
@@ -44,7 +44,7 @@ const calcPopularity = account =>
  */
 const findByEmail = email =>
     new Promise((resolve, reject) => Account.findOne({ email }, (err, data) =>
-        (err ? reject(new Error(err)) : resolve(data))))
+        (err ? reject(err) : resolve(data))))
 
 /**
  * Fetches all users and compresses them
@@ -55,12 +55,12 @@ const fetchAllUsers = () =>
         Account.find({})
             .populate('hobbies')
             .exec((err, data) => {
-                if (err) reject(new Error(err))
+                if (err) reject(err)
                 try {
                     const users = data.map(user => compressHobbies(user))
                     resolve(users)
                 } catch (error) {
-                    reject(new Error(error))
+                    reject(error)
                 }
             }))
 
@@ -74,13 +74,22 @@ const findById = _id =>
         Account.findOne({ _id })
             .populate('hobbies')
             .exec((err, data) => {
-                if (err) reject(new Error(err))
+                if (err) reject(err)
                 try {
                     const parsedData = compressHobbies(data)
                     resolve(parsedData)
                 } catch (error) {
-                    reject(new Error(error))
+                    reject(error)
                 }
+            }))
+
+const findByIdWithMatches = _id =>
+    new Promise((resolve, reject) =>
+        Account.findOne({ _id })
+            .populate('matches')
+            .exec((err, data) => {
+                if (err) reject(err)
+                resolve(data)
             }))
 
 /**
@@ -90,7 +99,7 @@ const findById = _id =>
 const findByIdWithoutHobbbies = id =>
     new Promise((resolve, reject) =>
         Account.findOne({ _id: id }, (err, data) => {
-            if (err) reject(new Error(err))
+            if (err) reject(err)
             resolve(data)
         }))
 /**
@@ -99,7 +108,7 @@ const findByIdWithoutHobbbies = id =>
  */
 const countUsers = () =>
     new Promise((resolve, reject) => Account.count({}, (err, count) =>
-        (err ? reject(new Error(err)) : resolve(count))))
+        (err ? reject(err) : resolve(count))))
 
 /**
  * Counts the amount of users with the same e-mail address
@@ -108,7 +117,7 @@ const countUsers = () =>
  */
 const countEmails = email =>
     new Promise((resolve, reject) => Account.count({ email }, (err, count) =>
-        (err ? reject(new Error(err)) : resolve(count))))
+        (err ? reject(err) : resolve(count))))
 
 /**
  * Counts the amount of users who have a certain hobby
@@ -117,7 +126,7 @@ const countEmails = email =>
  */
 const countUsersOnHobbies = id =>
     new Promise((resolve, reject) => Account.count({ hobbies: { _id: id } }, (err, data) =>
-        (err ? reject(new Error(err)) : resolve(data))))
+        (err ? reject(err) : resolve(data))))
 
 /**
  * Sorts lists of users based on if they like the comparing user.
@@ -216,7 +225,7 @@ const processUserList = (loggedInUser, users) => /* eslint-disable function-pare
                                                 filterLoggedInUser(loggedInUser, users)))))))))
             resolve(processedUsers)
         } catch (err) {
-            reject(new Error(err))
+            reject(err)
         }
     })
 
@@ -239,7 +248,7 @@ const processMatch = (loggedInUser, matchId) =>
             await match.update(match)
             resolve()
         } catch (err) {
-            reject(new Error(err))
+            reject(err)
         }
     })
 
@@ -255,7 +264,7 @@ const checkForMatch = ({ _id: id }, userId) =>
             if (!likesToCheck.length) resolve(false)
             else resolve(likesToCheck.some(like => like.equals(id)))
         } catch (err) {
-            reject(new Error(err))
+            reject(err)
         }
     })
 
@@ -275,7 +284,17 @@ const getLoggedInUser = ({ session: { userId } }) =>
             const user = await findById(userId)
             resolve(user)
         } catch (err) {
-            reject(new Error(err))
+            reject(err)
+        }
+    })
+
+const getLoggedInUserWithMatches = ({ session: { userId } }) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const user = await findByIdWithMatches(userId)
+            resolve(user)
+        } catch (err) {
+            reject(err)
         }
     })
 
@@ -285,7 +304,7 @@ const getLoggedInUserWithoutHobbies = ({ session: { userId } }) =>
             const user = await findByIdWithoutHobbbies(userId)
             resolve(user)
         } catch (err) {
-            reject(new Error(err))
+            reject(err)
         }
     })
 
@@ -300,7 +319,17 @@ const logInUser = (req, id) => { req.session.userId = id }
  * Destroys user session
  * @param {Request} req Express Request
  */
-const logOutUser = ({ session: { destroy } }) => destroy()
+const logOutUser = ({ session }) => session.destroy()
+
+const deleteUser = ({ session: { userId } }) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            await Account.findByIdAndRemove(userId)
+            resolve()
+        } catch (err) {
+            reject(err)
+        }
+    })
 
 /**
  * Creates a new Account document based on provided data
@@ -341,9 +370,11 @@ module.exports = {
     currentUser: {
         isLoggedIn: isUserLoggedIn,
         get: getLoggedInUser,
+        getWithMatches: getLoggedInUserWithMatches,
         getWithoutHobbies: getLoggedInUserWithoutHobbies,
         logIn: logInUser,
-        logOut: logOutUser
+        logOut: logOutUser,
+        delete: deleteUser
     },
     new: newAccount
 }

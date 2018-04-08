@@ -6,33 +6,17 @@
         <h1 class="header__heading">Matches</h1>
     </header>
     <ul class="matches">
+        <% data.matches.forEach(function (match) { %>
         <li class="matches__match">
-            <a href="/account/user">
-                <img src="/images/profile-7.jpg" alt="Profielfoto account">
-                Maria
+            <a href="/messages/<%= match._id %>">
+                <img src="/images/<%= match.avatar %>" role="presentation">
+                <%= match.firstName %>
             </a>
         </li>
-        <li class="matches__match">
-            <a href="/account/user">
-                <img src="/images/profile-8.jpg" alt="Profielfoto account">
-                Jordan
-            </a>
-        </li>
-        <li class="matches__match">
-            <a href="/account/user">
-                <img src="/images/profile-2.jpg" alt="Profielfoto account">
-                Irene
-            </a>
-        </li>
-        <li class="matches__match">
-            <a href="/account/user">
-                <img src="/images/profile-6.jpg" alt="Profielfoto account">
-                Loraine
-            </a>
-        </li>
+        <% }) %>
     </ul>
 </section>
-<section>
+<section class="container">
     <header class="container">
         <h1 class="header__heading">Chats</h1>
     </header>

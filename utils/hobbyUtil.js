@@ -27,7 +27,7 @@ const calculatePopularity = async (hobbies) => {
             parsedHobby.popularity = popularity
             return parsedHobby
         } catch (err) {
-            throw new Error(err)
+            throw err
         }
     })
     const processedHobbies = await Promise.all(promises)
@@ -55,6 +55,13 @@ const findAllHobbies = () =>
             const sortedHobbies = sortHobbies(parsedHobbies)
             resolve(sortedHobbies)
         }))
+
+const compressCustomProperties = (hobby, props) => ({
+    _id: hobby._id,
+    name: hobby.name,
+    image: (props && props.image) || hobby.image,
+    description: (props && props.description)
+})
 
 /**
  * Fetches one Hobby document with the provided ID
@@ -86,6 +93,9 @@ module.exports = {
     },
     filter: {
         user: filterHobbiesOnUser
+    },
+    compress: {
+        properties: compressCustomProperties
     },
     new: newHobby
 }

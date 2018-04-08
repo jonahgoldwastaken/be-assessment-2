@@ -14,12 +14,18 @@ button {
     text-decoration: none;
     transition: background 0.3s var(--transition);
 
+    &:focus {
+        outline: none;
+        border-color: black !important;
+        box-shadow: var(--box-shadow);
+    }
+
     &--pink {
         color: white;
         background: var(--pink);
         border-color: var(--pink);
 
-        &:hover {
+        &:hover, &:focus {
             background: $dark-pink;
         }
     }
@@ -29,7 +35,7 @@ button {
         background: var(--blue);
         border-color: var(--blue);
 
-        &:hover {
+        &:hover, &:focus {
             background: $dark-blue;
         }
     }
@@ -39,7 +45,7 @@ button {
         background: var(--red);
         border-color: var(--red);
 
-        &:hover {
+        &:hover, &:focus {
             background: $dark-red;
         }
     }
@@ -49,7 +55,7 @@ button {
         background: var(--green);
         border-color: var(--green) !important;
 
-        &:hover {
+        &:hover, &:focus {
             background: $dark-green;
         }
     }
@@ -72,6 +78,10 @@ button {
         margin-bottom: 1rem;
     }
 
+    &--ml {
+        margin-left: 1rem;
+    }
+
     &--circle {
         width: 4rem;
         height: 4rem;
@@ -87,6 +97,10 @@ button {
         font-size: 1.5rem;
         font-weight: bold;
         text-decoration: none;
+
+        &:hover, &:focus {
+            background-color: whitesmoke;
+        }
 
         &.btn {
             &--pink {

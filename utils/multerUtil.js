@@ -1,5 +1,13 @@
 const multer = require('multer')
+const mime = require('mime-types')
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) =>
+        cb(null, `${req.body.name || req.session.userId || req.params.id}.${mime.extension(file.mimetype)}`)
+})
 let upload
 
 /**
@@ -7,7 +15,7 @@ let upload
  */
 const createInstance = () => {
     upload = multer({
-        dest: 'uploads',
+        storage,
         fileFilter: (req, file, cb) =>
             cb(null, file.mimetype.split('/')[0] === 'image')
     })

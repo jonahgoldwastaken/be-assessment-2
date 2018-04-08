@@ -83,7 +83,7 @@
     display: flex;
     justify-content: space-between;
 
-    @media screen and (min-width: 60rem) {
+    @media screen and (min-width: 40rem) {
         width: 60rem;
         left: calc(50vw - 30rem);
     }
@@ -119,15 +119,15 @@
 
     &__match {
         margin-right: 1rem;
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        font-weight: 900;
-        font-size: 0.8rem;
 
         a {
             color: black;
             text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            font-weight: 900;
+            font-size: 0.8rem;
         }
 
         img {

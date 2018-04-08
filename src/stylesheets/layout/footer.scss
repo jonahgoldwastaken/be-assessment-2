@@ -14,7 +14,7 @@
     display: flex;
     justify-content: space-between;
 
-    @media screen and (min-width: 60rem) {
+    @media screen and (min-width: 40rem) {
         left: calc(50% - 15rem);
         width: 30rem;
     }

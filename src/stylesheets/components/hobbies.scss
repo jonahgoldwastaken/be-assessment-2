@@ -48,6 +48,11 @@
         padding: 0.5rem;
         border: 3px solid var(--blue);
         box-shadow: var(--button-shadow);
+        cursor: pointer;
+
+        &:hover {
+            border-color: var(--green);
+        }
     }
 
     &__label {
@@ -56,6 +61,7 @@
         width: calc(100% - 1em);
         color: black;
         transition: color 0.3s var(--transition);
+        cursor: pointer;
 
         &:only-child {
             width: 100%;
@@ -63,6 +69,8 @@
 
         &--both {
             width: calc(100% - 3rem);
+            cursor: auto;
+            cursor: initial;
         }
     }
 
@@ -79,6 +87,11 @@
         border: 1px solid black;
         width: 1em;
         height: 1em;
+        cursor: pointer;
+
+        &:hover:before {
+            transform: rotate(22.5deg);
+        }
 
         &:not(:only-of-type) {
             margin-left: 1em;
@@ -125,9 +138,15 @@
             }
         }
 
-        &--edit:before {
-            content: '\f303';
-            font-size: 0.5em;
+        &--edit {
+            &:before {
+                content: '\f303';
+                font-size: 0.5em;
+            }
+
+            &:hover:before {
+                transform: rotate(0deg);
+            }
         }
     }
 }

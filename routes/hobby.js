@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const Jimp = require('jimp')
 const account = require('../utils/accountUtil')
 const hobby = require('../utils/hobbyUtil')
 const upload = require('../utils/multerUtil').getInstance()
@@ -44,7 +45,8 @@ const editHobbyForm = async (req, res, next) => {
         try {
             const { hobbyCustom: customProperties } = await account.currentUser.get(req)
             const i = customProperties.findIndex(prop => prop._id.equals(id))
-            const hobbyToEdit = Object.assign(await hobby.find.id(id), customProperties[i])
+            let hobbyToEdit = await hobby.find.id(id)
+            hobbyToEdit = hobby.compress.properties(hobbyToEdit, customProperties[i])
             res.render('account/hobby', {
                 data: hobbyToEdit
             })
@@ -69,18 +71,20 @@ const editHobby = async (req, res, next) => {
         try {
             const loggedInUser = await account.currentUser.get(req)
             const { hobbyCustom } = loggedInUser
+            if (file) {
+                const newImage = await Jimp.read(`uploads/${file.filename}`)
+                newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${file.filename}`)
+            }
             const newCustomProperties = {
                 _id,
                 image: file && file.filename,
                 description
             }
             const i = hobbyCustom.findIndex(customHobby => customHobby._id.equals(_id))
-            if (i < 0)
-                hobbyCustom.push(newCustomProperties)
-            else
-                hobbyCustom[i] = newCustomProperties
+            if (i < 0) hobbyCustom.push(newCustomProperties)
+            else hobbyCustom[i] = newCustomProperties
             await loggedInUser.update({ $set: { hobbyCustom } })
-            res.redirect('back')
+            res.redirect('/account/hobbies')
         } catch (err) {
             next(err)
         }
