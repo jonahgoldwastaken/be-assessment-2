@@ -64,11 +64,11 @@
             <legend class="fieldset__legend">en valt op...</legend>
             <div class="form-combine">
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="male" <% if (data.sexPref=='male' ) { %> checked
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="male" <% if (data.sexPref.includes('male') ) { %> checked
                     <% } %>> Mannen
                 </label>
                 <label class="form-group form-group--checkbox">
-                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="female" <% if (data.sexPref=='female' ) { %> checked
+                    <input class="form-group__checkbox fa" type="checkbox" name="sex_pref" value="female" <% if (data.sexPref.includes('female') ) { %> checked
                     <% } %>> Vrouwen
                 </label>
             </div>
@@ -80,14 +80,14 @@
                     <label for="age_min" class="form-group__label form-group__label--range">
                         Minimale leeftijd
                     </label>
-                    <input for="age_min" type="number" class="form-group__input" value="18" max="99" min="18" name="age_min" required>
+                    <input for="age_min" type="number" class="form-group__input" value="<%= data.ageRange.min %>" max="99" min="18" name="age_min" required>
                 </div>
                 <p class="text--large">en</p>
                 <div class="form-group form-group--age form-group--range">
                     <label for="age_max" class="form-group__label form-group__label--range">
                         Maximale leeftijd
                     </label>
-                    <input id="age_max" type="number" class="form-group__input" value="99" max="99" min="18" name="age_max" required>
+                    <input id="age_max" type="number" class="form-group__input" value="<%= data.ageRange.max %>" max="99" min="18" name="age_max" required>
                 </div>
             </div>
         </fieldset>
