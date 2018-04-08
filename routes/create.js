@@ -120,9 +120,9 @@ const registerSession = (req, res, next) => {
         const { body, file } = req
         try {
             const newName = `${req.body.first_name}${req.body.location}${req.body.age}`
-            await multer.renameFile(file, newName)
-            const newImage = await Jimp.read(`uploads/${newName}`)
-            newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${newName}`)
+            const processedName = await multer.renameFile(file, newName)
+            const newImage = await Jimp.read(`uploads/${processedName}`)
+            await newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${processedName}`)
             req.session.registration = Object.assign(req.session.registration, {
                 step: 3,
                 firstName: body.first_name,
@@ -137,10 +137,11 @@ const registerSession = (req, res, next) => {
                     min: body.age_min,
                     max: body.age_max
                 },
-                avatar: file.filename
+                avatar: processedName
             })
             res.status(200).redirect('/account/create/3')
         } catch (err) {
+            console.error(err)
             next({ err, status: 422 })
         }
     }

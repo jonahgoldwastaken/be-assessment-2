@@ -8,7 +8,7 @@
         <h2 class="user-info__age"><%= data.age %></h2>
         <h2 class="user-info__location"><%= data.location %></h2>
     </section>
-    <section class="gallery--profile">
+    <section class="gallery--profile container container--mobile">
         <h2 class="header__heading">Hobbies <a href="/account/hobbies"><i class="fa fa-pencil-alt"></i></a></h2>
         <ul class="gallery">
             <% data.hobbies.forEach(function (hobby) { %>
@@ -17,13 +17,13 @@
                     <img role="presentation" src="/images/<%= hobby.image %>">
                     <h3 title="Hobby"><%= hobby.name %></h3>
                     <p><%= hobby.description %></p>
-                    <a href="/account/hobbies/<%= hobby._id %>">Bewerken</a>
+                    <a href="/account/hobbies/<%= hobby._id %>">Bewerk</a>
                 </li>
                 <% } else { %>
                 <li class="gallery-item gallery-item--profile">
                     <img role="presentation" src="/images/<%= hobby.image %>">
                     <h3 title="Hobby"><%= hobby.name %></h3>
-                    <a href="/account/hobbies/<%= hobby._id %>">Bewerken</a>
+                    <a href="/account/hobbies/<%= hobby._id %>">Bewerk</a>
                 </li>
                 <% } %>
             <% }) %>

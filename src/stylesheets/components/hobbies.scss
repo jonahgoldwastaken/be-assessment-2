@@ -65,10 +65,6 @@
         border: 3px solid var(--blue);
         box-shadow: var(--button-shadow);
         cursor: pointer;
-
-        &:hover {
-            border-color: var(--green);
-        }
     }
 
     &__label {
@@ -107,6 +103,7 @@
 
         &:hover:before {
             transform: rotate(22.5deg);
+            color: var(--green);
         }
 
         &:not(:only-of-type) {
@@ -152,6 +149,10 @@
             &:before {
                 transform: rotate(45deg);
             }
+
+            &:hover:before {
+                color: var(--red);
+            }
         }
 
         &--edit {
@@ -162,6 +163,7 @@
 
             &:hover:before {
                 transform: rotate(0deg);
+                color: var(--blue);
             }
         }
     }
