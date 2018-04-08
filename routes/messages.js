@@ -1,6 +1,22 @@
 /* eslint-disable new-cap */
 const router = require('express').Router()
+const account = require('../utils/accountUtil')
+
+const messagesList = async (req, res, next) => {
+    if (account.currentUser.isLoggedIn(req)) {
+        try {
+            const data = await account.currentUser.getWithMatches(req)
+            res.render('messages/list', {
+                data
+            })
+        } catch (err) {
+            next(err)
+        }
+    } else {
+        res.redirect('/account/login')
+    }
+}
 
 module.exports = router
-    .get('/', (req, res) => res.render('messages/list'))
+    .get('/', messagesList)
     .get('/:chat', (req, res) => res.render('messages/chat'))

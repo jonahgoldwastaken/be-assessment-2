@@ -15,16 +15,24 @@
 .fixed {
     position: fixed;
 
-    @media screen and (min-width: 60rem) {
-        position: absolute;
-    }
-
     &--top {
         top: 1rem;
     }
 
     &--right {
         right: 1rem;
+
+        @media screen and (min-width: 40rem) {
+            right: calc(50vw - 19rem);
+        }
+
+        @media screen and (min-width: 60rem) {
+            right: calc(50vw - 29rem);
+        }
+
+        @media screen and (min-width: 80rem) {
+            right: calc(50vw - 39rem);
+        }
     }
 
     &--bottom {
@@ -33,6 +41,18 @@
 
     &--left {
         left: 1rem;
+
+        @media screen and (min-width: 40rem) {
+            left: calc(50vw - 19rem);
+        }
+
+        @media screen and (min-width: 60rem) {
+            left: calc(50vw - 29rem);
+        }
+
+        @media screen and (min-width: 80rem) {
+            left: calc(50vw - 39rem);
+        }
     }
 }
 
@@ -79,17 +99,29 @@
 }
 
 .two-column {
-    @media screen and (min-width: 60rem) {
+    @media screen and (min-width: 40rem) {
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;
+        align-items: center;
         padding: 0 1rem;
 
         .fieldset {
-            flex: 0 0 25rem;
+            flex: 0 0 20rem;
+            align-self: flex-start;
 
             &--small {
-                flex: 0 0 15rem;
+                flex: 0 0 14rem;
+            }
+        }
+    }
+
+    @media screen and (min-width: 80rem) {
+        .fieldset {
+            flex: 0 0 35rem;
+
+            &--small {
+                flex: 0 0 16rem;
             }
         }
     }

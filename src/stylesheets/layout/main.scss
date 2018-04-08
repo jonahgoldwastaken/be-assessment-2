@@ -6,7 +6,17 @@
         margin-top: 33vh;
     }
 
-    @media screen and (min-width: 60rem) {
+    @media screen and (min-width: 40rem) {
         width: 30rem;
+    }
+
+    @media screen and (min-width: 80rem) {
+        width: 40rem;
+    }
+
+    &--mobile {
+        @media screen and (min-width: 40rem) {
+            width: 100%;
+        }
     }
 }

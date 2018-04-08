@@ -4,8 +4,8 @@
 <main class="container">
     <% if (match) { %>
     <section class="overlay overlay--blur">
-        <h1 class="text--center">Je hebt een match!</h1>
-        <p class="text--center text--mb">Jullie vinden elkaars hobbies leuk!</p>
+        <h1 class="text--center text--mb">Je hebt een match!</h1>
+        <p class="text--center text--mb">Jij en <%= match.userTwo.firstName %> vinden elkaars hobbies leuk!</p>
         <div class="new-match">
             <img class="new-match__avatar" src="/images/<%= match.userOne.avatar %>" role="presentation">
             <img class="new-match__avatar" src="/images/<%= match.userTwo.avatar %>" role="presentation">

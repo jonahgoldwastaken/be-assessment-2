@@ -2,11 +2,7 @@
     box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
-}
-
-@media screen and (min-width: 60rem) {
+@media screen and (min-width: 40rem) {
     html {
         background: #efefef;
     }
@@ -21,8 +17,12 @@ body {
     background: white;
     position: relative;
 
-    @media screen and (min-width: 60rem) {
+    @media screen and (min-width: 40rem) {
         z-index: -2;
+    }
+
+    @media screen and (min-width: 80rem) {
+        max-width: 80rem;
     }
 }
 

@@ -1,6 +1,6 @@
-/* eslint-disable new-cap */
 const router = require('express').Router()
 const argon2 = require('argon2')
+const Jimp = require('jimp')
 const account = require('../utils/accountUtil')
 const upload = require('../utils/multerUtil').getInstance()
 
@@ -95,7 +95,7 @@ const updateProfile = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         try {
             const { body, file } = req
-            let redirectUrl
+            let redirectUrl = '/account'
             const oldUser = await account.currentUser.get(req)
             const updatedUser = {
                 firstName: body.first_name || oldUser.firstName,
@@ -117,9 +117,14 @@ const updateProfile = async (req, res, next) => {
                     redirectUrl = '/account/login'
                 }
             }
-            updatedUser.avatar = !file ? oldUser.avatar : file.filename
+            if (file) {
+                const newImage = await Jimp.read(`uploads/${file.filename}`)
+                newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${file.filename}`)
+                updatedUser.avatar = file.filename
+            } else {
+                updatedUser.avatar = oldUser.avatar
+            }
             await oldUser.update(updatedUser)
-            redirectUrl = '/account'
             res.redirect(redirectUrl)
         } catch (err) {
             next(err)
@@ -158,13 +163,33 @@ const userProfile = async (req, res, next) => {
     }
 }
 
+const logOut = (req, res) => {
+    if (account.currentUser.isLoggedIn(req))
+        account.currentUser.logOut(req)
+    res.redirect('/account/login')
+}
+
+const deleteAccount = async (req, res, next) => {
+    if (account.currentUser.isLoggedIn(req)) {
+        try {
+            await account.currentUser.delete(req)
+            res.redirect('/')
+        } catch (err) {
+            next(err)
+        }
+    } else {
+        res.redirect('/account/login')
+    }
+}
+
 module.exports = router
     .use('/create', create)
     .use('/hobbies', hobby)
-    .get('/login', (req, res) =>
-        res.render('account/login', { error: {}, email: '' }))
+    .get('/login', (req, res) => res.render('account/login', { error: {}, email: '' }))
     .post('/login', login)
+    .get('/logout', logOut)
     .get('/edit', editForm)
+    .get('/delete', deleteAccount)
     .get('/:id', userProfile)
     .get('/', profile)
     .patch('/', upload.single('avatar'), updateProfile)

@@ -4,11 +4,12 @@
     <a href="/account"><i class="fa fa-angle-left"></i></a>
     <h1 class="header__chat-heading">Profiel Bewerken</h1>
 </header>
-<main>
+<main class="container container--mobile">
     <form class="two-column" action="/account?_method=PATCH" method="POST" enctype="multipart/form-data">
         <fieldset class="fieldset">
             <legend class="fieldset__legend">Accountgegevens</legend>
             <label class="form-group">
+                E-mailadres
                 <input autocomplete="email" type="email" name="email" class="form-group__input" value="<%= data.email %>" required>
             </label>
             <label class="form-group">
@@ -91,7 +92,10 @@
                 </div>
             </div>
         </fieldset>
-        <input type="submit" class="btn btn--large btn--green" value="Wijzigingen opslaan">
+        <div class="btn-group">
+            <input type="submit" class="btn btn-group__btn btn--large btn--green" value="Wijzigingen opslaan">
+            <a href="/account/delete?_method=DELETE" class="btn btn-group__btn btn--large btn--red">Account verwijderen</a>
+        </div>
     </form>
 </main>
 

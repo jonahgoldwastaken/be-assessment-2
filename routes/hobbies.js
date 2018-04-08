@@ -1,5 +1,5 @@
-/* eslint-disable new-cap */
 const router = require('express').Router()
+const Jimp = require('jimp')
 const upload = require('../utils/multerUtil').getInstance()
 const hobby = require('../utils/hobbyUtil')
 
@@ -10,9 +10,12 @@ const hobby = require('../utils/hobbyUtil')
  * @param {Function} next
  */
 const requestHobby = async (req, res, next) => {
+    const { body, file } = req
+    const newImage = await Jimp.read(`uploads/${file.filename}`)
+    newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${file.filename}`)
     const newHobby = hobby.new({
-        name: req.body.name,
-        image: req.file.filename
+        name: body.name,
+        image: file.filename
     })
     try {
         await newHobby.save()

@@ -36,7 +36,7 @@
             flex: 1 0 4rem;
             background: none;
 
-            @media screen and (min-width: 60rem) {
+            @media screen and (min-width: 40rem) {
                 transition: flex 0.3s var(--transition);
                 flex: 1 1 8rem;
 
@@ -74,8 +74,8 @@
                 }
             }
 
-            @media screen and (min-width: 60rem) {
-                width: 28rem;
+            @media screen and (min-width: 40rem) {
+                width: 22rem;
                 box-shadow: var(--box-shadow);
                 margin-bottom: 2rem;
 
@@ -90,6 +90,14 @@
                 }
             }
 
+            @media screen and (min-width: 60rem) {
+                width: 28rem;
+            }
+
+            @media screen and (min-width: 80rem) {
+                width: 36rem;
+                height: 22rem;
+            }
         }
 
         &--description {
@@ -109,7 +117,7 @@
                 opacity: 1;
                 user-select: none;
 
-                @media screen and (min-width: 60rem) {
+                @media screen and (min-width: 40rem) {
                     padding: 0 4rem;
                 }
             }
@@ -123,7 +131,7 @@
                 opacity: 0.75;
                 user-select: none;
 
-                @media screen and (min-width: 60rem) {
+                @media screen and (min-width: 40rem) {
                     padding: 0 2rem 2rem;
                 }
             }
@@ -136,7 +144,7 @@
                     opacity: 0.75;
                     padding: 0 1rem;
 
-                    @media screen and (min-width: 60rem) {
+                    @media screen and (min-width: 40rem) {
                         padding: 0 4rem;
                     }
                 }
@@ -160,15 +168,14 @@
         margin-left: -1rem;
         margin-bottom: -1rem;
 
-        @media screen and (min-width: 60rem) {
+        @media screen and (min-width: 40rem) {
             height: 24rem;
         }
     }
 
     &--profile {
-        @media screen and (min-width: 60rem) {
-            width: 60rem;
-            margin-left: -15rem;
+        @media screen and (min-width: 40rem) {
+            width: 100%;
             padding: 0 1rem;
 
             .gallery {

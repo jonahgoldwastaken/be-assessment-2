@@ -1,15 +1,15 @@
 <%- include('../layouts/head.ejs', { title: 'Mijn profiel - HDate' }) %>
 
 <%- include('../layouts/homeHeader', { url: 'profile' }) %>
-<main class="container">
-    <section class="user-info">
-        <img class="user-info__avatar" src="/images/<%=data.avatar%>" alt="Profielfoto gebruiker">
+<main>
+    <section class="user-info container">
+        <img class="user-info__avatar" src="/images/<%=data.avatar%>" role="presentation">
         <h1 class="user-info__name"><%= data.firstName %> <%= data.lastName %></h1>
         <h2 class="user-info__age"><%= data.age %></h2>
         <h2 class="user-info__location"><%= data.location %></h2>
     </section>
     <section class="gallery--profile">
-        <h2 class="header__heading gallery__heading">Hobbies</h2>
+        <h2 class="header__heading">Hobbies <a href="/account/hobbies"><i class="fa fa-pencil-alt"></i></a></h2>
         <ul class="gallery">
             <% data.hobbies.forEach(function (hobby) { %>
                 <% if (hobby.description) { %>
@@ -30,6 +30,9 @@
         </ul>
     </section>
 </main>
-<a class="fixed fixed--bottom fixed--right btn btn--circle btn--pink" href="/account/edit"><i class="fas fa-pencil-alt"></i></a>
+<footer class="flex fixed fixed--bottom fixed--right">
+    <a class="btn btn--circle btn--pink" href="/account/edit"><i class="fas fa-pencil-alt"></i></a>
+    <a class="btn btn--circle btn--red btn--ml" href="/account/logout"><i class="fas fa-sign-out-alt"></i></a>
+</footer>
 
 <%- include('../layouts/tail.ejs') %>

@@ -1,6 +1,7 @@
 /* eslint-disable new-cap */
 const router = require('express').Router()
 const argon = require('argon2')
+const Jimp = require('jimp')
 const upload = require('../utils/multerUtil').getInstance()
 const account = require('../utils/accountUtil')
 const hobby = require('../utils/hobbyUtil')
@@ -113,8 +114,10 @@ const registerSession = (req, res, next) => {
         }
     }
 
-    const stepTwo = () => {
+    const stepTwo = async () => {
         const { body, file } = req
+        const newImage = await Jimp.read(`uploads/${file.filename}`)
+        newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${file.filename}`)
         req.session.registration = Object.assign(req.session.registration, {
             step: 3,
             firstName: body.first_name,
