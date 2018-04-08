@@ -28,12 +28,10 @@ const getInstance = () => upload
  */
 const renameFile = (file, newName) =>
     new Promise(async (resolve, reject) => {
-        try {
-            await fs.rename(`uploads/${file.filename}`, `uploads/${newName}.${mime.extension(file.mimetype)}`)
-            resolve()
-        } catch (err) {
-            reject(err)
-        }
+        fs.rename(`uploads/${file.filename}`, `uploads/${newName}.${mime.extension(file.mimetype)}`, (err) => {
+            if (err) reject(err)
+            resolve(`${newName}.${mime.extension(file.mimetype)}`)
+        })
     })
 
 module.exports = {

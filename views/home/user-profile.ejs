@@ -5,14 +5,14 @@
     <h1 class="header__chat-heading"><%= data.firstName %></h1>
     <i class="fas fa-ellipsis-v"></i>
 </header>
-<main class="container">
-    <section class="user-info">
+<main>
+    <section class="user-info container">
         <img class="user-info__avatar" src="/images/<%=data.avatar%>" alt="Profielfoto gebruiker">
-        <h1 class="user-info__name"><%= data.firstName %> <%= match && data.lastName %></h1>
+        <h1 class="user-info__name"><%= data.firstName %> <% if (match) { %> <%= data.lastName %> <% } %></h1>
         <h2 class="user-info__age"><%= data.age %></h2>
         <h2 class="user-info__location"><%= data.location %></h2>
     </section>
-    <section class="gallery--profile">
+    <section class="gallery--profile container container--mobile">
         <h2 class="header__heading gallery__heading">Hobbies</h2>
         <ul class="gallery">
             <% data.hobbies.forEach(function (hobby) { %>

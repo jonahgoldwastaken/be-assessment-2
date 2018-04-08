@@ -73,16 +73,16 @@ const editHobby = async (req, res, next) => {
         try {
             const loggedInUser = await account.currentUser.get(req)
             const { hobbyCustom } = loggedInUser
-            if (file) {
-                const newName = `${loggedInUser._id}${_id}`
-                await multer.renameFile(file, newName)
-                const newImage = await Jimp.read(`uploads/${newName}`)
-                newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${newName}`)
-            }
             const newCustomProperties = {
                 _id,
-                image: file && file.filename,
                 description
+            }
+            if (file) {
+                const newName = `${loggedInUser._id}${_id}`
+                const processedName = await multer.renameFile(file, newName)
+                const newImage = await Jimp.read(`uploads/${processedName}`)
+                newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${processedName}`)
+                newCustomProperties.image = processedName
             }
             const i = hobbyCustom.findIndex(customHobby => customHobby._id.equals(_id))
             if (i < 0) hobbyCustom.push(newCustomProperties)

@@ -121,9 +121,9 @@ const updateProfile = async (req, res, next) => {
             }
             if (file) {
                 const newName = `${updatedUser.firstName}${updatedUser.location}${updatedUser.age}`
-                await multer.renameFile(file, newName)
-                const newImage = await Jimp.read(`uploads/${newName}`)
-                newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${newName}`)
+                const processedName = await multer.renameFile(file, newName)
+                const newImage = await Jimp.read(`uploads/${processedName}`)
+                newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${processedName}`)
                 updatedUser.avatar = file.filename
             } else {
                 updatedUser.avatar = oldUser.avatar

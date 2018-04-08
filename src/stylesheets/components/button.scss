@@ -25,8 +25,11 @@ button {
         background: var(--pink);
         border-color: var(--pink);
 
-        &:hover, &:focus {
-            background: $dark-pink;
+        @media screen and (min-width: 40rem) {
+            &:hover,
+            &:focus {
+                background: $dark-pink;
+            }
         }
     }
 
@@ -35,8 +38,11 @@ button {
         background: var(--blue);
         border-color: var(--blue);
 
-        &:hover, &:focus {
-            background: $dark-blue;
+        @media screen and (min-width: 40rem) {
+            &:hover,
+            &:focus {
+                background: $dark-blue;
+            }
         }
     }
 
@@ -45,8 +51,11 @@ button {
         background: var(--red);
         border-color: var(--red);
 
-        &:hover, &:focus {
-            background: $dark-red;
+        @media screen and (min-width: 40rem) {
+            &:hover,
+            &:focus {
+                background: $dark-red;
+            }
         }
     }
 
@@ -55,8 +64,11 @@ button {
         background: var(--green);
         border-color: var(--green) !important;
 
-        &:hover, &:focus {
-            background: $dark-green;
+        @media screen and (min-width: 40rem) {
+            &:hover,
+            &:focus {
+                background: $dark-green;
+            }
         }
     }
 
@@ -74,8 +86,19 @@ button {
         margin: 0 auto;
     }
 
+    &--block {
+        display: block;
+        @media screen and (max-width: 40rem) {
+            width: 100%;
+        }
+    }
+
     &--mb {
         margin-bottom: 1rem;
+    }
+
+    &--mt {
+        margin-top: 1rem;
     }
 
     &--ml {
@@ -98,8 +121,11 @@ button {
         font-weight: bold;
         text-decoration: none;
 
-        &:hover, &:focus {
-            background-color: whitesmoke;
+        @media screen and (min-width: 40rem) {
+            &:hover,
+            &:focus {
+                background-color: whitesmoke;
+            }
         }
 
         &.btn {

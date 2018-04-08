@@ -58,7 +58,6 @@ mongoose.connect(url, (err) => {
         .use('/hobbies', hobbyCategories)
         .use('/messages', messages)
         .get('/', (req, res) => res.render('onboarding'))
-        // TODO: add error handling function
         .use((reqErr, req, res) => {
             if (reqErr.err) {
                 console.error('request error: ', reqErr)
