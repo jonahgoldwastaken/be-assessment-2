@@ -15,7 +15,29 @@ const homePage = async (req, res, next) => {
             const fetchedUsers = await account.find.all()
             const processedUsers = await account.process.list(loggedInUser, fetchedUsers)
             res.render('home/home', {
-                data: processedUsers[0]
+                data: processedUsers[0],
+                match: null
+            })
+        } catch (err) {
+            next(err)
+        }
+    } else {
+        res.redirect('/account/login')
+    }
+}
+
+const homePageWithMatch = async (req, res, next) => {
+    if (account.currentUser.isLoggedIn(req)) {
+        try {
+            const { id } = req.params
+            const loggedInUser = await account.currentUser.get(req)
+            const match = await account.find.byId(id)
+            res.render('home/home', {
+                match: {
+                    userOne: loggedInUser,
+                    userTwo: match
+                },
+                data: null
             })
         } catch (err) {
             next(err)
@@ -38,14 +60,12 @@ const likeUser = async (req, res, next) => {
             const loggedInUser = await account.currentUser.get(req)
             loggedInUser.likes.push(id)
             await loggedInUser.update(loggedInUser)
-
-            if (account.checkMatch(loggedInUser, id)) {
+            if (await account.checkMatch(loggedInUser, id)) {
                 account.process.match(loggedInUser, id)
-                res.redirect('/home')
+                res.redirect(`/home/match/${id}`)
             } else {
                 res.redirect('/home')
             }
-
         } catch (err) {
             next(err)
         }
@@ -80,4 +100,4 @@ module.exports = router
     .get('/', homePage)
     .post('/like/:id', likeUser)
     .post('/dislike/:id', dislikeUser)
-
+    .get('/match/:id', homePageWithMatch)

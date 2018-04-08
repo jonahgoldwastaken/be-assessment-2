@@ -69,9 +69,9 @@ const fetchAllUsers = () =>
  * @param {String} id An Account document ID
  * @returns {Promise} Promise resolving to compressed Account document
  */
-const findById = id =>
+const findById = _id =>
     new Promise((resolve, reject) =>
-        Account.findOne({ _id: id })
+        Account.findOne({ _id })
             .populate('hobbies')
             .exec((err, data) => {
                 if (err) reject(new Error(err))
@@ -127,7 +127,8 @@ const countUsersOnHobbies = id =>
  */
 const sortUsersOnLikes = (user, users) =>
     users.sort(currentUser =>
-        (!!currentUser.likes && user.id in currentUser.likes))
+        (currentUser.likes.some(like =>
+            user._id.equals(like))))
 
 /**
  * Sorts list of users on its popularity
@@ -138,15 +139,31 @@ const sortOnPopularity = users =>
     users.sort((a, b) =>
         calcPopularity(a) > calcPopularity(b))
 
+const filterLiked = (user, users) =>
+    users.filter(currentUser =>
+        !(user.likes.some(like =>
+            like.equals(currentUser._id))))
+
+const filterDisliked = (user, users) =>
+    users.filter(currentUser =>
+        !(user.dislikes.some(dislike =>
+            dislike.equals(currentUser._id))))
+
+const filterMatched = (user, users) =>
+    users.filter(currentUser =>
+        !(user.matches.some(match =>
+            match.equals(currentUser._id))))
+            
 /**
  * Filters users on whether they disliked the comparing user.
  * @param {Account} user Account document to compare to
  * @param {Account[]} users All other Account documents
  * @returns {Account[]} Filtered list of Account documents
  */
-const filterUsersWithDislikes = (user, users) =>
+const filterUsersWithDisliked = (user, users) =>
     users.filter(currentUser =>
-        !(currentUser.dislikes && user in currentUser.dislikes))
+        !(currentUser.dislikes.some(dislike =>
+            dislike.equals(user._id))))
 
 /**
  * Filters logged in user from Account list
@@ -184,16 +201,20 @@ const filterSex = (user, users) =>
  * @param {Account[]} users All Account documents from DB
  * @returns {Account[]} Processed list of Account documents
  */
-const processUserList = (loggedInUser, users) =>
+const processUserList = (loggedInUser, users) => /* eslint-disable function-paren-newline */
     new Promise((resolve, reject) => {
         try {
-            const usersWithoutLoggedInUser = filterLoggedInUser(loggedInUser, users)
-            const usersWithoutDislikedUser =
-                filterUsersWithDislikes(loggedInUser, usersWithoutLoggedInUser)
-            const usersOnRightGender = filterSex(loggedInUser, usersWithoutDislikedUser)
-            const sortedUsers = sortOnPopularity(sortUsersOnLikes(loggedInUser, usersOnRightGender))
-            const usersWithinAgeRange = filterAgeRange(loggedInUser, sortedUsers)
-            resolve(usersWithinAgeRange)
+            const processedUsers =
+                sortOnPopularity(
+                    sortUsersOnLikes(loggedInUser,
+                        filterAgeRange(loggedInUser,
+                            filterSex(loggedInUser,
+                                filterUsersWithDisliked(loggedInUser,
+                                    filterMatched(loggedInUser,
+                                        filterDisliked(loggedInUser,
+                                            filterLiked(loggedInUser,
+                                                filterLoggedInUser(loggedInUser, users)))))))))
+            resolve(processedUsers)
         } catch (err) {
             reject(new Error(err))
         }
@@ -208,8 +229,8 @@ const processMatch = (loggedInUser, matchId) =>
     new Promise(async (resolve, reject) => {
         try {
             const match = await findById(matchId)
-            const iOne = loggedInUser.likes.findIndex(like => matchId.equals(like))
-            const iTwo = match.likes.findIndex(like => loggedInUser._id.equals(like))
+            const iOne = loggedInUser.likes.findIndex(like => like.equals(matchId))
+            const iTwo = match.likes.findIndex(like => like.equals(loggedInUser._id))
             loggedInUser.likes.splice(iOne, 1)
             match.likes.splice(iTwo, 1)
             loggedInUser.matches.push(matchId)
@@ -231,7 +252,8 @@ const checkForMatch = ({ _id: id }, userId) =>
     new Promise(async (resolve, reject) => {
         try {
             const { likes: likesToCheck } = await findByIdWithoutHobbbies(userId)
-            resolve(likesToCheck.some(like => like.equals(id)))
+            if (!likesToCheck.length) resolve(false)
+            else resolve(likesToCheck.some(like => like.equals(id)))
         } catch (err) {
             reject(new Error(err))
         }
@@ -305,7 +327,7 @@ module.exports = {
     },
     filter: {
         loggedIn: filterLoggedInUser,
-        withDislikes: filterUsersWithDislikes,
+        withDisliked: filterUsersWithDisliked,
         ageRange: filterAgeRange,
         sex: filterSex
     },
