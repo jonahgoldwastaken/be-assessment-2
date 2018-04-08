@@ -6,6 +6,10 @@
     margin-bottom: 0.6em;
     padding-bottom: 0.4em;
 
+    &__label {
+        font-weight: bold;
+    }
+
     &__input {
         font-size: inherit;
         -webkit-appearance: none;
@@ -29,6 +33,18 @@
                 color: transparent;
                 position: relative;
             }
+        }
+    }
+
+    &__icon {
+        font-size: inherit;
+        position: absolute;
+        right: 0;
+        transition: color 0.3s var(--transition);
+        cursor: pointer;
+
+        &:hover {
+            color: var(--blue);
         }
     }
 }
