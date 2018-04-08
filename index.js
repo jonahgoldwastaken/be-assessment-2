@@ -6,6 +6,7 @@ const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const mongoose = require('mongoose')
+const MongoDBStore = require('connect-mongodb-session')(session)
 const multerUtil = require('./utils/multerUtil')
 
 multerUtil.createInstance()
@@ -17,6 +18,15 @@ const messages = require('./routes/messages')
 
 const url = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
 const port = process.env.PORT || 3000
+// Due to MemoryStorage error https://github.com/expressjs/session#compatible-session-stores
+const store = new MongoDBStore({
+    uri: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    databaseName: process.env.DB_NAME,
+    collection: 'sessions'
+}, err => err && console.error(err))
+
+store.on('error', err => err && console.error(err))
+
 mongoose.connect(url, (err) => {
     if (err) {
         console.error(err)
@@ -35,7 +45,12 @@ mongoose.connect(url, (err) => {
         .use(session({
             resave: false,
             saveUninitialized: true,
-            secret: process.env.SESSION_SECRET
+            secret: process.env.SESSION_SECRET,
+            cookie: {
+                maxAge: 1000 * 60 * 60 * 24 * 28, // 4 weeks aka about a month
+                secure: process.env.NODE_ENV === 'production'
+            },
+            store
         }))
         .use('/home', home)
         .use('/account', account)
@@ -43,5 +58,9 @@ mongoose.connect(url, (err) => {
         .use('/messages', messages)
         .get('/', (req, res) => res.render('onboarding'))
         // TODO: add error handling function
+        .use((reqErr, req, res) => {
+            console.error('request error: ', reqErr)
+            res.redirect('back')
+        })
         .listen(port)
 })
