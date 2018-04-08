@@ -10,12 +10,12 @@ jobs:
   include:
     - stage: lint
       install:
-      - npm install
+      - npm install --development
       script:
       - yarn lint
     - stage: build
       install:
-      - npm install
+      - npm install --production
       script:
       - yarn build-prod
     - stage: deploy
