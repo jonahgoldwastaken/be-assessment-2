@@ -24,14 +24,14 @@
         grid-column: 2 / span 1;
         align-self: center;
     }
-    
+
     &__message {
         grid-column: 2 / span 2;
         grid-row: 2;
         align-self: center;
         margin-bottom: 0;
     }
-    
+
     &--first {
         border-top: 0;
     }

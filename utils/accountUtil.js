@@ -153,7 +153,7 @@ const filterMatched = (user, users) =>
     users.filter(currentUser =>
         !(user.matches.some(match =>
             match.equals(currentUser._id))))
-            
+
 /**
  * Filters users on whether they disliked the comparing user.
  * @param {Account} user Account document to compare to
