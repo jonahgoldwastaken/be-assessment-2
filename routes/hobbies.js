@@ -26,6 +26,5 @@ const requestHobby = async (req, res, next) => {
 }
 
 module.exports = router
-    .get('/', (req, res) => res.render('hobbies/list'))
     .get('/request', (req, res) => res.render('hobbies/request'))
     .post('/request', upload.single('image'), requestHobby)

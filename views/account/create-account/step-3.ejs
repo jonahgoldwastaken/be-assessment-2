@@ -1,16 +1,10 @@
 <%- include('../../layouts/head.ejs', { title: 'Profiel instellen - HDate' }) %>
 
 <header class="header">
-    <h1 class="header__chat-heading">Profiel Opzetten</h1>
+    <h1 class="header__chat-heading">Stap 3/3: Profiel Opzetten</h1>
 </header>
 <main class="container">
     <form action="/account/create" method="POST">
-        <div class="hobby-search">
-            <input autofocus type="text" class="hobby-search__input" placeholder="Wat doe je graag?" data-hobby-search>
-            <label class="hobby-search__label">
-                Wat doe je graag?
-            </label>
-        </div>
         <ul class="hobby-list">
             <% data.forEach(function (hobby) { %>
             <li class="hobby-list__item">
