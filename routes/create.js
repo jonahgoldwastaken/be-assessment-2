@@ -38,7 +38,7 @@ const accountForms = async (req, res, next) => {
                 data: hobbies
             })
         } catch (err) {
-            next(err)
+            next({ err, status: 500 })
         }
     }
 
@@ -81,7 +81,7 @@ const registerUser = async (req, res, next) => {
         account.currentUser.logIn(req, user._id)
         res.status(201).redirect('/home')
     } catch (err) {
-        next(err)
+        next({ err, status: 422 })
     }
 }
 
@@ -110,31 +110,35 @@ const registerSession = (req, res, next) => {
                 res.status(400).redirect('/account/create/1')
             }
         } catch (err) {
-            next(err)
+            next({ err, status: 422 })
         }
     }
 
     const stepTwo = async () => {
         const { body, file } = req
-        const newImage = await Jimp.read(`uploads/${file.filename}`)
-        newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${file.filename}`)
-        req.session.registration = Object.assign(req.session.registration, {
-            step: 3,
-            firstName: body.first_name,
-            lastName: body.last_name,
-            age: body.age,
-            location: body.location,
-            sex: body.sex,
-            sexPref: typeof body.sex_pref === 'string'
-                ? [body.sex_pref]
-                : body.sex_pref,
-            ageRange: {
-                min: body.age_min,
-                max: body.age_max
-            },
-            avatar: file.filename
-        })
-        res.status(200).redirect('/account/create/3')
+        try {
+            const newImage = await Jimp.read(`uploads/${file.filename}`)
+            newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${file.filename}`)
+            req.session.registration = Object.assign(req.session.registration, {
+                step: 3,
+                firstName: body.first_name,
+                lastName: body.last_name,
+                age: body.age,
+                location: body.location,
+                sex: body.sex,
+                sexPref: typeof body.sex_pref === 'string'
+                    ? [body.sex_pref]
+                    : body.sex_pref,
+                ageRange: {
+                    min: body.age_min,
+                    max: body.age_max
+                },
+                avatar: file.filename
+            })
+            res.status(200).redirect('/account/create/3')
+        } catch (err) {
+            next({ err, status: 422 })
+        }
     }
 
     switch (step) {

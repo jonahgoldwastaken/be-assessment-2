@@ -10,7 +10,7 @@ const messagesList = async (req, res, next) => {
                 data
             })
         } catch (err) {
-            next(err)
+            next({ err, status: 500 })
         }
     } else {
         res.redirect('/account/login')

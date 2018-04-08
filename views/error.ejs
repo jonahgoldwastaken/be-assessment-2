@@ -1,0 +1,8 @@
+<%- include('./layouts/head.ejs', { title: 'Error - ' + data.status }) %>
+
+<main class="container">
+    <h1><%= data.status %></h1>
+    <p><%= data.message %></p>
+</main>
+
+<%- include('./layouts/tail.ejs') %>

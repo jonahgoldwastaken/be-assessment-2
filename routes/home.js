@@ -19,7 +19,7 @@ const homePage = async (req, res, next) => {
                 match: null
             })
         } catch (err) {
-            next(err)
+            next({ err, status: 500 })
         }
     } else {
         res.redirect('/account/login')
@@ -40,7 +40,7 @@ const homePageWithMatch = async (req, res, next) => {
                 data: null
             })
         } catch (err) {
-            next(err)
+            next({ err, status: 422 })
         }
     } else {
         res.redirect('/account/login')
@@ -67,7 +67,7 @@ const likeUser = async (req, res, next) => {
                 res.redirect('/home')
             }
         } catch (err) {
-            next(err)
+            next({ err, status: 422 })
         }
     } else {
         res.redirect('/account/login')
@@ -89,7 +89,7 @@ const dislikeUser = async (req, res, next) => {
             await loggedInUser.update(loggedInUser)
             res.redirect('/home')
         } catch (err) {
-            next(err)
+            next({ err, status: 422 })
         }
     } else {
         res.redirect('/home')

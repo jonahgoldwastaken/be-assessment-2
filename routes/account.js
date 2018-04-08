@@ -22,14 +22,14 @@ const login = async (req, res) => {
                 account.currentUser.logIn(req, user._id)
                 res.status(200).redirect('/home')
             } else {
-                throw new Error({ password: 'Het opgegeven wachtwoord is onjuist.' })
+                throw new Error('{ "password": "Het opgegeven wachtwoord is onjuist." }')
             }
         } else {
-            throw new Error({ email: 'Het ingevoerde e-mailadres is niet gevonden.' })
+            throw new Error('{ "email": "Het ingevoerde e-mailadres is niet gevonden." }')
         }
     } catch (err) {
         res.render('account/login', {
-            error: err,
+            error: JSON.parse((err.message)),
             email
         })
     }
@@ -56,7 +56,7 @@ const profile = async (req, res, next) => {
             next(err)
         }
     } else {
-        res.status(403).redirect('/account/login')
+        res.status(401).redirect('/account/login')
     }
 }
 
@@ -71,14 +71,14 @@ const editForm = async (req, res, next) => {
         try {
             const data = await account.currentUser.get(req)
             if (!data) {
-                res.status(500).redirect('/')
+                res.status(404).redirect('/')
             } else {
                 res.render('account/edit', {
                     data
                 })
             }
         } catch (err) {
-            next(err)
+            next({ err, status: 500 })
         }
     } else {
         res.redirect('/account/login')
@@ -127,7 +127,7 @@ const updateProfile = async (req, res, next) => {
             await oldUser.update(updatedUser)
             res.redirect(redirectUrl)
         } catch (err) {
-            next(err)
+            next({ err, status: 422 })
         }
     } else {
         res.redirect('/account/login')
@@ -156,7 +156,7 @@ const userProfile = async (req, res, next) => {
                 })
             }
         } catch (err) {
-            next(err)
+            next({ err, status: 404 })
         }
     } else {
         res.redirect('/account/login')
@@ -175,7 +175,7 @@ const deleteAccount = async (req, res, next) => {
             await account.currentUser.delete(req)
             res.redirect('/')
         } catch (err) {
-            next(err)
+            next({ err, status: 500 })
         }
     } else {
         res.redirect('/account/login')

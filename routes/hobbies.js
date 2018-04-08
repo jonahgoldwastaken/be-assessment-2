@@ -11,17 +11,17 @@ const hobby = require('../utils/hobbyUtil')
  */
 const requestHobby = async (req, res, next) => {
     const { body, file } = req
-    const newImage = await Jimp.read(`uploads/${file.filename}`)
-    newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${file.filename}`)
-    const newHobby = hobby.new({
-        name: body.name,
-        image: file.filename
-    })
     try {
+        const newImage = await Jimp.read(`uploads/${file.filename}`)
+        newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${file.filename}`)
+        const newHobby = hobby.new({
+            name: body.name,
+            image: file.filename
+        })
         await newHobby.save()
         res.status(201).redirect('/')
     } catch (err) {
-        next(err)
+        next({ err, status: 422 })
     }
 }
 
