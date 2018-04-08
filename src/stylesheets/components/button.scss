@@ -7,35 +7,51 @@ button {
 }
 
 .btn {
-    display: block;
     padding: 0.8rem 1rem;
     border-radius: 0.4em;
     border: none;
     text-align: center;
     text-decoration: none;
+    transition: background 0.3s var(--transition);
 
     &--pink {
         color: white;
         background: var(--pink);
         border-color: var(--pink);
+
+        &:hover {
+            background: $dark-pink;
+        }
     }
 
     &--blue {
         color: white;
         background: var(--blue);
         border-color: var(--blue);
+
+        &:hover {
+            background: $dark-blue;
+        }
     }
 
     &--red {
         color: white;
         background: var(--red);
         border-color: var(--red);
+
+        &:hover {
+            background: $dark-red;
+        }
     }
 
     &--green {
         color: white;
         background: var(--green);
         border-color: var(--green) !important;
+
+        &:hover {
+            background: $dark-green;
+        }
     }
 
     &--large {
@@ -50,6 +66,10 @@ button {
     &--center {
         display: inline-block;
         margin: 0 auto;
+    }
+
+    &--mb {
+        margin-bottom: 1rem;
     }
 
     &--circle {
