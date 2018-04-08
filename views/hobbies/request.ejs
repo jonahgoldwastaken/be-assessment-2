@@ -1,16 +1,19 @@
 <%- include('../layouts/head.ejs', { title: 'Hobby aanvragen' }) %>
 
 <header class="header">
-    <h1 class="header__chat-heading">Hobby toevoegen</h1>
+    <a href="/"><i class="fa fa-angle-left"></i></a>
+    <h1 class="header__chat-heading">Hobby aanvragen</h1>
 </header>
 <main class="container">
     <form action="/hobbies/request" method="POST" enctype="multipart/form-data">
-        <label class="form-group--image">
-            Foto voor de hobby
-            <input autocomplete="photo" type="file" name="image" accept="image/*" required>
-        </label>
+        <div class="form-group form-group--image">
+            <input id="avatar" class="form-group__input" autocomplete="photo" type="file" name="image" accept="image/*" value="" required>
+            <label for="avatar" class="form-group__label">
+                    Foto voor hobby
+            </label>
+        </div>
         <label class="form-group">
-            Naam Hobby
+            Naam hobby
             <input class="form-group__input" autocomplete="off" type="text" name="name" required>
         </label>
         <button class="btn btn--large btn--green" type="submit">Hobby aanvragen</button>

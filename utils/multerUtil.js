@@ -1,13 +1,7 @@
 const multer = require('multer')
+const fs = require('fs')
 const mime = require('mime-types')
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads')
-    },
-    filename: (req, file, cb) =>
-        cb(null, `${req.body.name || req.session.userId || req.params.id}.${mime.extension(file.mimetype)}`)
-})
 let upload
 
 /**
@@ -15,7 +9,7 @@ let upload
  */
 const createInstance = () => {
     upload = multer({
-        storage,
+        dest: 'uploads',
         fileFilter: (req, file, cb) =>
             cb(null, file.mimetype.split('/')[0] === 'image')
     })
@@ -26,7 +20,24 @@ const createInstance = () => {
  */
 const getInstance = () => upload
 
+/**
+ * Changes file name with provided name
+ * @param {Express.Multer.File} file File that needs a name change
+ * @param {String} newName New name for file
+ * @returns {Promise} Promise which resolves to nothing if rename is succesful
+ */
+const renameFile = (file, newName) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            await fs.rename(`uploads/${file.filename}`, `uploads/${newName}.${mime.extension(file.mimetype)}`)
+            resolve()
+        } catch (err) {
+            reject(err)
+        }
+    })
+
 module.exports = {
     createInstance,
-    getInstance
+    getInstance,
+    renameFile
 }

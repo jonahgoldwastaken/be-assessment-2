@@ -2,7 +2,9 @@ const router = require('express').Router()
 const Jimp = require('jimp')
 const account = require('../utils/accountUtil')
 const hobby = require('../utils/hobbyUtil')
-const upload = require('../utils/multerUtil').getInstance()
+const multer = require('../utils/multerUtil')
+
+const upload = multer.getInstance()
 
 /**
  * Renders hobby list page with all hobbies, seperated by if in logged in Account document
@@ -72,8 +74,10 @@ const editHobby = async (req, res, next) => {
             const loggedInUser = await account.currentUser.get(req)
             const { hobbyCustom } = loggedInUser
             if (file) {
-                const newImage = await Jimp.read(`uploads/${file.filename}`)
-                newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${file.filename}`)
+                const newName = `${loggedInUser._id}${_id}`
+                await multer.renameFile(file, newName)
+                const newImage = await Jimp.read(`uploads/${newName}`)
+                newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${newName}`)
             }
             const newCustomProperties = {
                 _id,
