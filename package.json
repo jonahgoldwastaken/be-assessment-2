@@ -43,6 +43,7 @@
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",
+    "connect-mongodb-session": "^2.0.2",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
     "dotenv": "^5.0.1",
