@@ -2,6 +2,7 @@
 const router = require('express').Router()
 const argon2 = require('argon2')
 const account = require('../utils/accountUtil')
+const upload = require('../utils/multerUtil').getInstance()
 
 const create = require('./create')
 const hobby = require('./hobby')
@@ -94,10 +95,32 @@ const updateProfile = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         try {
             const { body, file } = req
+            let redirectUrl
             const oldUser = await account.currentUser.get(req)
-            body.avatar = !file ? oldUser.avatar : body.avatart
-            await oldUser.update(body)
-            res.redirect('/account')
+            const updatedUser = {
+                firstName: body.first_name || oldUser.firstName,
+                lastName: body.last_name || oldUser.lastName,
+                age: body.age || oldUser.age,
+                location: body.location || oldUser.location,
+                sex: body.sex || oldUser.sex,
+                sexPref: body.sex_pref || oldUser.sexPref,
+                ageRange: {
+                    min: body.age_min || oldUser.ageRange.min,
+                    max: body.age_max || oldUser.ageRange.max
+                }
+            }
+            if (body.password_old && body.password_new) {
+                const match = await argon2.verify(oldUser.password, body.password_old)
+                if (match) {
+                    const hash = await argon2.hash(body.password_new)
+                    updatedUser.password = hash
+                    redirectUrl = '/account/login'
+                }
+            }
+            updatedUser.avatar = !file ? oldUser.avatar : file.filename
+            await oldUser.update(updatedUser)
+            redirectUrl = '/account'
+            res.redirect(redirectUrl)
         } catch (err) {
             next(err)
         }
@@ -116,12 +139,14 @@ const userProfile = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         try {
             const { params: { id } } = req
+            const { _id: loggedInID } = await account.currentUser.get(req)
             const data = await account.find.byId(id)
             if (!data) {
-                res.redirect('/home')
+                res.redirect('back')
             } else {
                 res.render('home/user-profile', {
                     data,
+                    match: data.matches.some(match => match.equals(loggedInID)),
                     back: req.header('Referer')
                 })
             }
@@ -142,4 +167,4 @@ module.exports = router
     .get('/edit', editForm)
     .get('/:id', userProfile)
     .get('/', profile)
-    .patch('/', updateProfile)
+    .patch('/', upload.single('avatar'), updateProfile)
