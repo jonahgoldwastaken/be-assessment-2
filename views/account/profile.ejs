@@ -17,11 +17,13 @@
                     <img role="presentation" src="/images/<%= hobby.image %>">
                     <h3 title="Hobby"><%= hobby.name %></h3>
                     <p><%= hobby.description %></p>
+                    <a href="/account/hobbies/<%= hobby._id %>">Bewerken</a>
                 </li>
                 <% } else { %>
                 <li class="gallery-item gallery-item--profile">
                     <img role="presentation" src="/images/<%= hobby.image %>">
                     <h3 title="Hobby"><%= hobby.name %></h3>
+                    <a href="/account/hobbies/<%= hobby._id %>">Bewerken</a>
                 </li>
                 <% } %>
             <% }) %>
