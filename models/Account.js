@@ -78,6 +78,6 @@ const schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account'
     }]
-}, { strict: false })
+})
 
 module.exports = mongoose.model('Account', schema)
