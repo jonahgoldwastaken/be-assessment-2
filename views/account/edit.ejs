@@ -5,7 +5,7 @@
     <h1 class="header__chat-heading">Profiel Bewerken</h1>
 </header>
 <main>
-    <form class="two-column" action="/account?_method=PATCH" method="POST">
+    <form class="two-column" action="/account?_method=PATCH" method="POST" enctype="multipart/form-data">
         <fieldset class="fieldset">
             <legend class="fieldset__legend">Accountgegevens</legend>
             <label class="form-group">
@@ -23,7 +23,7 @@
         <fieldset class="fieldset">
             <legend class="fieldset__legend">Persoonlijke info</legend>
             <div class="form-group form-group--image">
-                <input id="avatar" class="form-group__input" autocomplete="photo" type="file" name="avatar" accept="image/*" value="<%= data.avatar %>">
+                <input id="avatar" class="form-group__input" autocomplete="photo" type="file" name="avatar" accept="image/*">
                 <label for="avatar" class="form-group__label">
                     Profielfoto Toevoegen
                 </label>
