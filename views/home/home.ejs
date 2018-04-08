@@ -2,7 +2,39 @@
 
 <%- include('../layouts/homeHeader', { url: 'home' }) %>
 <main class="container">
-    <% if (data) { %>
+    <% if (match) { %>
+    <section class="overlay overlay--blur">
+        <h1 class="text--center">Je hebt een match!</h1>
+        <p class="text--center text--mb">Jullie vinden elkaars hobbies leuk!</p>
+        <div class="new-match">
+            <img class="new-match__avatar" src="/images/<%= match.userOne.avatar %>" role="presentation">
+            <img class="new-match__avatar" src="/images/<%= match.userTwo.avatar %>" role="presentation">
+        </div>
+        <div class="btn-group">
+            <a class="btn btn--blue" href="<%= match.userTwo.email %>">Stuur een mailtje</a>
+            <a class="btn btn--pink" href="/home">Verder swipen</a>
+        </div>
+    </section>
+    <article class="card">
+        <a href="/account/<%= match.userTwo._id %>">
+            <div class="card__header">
+                <img src="/images/<%= match.userTwo.avatar %>" alt="Profielfoto Daniëlle Schinkels">
+                <h2><%= match.userTwo.firstName %></h2>
+                <h3><%= match.userTwo.age %> jaar</h3>
+                <h4><%= match.userTwo.hobbies.length > 3 ? `${match.userTwo.hobbies.length} hobbies, waaronder:` : `${match.userTwo.hobbies.length} hobbies` %></h4>
+            </div>
+            <ul class="gallery gallery--card">
+                <% match.userTwo.hobbies.some(function (hobby, i) { %>
+                    <li class="gallery-item gallery-item--card">
+                        <img src="/images/<%= hobby.image %>" role="presentation">
+                        <h3 title="Hobby"><%= hobby.name %></h3>
+                    </li>
+                    <% return i >= 2 %>
+                <% }) %>
+            </ul>
+        </a>
+    </article>
+    <% } else if (data) { %>
     <article class="card">
         <a href="/account/<%= data._id %>">
             <div class="card__header">
@@ -17,7 +49,7 @@
                         <img src="/images/<%= hobby.image %>" role="presentation">
                         <h3 title="Hobby"><%= hobby.name %></h3>
                     </li>
-                    <% return i >= 2 %>
+                    <% return data.hobbies.length < 3 || i >= 2 %>
                 <% }) %>
             </ul>
         </a>
@@ -31,9 +63,23 @@
 </main>
 <% if (data) { %>
     <footer class="button-footer">
-        <button data-dislike class="btn btn--circle btn--red"><i class="fa fa-thumbs-down"></i></button>
+        <form method="POST" action="/home/dislike/<%= data._id %>">
+            <button data-dislike class="btn btn--circle btn--red"><i class="fa fa-thumbs-down"></i></button>
+        </form>
         <a class="btn btn--circle" href="/hobbies/filter"><i class="fa fa-filter"></i></a>
-        <button data-like class="btn btn--circle btn--green"><i class="fa fa-thumbs-up"></i></button>
+        <form method="POST" action="/home/like/<%= data._id %>">
+            <button data-like class="btn btn--circle btn--green"><i class="fa fa-thumbs-up"></i></button>
+        </form>
+    </footer>
+<% } else if (match) { %>
+        <footer class="button-footer">
+        <form method="POST" action="/home/dislike">
+            <button data-dislike class="btn btn--circle btn--red"><i class="fa fa-thumbs-down"></i></button>
+        </form>
+        <a class="btn btn--circle" href="/hobbies/filter"><i class="fa fa-filter"></i></a>
+        <form method="POST" action="/home/like">
+            <button data-like class="btn btn--circle btn--green"><i class="fa fa-thumbs-up"></i></button>
+        </form>
     </footer>
 <% } %>
 
