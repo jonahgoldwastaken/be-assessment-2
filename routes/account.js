@@ -168,12 +168,23 @@ const userProfile = async (req, res, next) => {
     }
 }
 
+/**
+ * Logs out user
+ * @param {Request} req
+ * @param {Response} res
+ */
 const logOut = (req, res) => {
     if (account.currentUser.isLoggedIn(req))
         account.currentUser.logOut(req)
     res.redirect('/account/login')
 }
 
+/**
+ * Deletes user account
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
 const deleteAccount = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         try {
@@ -187,6 +198,12 @@ const deleteAccount = async (req, res, next) => {
     }
 }
 
+/**
+ * Unmatches provided user
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
 const unmatch = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         try {

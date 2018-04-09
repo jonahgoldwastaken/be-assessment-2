@@ -66,7 +66,6 @@ const editHobbyForm = async (req, res, next) => {
  * @param {Response} res
  * @param {Function} next
  */
-
 const editHobby = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         const { params: { id: _id }, body: { description }, file } = req
