@@ -55,6 +55,7 @@
         ],
         "no-param-reassign": ["error", {
             "props": false
-        }]
+        }],
+        "no-confusing-arrow": "off"
     }
 }

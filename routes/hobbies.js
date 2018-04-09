@@ -16,7 +16,6 @@ const requestHobby = async (req, res, next) => {
     try {
         const newName = req.body.name
         const processedName = await multer.renameFile(file, newName)
-        console.log(processedName)
         const newImage = await Jimp.read(`uploads/${processedName}`)
         newImage.resize(Jimp.AUTO, 960).quality(70).write(`uploads/${processedName}`)
         const newHobby = hobby.new({

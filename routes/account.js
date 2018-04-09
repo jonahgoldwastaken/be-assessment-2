@@ -154,10 +154,13 @@ const userProfile = async (req, res, next) => {
             if (!data) {
                 res.redirect('back')
             } else {
-                res.render('home/user-profile', {
-                    data,
-                    match: data.matches.some(match => match.equals(loggedInID)),
-                    back: req.header('Referer')
+                res.status(200).format({
+                    json: () => res.json({ data }),
+                    html: () => res.render('home/user-profile', {
+                        data,
+                        match: data.matches.some(match => match.equals(loggedInID)),
+                        back: req.header('Referer')
+                    })
                 })
             }
         } catch (err) {
