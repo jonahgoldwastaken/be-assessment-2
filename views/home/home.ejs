@@ -1,7 +1,7 @@
 <%- include('../layouts/head.ejs', { title: 'Home - HDate' }) %>
 
 <%- include('../layouts/homeHeader', { url: 'home' }) %>
-<main class="container">
+<main class="container" <% if (data && !match) { %> data-home <% } %>>
     <% if (match) { %>
     <section class="overlay overlay--blur">
         <h1 class="text--center text--mb">Je hebt een match!</h1>
@@ -35,7 +35,7 @@
         </a>
     </article>
     <% } else if (data) { %>
-    <article class="card">
+    <article class="card" data-user="<%= data._id %>">
         <a href="/account/<%= data._id %>">
             <div class="card__header">
                 <img src="/images/<%= data.avatar %>" alt="Profielfoto Daniëlle Schinkels">
