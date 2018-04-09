@@ -83,6 +83,11 @@ const findById = _id =>
                 }
             }))
 
+/**
+ * Finds a user with matches
+ * @param {String} _id An Account document ID
+ * @returns {Promise} Promise which resolves to an Account document
+ */
 const findByIdWithMatches = _id =>
     new Promise((resolve, reject) =>
         Account.findOne({ _id })
@@ -95,6 +100,7 @@ const findByIdWithMatches = _id =>
 /**
  * Finds a user without compressing it
  * @param {String} id An Account document ID
+ * @returns {Promise} Promise which resolves to an Account document
  */
 const findByIdWithoutHobbbies = id =>
     new Promise((resolve, reject) =>
@@ -148,16 +154,34 @@ const sortOnPopularity = users =>
     users.sort((a, b) =>
         calcPopularity(a) > calcPopularity(b))
 
+/**
+ * Filters users which the provided user has liked
+ * @param {Account} user Account document to compare to
+ * @param {Account[]} users All other Account documents
+ * @returns {Account[]} Filtered list of Account documents
+ */
 const filterLiked = (user, users) =>
     users.filter(currentUser =>
         !(user.likes.some(like =>
             like.equals(currentUser._id))))
 
+/**
+ * Filters users which the provided user has disliked
+ * @param {Account} user Account document to compare to
+ * @param {Account[]} users All other Account documents
+ * @returns {Account[]} Filtered list of Account documents
+ */
 const filterDisliked = (user, users) =>
     users.filter(currentUser =>
         !(user.dislikes.some(dislike =>
             dislike.equals(currentUser._id))))
 
+/**
+ * Filters users which the provided user already matched with
+ * @param {Account} user Account document to compare to
+ * @param {Account[]} users All other Account documents
+ * @returns {Account[]} Filtered list of Account documents
+ */
 const filterMatched = (user, users) =>
     users.filter(currentUser =>
         !(user.matches.some(match =>
@@ -176,8 +200,8 @@ const filterUsersWithDisliked = (user, users) =>
 
 /**
  * Filters logged in user from Account list
- * @param {Account} user Logged in user
- * @param {Account[]} users All Account documents fro mDB
+ * @param {Account} user Account document to compare to
+ * @param {Account[]} users All Account documents from DB
  * @returns {Account[]} Filtered list of Account documents
  */
 const filterLoggedInUser = (user, users) =>
@@ -186,7 +210,7 @@ const filterLoggedInUser = (user, users) =>
 
 /**
  * Filters on age range
- * @param {Account} user Account documents to compare to
+ * @param {Account} user Account document to compare to
  * @param {Account[]} users All other Account documents
  * @returns {Account[]} Filtered list of Account documents
  */
@@ -204,6 +228,12 @@ const filterSex = (user, users) =>
     users.filter(currentUser =>
         !(currentUser.sex in user.sexPref))
 
+/**
+ * Filters users with same hobbies as user
+ * @param {Account} user Account document to compare to
+ * @param {Account[]} users All other Account documents
+ * @returns {Account[]} Filtered list of Account documents
+ */
 const filterWithSameHobbies = (user, users) =>
     users.filter(currentUser =>
         !(currentUser.hobbies.some(currentUserHobby =>
@@ -263,6 +293,7 @@ const processMatch = (loggedInUser, matchId) =>
  * Checks if certain person likes logged in user.
  * @param {String} id Logged in Account document ID
  * @param {String} userId Account document ID to check for likes
+ * @returns {Boolean}
  */
 const checkForMatch = ({ _id: id }, userId) =>
     new Promise(async (resolve, reject) => {
@@ -278,12 +309,14 @@ const checkForMatch = ({ _id: id }, userId) =>
 /**
  * Returns if user has a session
  * @param {Request} req Express Request
+ * @returns {Boolean}
  */
 const isUserLoggedIn = ({ session: { userId } }) => !!userId
 
 /**
  * Fetches logged in user with session id
  * @param {Request} req Express Request
+ * @returns {Account} Account model
  */
 const getLoggedInUser = ({ session: { userId } }) =>
     new Promise(async (resolve, reject) => {
@@ -295,6 +328,11 @@ const getLoggedInUser = ({ session: { userId } }) =>
         }
     })
 
+/**
+ * Fetches logged in user with matches with session id
+ * @param {Request} req
+ * @returns {Account} Account model
+ */
 const getLoggedInUserWithMatches = ({ session: { userId } }) =>
     new Promise(async (resolve, reject) => {
         try {
@@ -305,6 +343,11 @@ const getLoggedInUserWithMatches = ({ session: { userId } }) =>
         }
     })
 
+/**
+ * Fetches logged in user without hobbies with session id
+ * @param {Request} req
+ * @returns {Account} Account model
+ */
 const getLoggedInUserWithoutHobbies = ({ session: { userId } }) =>
     new Promise(async (resolve, reject) => {
         try {
@@ -328,6 +371,10 @@ const logInUser = (req, id) => { req.session.userId = id }
  */
 const logOutUser = ({ session }) => session.destroy()
 
+/**
+ * Deletes the logged in user from database
+ * @param {Request} req
+ */
 const deleteUser = ({ session: { userId } }) =>
     new Promise(async (resolve, reject) => {
         try {
