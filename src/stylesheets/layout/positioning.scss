@@ -107,11 +107,21 @@
         padding: 0 1rem;
 
         .fieldset {
-            flex: 0 0 20rem;
+            flex: 0 0 22rem;
             align-self: flex-start;
 
             &--small {
                 flex: 0 0 14rem;
+            }
+        }
+    }
+
+    @media screen and (min-width: 60rem) {
+        .fieldset {
+            flex: 0 0 25rem;
+
+            &--small {
+                flex: 0 0 15rem;
             }
         }
     }
