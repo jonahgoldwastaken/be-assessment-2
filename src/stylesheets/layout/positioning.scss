@@ -22,10 +22,6 @@
     &--right {
         right: 1rem;
 
-        @media screen and (min-width: 40rem) {
-            right: calc(50vw - 19rem);
-        }
-
         @media screen and (min-width: 60rem) {
             right: calc(50vw - 29rem);
         }
@@ -58,6 +54,10 @@
 
 .static {
     position: static;
+}
+
+.relative {
+    position: relative;
 }
 
 .sticky {

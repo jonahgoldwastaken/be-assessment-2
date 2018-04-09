@@ -31,7 +31,7 @@ const homePageWithMatch = async (req, res, next) => {
         try {
             const { id } = req.params
             const loggedInUser = await account.currentUser.get(req)
-            const match = await account.find.byId(id)
+            const match = await account.find.id(id)
             res.render('home/home', {
                 match: {
                     userOne: loggedInUser,

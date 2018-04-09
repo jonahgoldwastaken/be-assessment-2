@@ -99,7 +99,7 @@ const registerSession = (req, res, next) => {
     const stepOne = async () => {
         const { email, password } = req.body
         try {
-            const emailExists = await account.find.byEmail(email)
+            const emailExists = await account.find.email(email)
             if (!emailExists) {
                 const hashedPassword = await argon.hash(password)
                 req.session.registration = {
