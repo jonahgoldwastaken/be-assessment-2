@@ -116,12 +116,14 @@
 .matches {
     display: flex;
     flex-flow: row wrap;
+    justify-content: space-between;
     margin-top: 1rem;
 
     &__match {
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin-bottom: 1.5rem;
     }
 }
 
