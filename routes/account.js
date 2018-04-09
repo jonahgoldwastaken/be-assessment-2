@@ -17,7 +17,7 @@ const hobby = require('./hobby')
 const login = async (req, res) => {
     const { email, password } = req.body
     try {
-        const user = await account.find.byEmail(email)
+        const user = await account.find.email(email)
         if (user) {
             const match = await argon2.verify(user.password, password)
             if (match) {
@@ -30,6 +30,7 @@ const login = async (req, res) => {
             throw new Error('{ "email": "Het ingevoerde e-mailadres is niet gevonden." }')
         }
     } catch (err) {
+        console.error(err)
         res.render('account/login', {
             error: JSON.parse((err.message)),
             email
@@ -55,7 +56,7 @@ const profile = async (req, res, next) => {
                 })
             }
         } catch (err) {
-            next(err)
+            next({ err, status: 500 })
         }
     } else {
         res.status(401).redirect('/account/login')
@@ -149,7 +150,7 @@ const userProfile = async (req, res, next) => {
         try {
             const { params: { id } } = req
             const { _id: loggedInID } = await account.currentUser.get(req)
-            const data = await account.find.byId(id)
+            const data = await account.find.id(id)
             if (!data) {
                 res.redirect('back')
             } else {
@@ -186,6 +187,29 @@ const deleteAccount = async (req, res, next) => {
     }
 }
 
+const unmatch = async (req, res, next) => {
+    if (account.currentUser.isLoggedIn(req)) {
+        try {
+            const { id } = req.params
+            const loggedInUser = await account.currentUser.get(req)
+            const match = await account.find.id(id)
+            const iOne = loggedInUser.matches.findIndex(userId => userId.equals(match._id))
+            const iTwo = match.matches.findIndex(userId => userId.equals(loggedInUser._id))
+            loggedInUser.matches.splice(iOne, 1)
+            match.matches.splice(iTwo, 1)
+            loggedInUser.dislikes.push(id)
+            match.dislikes.push(loggedInUser._id)
+            await loggedInUser.update(loggedInUser)
+            await match.update(match)
+            res.redirect('/home')
+        } catch (err) {
+            next({ err, status: 500 })
+        }
+    } else {
+        res.status(401).redirect('/account/login')
+    }
+}
+
 module.exports = router
     .use('/create', create)
     .use('/hobbies', hobby)
@@ -194,6 +218,7 @@ module.exports = router
     .get('/logout', logOut)
     .get('/edit', editForm)
     .get('/delete', deleteAccount)
-    .get('/:id', userProfile)
     .get('/', profile)
     .patch('/', upload.single('avatar'), updateProfile)
+    .delete('/unmatch/:id', unmatch)
+    .get('/:id', userProfile)

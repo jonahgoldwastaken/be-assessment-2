@@ -204,6 +204,12 @@ const filterSex = (user, users) =>
     users.filter(currentUser =>
         !(currentUser.sex in user.sexPref))
 
+const filterWithSameHobbies = (user, users) =>
+    users.filter(currentUser =>
+        !(currentUser.hobbies.some(currentUserHobby =>
+            (user.hobbies.some(userHobby =>
+                currentUserHobby.equals(userHobby))))))
+
 /**
  * Process all users for the matching system to work it's magic.
  * @param {Account} loggedInUser Logged in user
@@ -219,10 +225,11 @@ const processUserList = (loggedInUser, users) => /* eslint-disable function-pare
                         filterAgeRange(loggedInUser,
                             filterSex(loggedInUser,
                                 filterUsersWithDisliked(loggedInUser,
-                                    filterMatched(loggedInUser,
-                                        filterDisliked(loggedInUser,
-                                            filterLiked(loggedInUser,
-                                                filterLoggedInUser(loggedInUser, users)))))))))
+                                    filterWithSameHobbies(loggedInUser,
+                                        filterMatched(loggedInUser,
+                                            filterDisliked(loggedInUser,
+                                                filterLiked(loggedInUser,
+                                                    filterLoggedInUser(loggedInUser, users))))))))))
             resolve(processedUsers)
         } catch (err) {
             reject(err)
@@ -342,8 +349,8 @@ module.exports = {
     checkMatch: checkForMatch,
     find: {
         all: fetchAllUsers,
-        byEmail: findByEmail,
-        byId: findById
+        email: findByEmail,
+        id: findById
     },
     count: {
         all: countUsers,

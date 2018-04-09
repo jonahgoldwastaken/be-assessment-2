@@ -60,13 +60,14 @@ mongoose.connect(url, (err) => {
         .get('/', (req, res) => res.render('onboarding'))
         .use((reqErr, req, res) => {
             if (reqErr.err) {
-                console.error('request error: ', reqErr)
+                console.log('request error: ', reqErr.err)
                 reqErr.message = httpStatus[reqErr.status]
                 res.status(reqErr.status).render('error', {
                     data: reqErr,
                     back: req.headers('Referer')
                 })
             }
+            return false
         })
         .listen(port)
 })
