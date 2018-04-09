@@ -45,7 +45,7 @@ const sortHobbies = hobbies =>
 
 /**
  * Fetches all Hobby documents from DB and parses them.
- * @returns sorted Hobby documents with popularity property.
+ * @returns {Hobby[]} sorted Hobby documents with popularity property.
  */
 const findAllHobbies = () =>
     new Promise((resolve, reject) =>
@@ -56,6 +56,12 @@ const findAllHobbies = () =>
             resolve(sortedHobbies)
         }))
 
+/**
+ * Combines the provided properties within the hobby
+ * @param {Hobby} hobby A Hobby document
+ * @param {Object} props Object with custom properties
+ * @return {Hobby} Object with custom properties
+ */
 const compressCustomProperties = (hobby, props) => ({
     _id: hobby._id,
     name: hobby.name,
