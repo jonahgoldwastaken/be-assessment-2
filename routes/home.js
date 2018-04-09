@@ -26,6 +26,12 @@ const homePage = async (req, res, next) => {
     }
 }
 
+/**
+ * Renders homepage with match
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
 const homePageWithMatch = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         try {
@@ -48,7 +54,7 @@ const homePageWithMatch = async (req, res, next) => {
 }
 
 /**
- * Lieks a user, and creates if match if idem
+ * Likes a user, and creates if match if idem
  * @param {Request} req
  * @param {Response} res
  * @param {Function} next

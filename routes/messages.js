@@ -2,6 +2,12 @@
 const router = require('express').Router()
 const account = require('../utils/accountUtil')
 
+/**
+ * Shows message list
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
 const messagesList = async (req, res, next) => {
     if (account.currentUser.isLoggedIn(req)) {
         try {
@@ -19,4 +25,4 @@ const messagesList = async (req, res, next) => {
 
 module.exports = router
     .get('/', messagesList)
-    .get('/:chat', (req, res) => res.render('messages/chat'))
+    // .get('/:chat', (req, res) => res.render('messages/chat'))
